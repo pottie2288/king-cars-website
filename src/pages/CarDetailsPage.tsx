@@ -1,11 +1,18 @@
 import { useState, useEffect } from 'react';
 import {
     ArrowLeft, MapPin, Calendar, Fuel, Settings,
-    Share2, Heart, Phone, Mail, CheckCircle, Info
+    Share2, Heart, Phone, Mail, CheckCircle, Info,
+    ChevronLeft, ChevronRight
 } from 'lucide-react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { FinanceCalculator } from '@/components/FinanceCalculator';
 import { useInventory } from '@/hooks/useInventory';
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    type CarouselApi,
+} from "@/components/ui/carousel";
 
 import { SEO } from '@/components/SEO';
 
@@ -18,7 +25,9 @@ export function CarDetailsPage({ isFavourite, onToggleFavourite }: CarDetailsPag
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
     const { cars } = useInventory();
-    const [activeImageIndex, setActiveImageIndex] = useState(0);
+    const [api, setApi] = useState<CarouselApi>();
+    const [current, setCurrent] = useState(0);
+    const [count, setCount] = useState(0);
     const [showEnquiryForm, setShowEnquiryForm] = useState(false);
 
     const car = cars.find(c => c.id === id);
@@ -27,6 +36,19 @@ export function CarDetailsPage({ isFavourite, onToggleFavourite }: CarDetailsPag
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [id]);
+
+    useEffect(() => {
+        if (!api) {
+            return;
+        }
+
+        setCount(api.scrollSnapList().length);
+        setCurrent(api.selectedScrollSnap() + 1);
+
+        api.on("select", () => {
+            setCurrent(api.selectedScrollSnap() + 1);
+        });
+    }, [api]);
 
     if (!car) {
         return (
@@ -74,6 +96,10 @@ export function CarDetailsPage({ isFavourite, onToggleFavourite }: CarDetailsPag
         }
     };
 
+    const handleThumbnailClick = (index: number) => {
+        api?.scrollTo(index);
+    };
+
 
     return (
         <div className="min-h-screen bg-white pt-20">
@@ -101,23 +127,50 @@ export function CarDetailsPage({ isFavourite, onToggleFavourite }: CarDetailsPag
 
                     {/* Image Gallery - Order 1 */}
                     <div className="lg:col-span-8 order-1 space-y-4">
-                        <div className="aspect-[16/10] bg-gray-100 rounded-2xl overflow-hidden relative shadow-lg group">
-                            <img
-                                src={images[activeImageIndex]}
-                                alt={`${car.make} ${car.model}`}
-                                className="w-full h-full object-cover"
-                            />
-                            <div className="absolute bottom-4 right-4 bg-black/70 backdrop-blur-md text-white text-sm px-3 py-1.5 rounded-full">
-                                {activeImageIndex + 1} / {images.length}
-                            </div>
+                        <div className="relative group">
+                            <Carousel setApi={setApi} className="w-full">
+                                <CarouselContent className="-ml-0">
+                                    {images.map((img, idx) => (
+                                        <CarouselItem key={idx} className="pl-0">
+                                            <div className="aspect-[16/10] bg-gray-100 rounded-2xl overflow-hidden shadow-lg">
+                                                <img
+                                                    src={img}
+                                                    alt={`${car.make} ${car.model} - View ${idx + 1}`}
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            </div>
+                                        </CarouselItem>
+                                    ))}
+                                </CarouselContent>
+
+                                <div className="absolute bottom-4 right-4 bg-black/70 backdrop-blur-md text-white text-sm px-3 py-1.5 rounded-full z-10">
+                                    {current} / {count}
+                                </div>
+
+                                {/* Custom Navigation Buttons for Desktop */}
+                                <div className="hidden lg:block">
+                                    <button
+                                        onClick={() => api?.scrollPrev()}
+                                        className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/20 hover:bg-black/40 backdrop-blur-md text-white rounded-full flex items-center justify-center transition-all opacity-0 group-hover:opacity-100"
+                                    >
+                                        <ChevronLeft className="w-6 h-6" />
+                                    </button>
+                                    <button
+                                        onClick={() => api?.scrollNext()}
+                                        className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/20 hover:bg-black/40 backdrop-blur-md text-white rounded-full flex items-center justify-center transition-all opacity-0 group-hover:opacity-100"
+                                    >
+                                        <ChevronRight className="w-6 h-6" />
+                                    </button>
+                                </div>
+                            </Carousel>
                         </div>
 
                         <div className="grid grid-cols-4 gap-4">
                             {images.map((img, idx) => (
                                 <button
                                     key={idx}
-                                    onClick={() => setActiveImageIndex(idx)}
-                                    className={`aspect-[4/3] rounded-xl overflow-hidden border-2 transition-all ${activeImageIndex === idx ? 'border-king-blue shadow-md' : 'border-transparent opacity-70 hover:opacity-100'
+                                    onClick={() => handleThumbnailClick(idx)}
+                                    className={`aspect-[4/3] rounded-xl overflow-hidden border-2 transition-all ${current === idx + 1 ? 'border-king-blue shadow-md' : 'border-transparent opacity-70 hover:opacity-100'
                                         }`}
                                 >
                                     <img src={img} alt="Thumbnail" className="w-full h-full object-cover" />

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ArrowRight, Shield, Clock, Award, Phone, Star, MapPin, Mail, Car as CarIcon, Coins, HandCoins } from 'lucide-react';
+import { ArrowRight, Shield, Clock, Award, Phone, Star, Car as CarIcon, Coins, HandCoins } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { SearchBar } from '@/components/SearchBar';
 import { CarCard } from '@/components/CarCard';
@@ -342,162 +342,179 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
       </section>
 
       {/* Locations Section */}
-      <section className="py-20 bg-white">
+      <section className="py-24 bg-white overflow-hidden">
         <div className="section-padding">
-          <AnimatedSection className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-king-cyan font-medium text-sm uppercase tracking-wider">
-              Our Locations
-            </span>
-            <h2 className="font-display font-bold text-3xl sm:text-4xl text-gray-900 mt-2 mb-4">
-              Visit Our Showrooms
+          <AnimatedSection className="max-w-2xl mb-16">
+            <h2 className="font-display font-bold text-4xl sm:text-5xl text-gray-900 mb-4">
+              Our branches
             </h2>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {/* Cape Town Region */}
-            <div className="space-y-8">
-              <AnimatedSection>
-                <div className="bg-white rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all">
-                  <div className="h-64 w-full bg-gray-100">
-                    <iframe
-                      title="King Cars Cape Town Map"
-                      width="100%"
-                      height="100%"
-                      frameBorder="0"
-                      scrolling="no"
-                      marginHeight={0}
-                      marginWidth={0}
-                      src="https://maps.google.com/maps?q=25%20Strand%20Rd%2C%20Belgravia%2C%20Cape%20Town%2C%207530&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                    />
-                  </div>
-                  <div className="p-8">
-                    <h3 className="font-display font-bold text-xl text-gray-900 mb-2">King Cars Cape Town</h3>
-                    <p className="text-gray-600 mb-4 flex items-start gap-2">
-                      <MapPin className="w-5 h-5 text-king-cyan flex-shrink-0 mt-0.5" />
-                      25 Strand Rd, Belgravia, Cape Town, 7530
-                    </p>
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-3 text-gray-700">
-                        <Phone className="w-5 h-5 text-king-blue" />
-                        <a href="tel:0219101343" className="hover:text-king-blue transition-colors">(021) 910 1343</a>
-                      </div>
-                      <div className="flex items-center gap-3 text-gray-700">
-                        <Mail className="w-5 h-5 text-king-blue" />
-                        <a href="mailto:andresadie@kingcars.co.za" className="hover:text-king-blue transition-colors">andresadie@kingcars.co.za</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </AnimatedSection>
-
-              <AnimatedSection>
-                <div className="bg-white rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all">
-                  <div className="h-64 w-full bg-gray-100">
-                    <iframe
-                      title="King Cars Vredekloof Map"
-                      width="100%"
-                      height="100%"
-                      frameBorder="0"
-                      scrolling="no"
-                      marginHeight={0}
-                      marginWidth={0}
-                      src="https://maps.google.com/maps?q=2%20Hillcrest%20Rd%2C%20Vredekloof%2C%20Cape%20Town%2C%207560&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                    />
-                  </div>
-                  <div className="p-8">
-                    <h3 className="font-display font-bold text-xl text-gray-900 mb-2">King Cars Vredekloof</h3>
-                    <p className="text-gray-600 mb-4 flex items-start gap-2">
-                      <MapPin className="w-5 h-5 text-king-cyan flex-shrink-0 mt-0.5" />
-                      2 Hillcrest Rd, Vredekloof, Cape Town, 7560
-                    </p>
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-3 text-gray-700">
-                        <Phone className="w-5 h-5 text-king-blue" />
-                        <a href="tel:0219101343" className="hover:text-king-blue transition-colors">021 910 1343</a>
-                      </div>
-                      <div className="flex items-center gap-3 text-gray-700">
-                        <Mail className="w-5 h-5 text-king-blue" />
-                        <a href="mailto:hansie@kingcars.co.za" className="hover:text-king-blue transition-colors">hansie@kingcars.co.za</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </AnimatedSection>
-            </div>
-
-            {/* Port Elizabeth Region */}
-            <div className="space-y-8">
-              <AnimatedSection>
-                <div className="bg-white rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all">
-                  <div className="h-64 w-full bg-gray-100">
-                    <iframe
-                      title="King Cars Cape Road Map"
-                      width="100%"
-                      height="100%"
-                      frameBorder="0"
-                      scrolling="no"
-                      marginHeight={0}
-                      marginWidth={0}
-                      src="https://maps.google.com/maps?q=343%20Cape%20Rd%2C%20Newton%20Park%2C%20Port%20Elizabeth&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                    />
-                  </div>
-                  <div className="p-8">
-                    <h3 className="font-display font-bold text-xl text-gray-900 mb-2">King Cars Cape Road</h3>
-                    <p className="text-gray-600 mb-4 flex items-start gap-2">
-                      <MapPin className="w-5 h-5 text-king-cyan flex-shrink-0 mt-0.5" />
-                      343 Cape Rd, Newton Park, Port Elizabeth
-                    </p>
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-3 text-gray-700">
-                        <Phone className="w-5 h-5 text-king-blue" />
-                        <a href="tel:0413653900" className="hover:text-king-blue transition-colors">(041) 365 3900</a>
-                      </div>
-                      <div className="flex items-center gap-3 text-gray-700">
-                        <Mail className="w-5 h-5 text-king-blue" />
-                        <a href="mailto:justin@kingcars.co.za" className="hover:text-king-blue transition-colors">justin@kingcars.co.za</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </AnimatedSection>
-
-              <AnimatedSection>
-                <div className="bg-white rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all">
-                  <div className="h-64 w-full bg-gray-100">
-                    <iframe
-                      title="King Cars Sydenham Map"
-                      width="100%"
-                      height="100%"
-                      frameBorder="0"
-                      scrolling="no"
-                      marginHeight={0}
-                      marginWidth={0}
-                      src="https://maps.google.com/maps?q=19%20-%2021%20Uitenhage%20Road%2C%20Sydenham%2C%20Port%20Elizabeth&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                    />
-                  </div>
-                  <div className="p-8">
-                    <h3 className="font-display font-bold text-xl text-gray-900 mb-2">King Cars Sydenham</h3>
-                    <p className="text-gray-600 mb-4 flex items-start gap-2">
-                      <MapPin className="w-5 h-5 text-king-cyan flex-shrink-0 mt-0.5" />
-                      19 - 21 Uitenhage Road, Sydenham, Port Elizabeth
-                    </p>
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-3 text-gray-700">
-                        <Phone className="w-5 h-5 text-king-blue" />
-                        <a href="tel:0414871241" className="hover:text-king-blue transition-colors">(041) 487 1241</a>
-                      </div>
-                      <div className="flex items-center gap-3 text-gray-700">
-                        <Mail className="w-5 h-5 text-king-blue" />
-                        <a href="mailto:derick@kingcars.co.za" className="hover:text-king-blue transition-colors">derick@kingcars.co.za</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </AnimatedSection>
-            </div>
-          </div>
+          <BranchSection />
         </div>
       </section>
+    </div>
+  );
+}
+
+function BranchSection() {
+  const branches = [
+    {
+      id: 'cape-town',
+      name: 'Cape Town',
+      fullName: 'King Cars Cape Town',
+      address: '25 Strand Rd, Belgravia, Cape Town, 7530',
+      phones: ['(021) 910 1343'],
+      email: 'andresadie@kingcars.co.za',
+      mapUrl: "https://maps.google.com/maps?q=25%20Strand%20Rd%2C%20Belgravia%2C%20Cape%20Town%2C%207530&t=&z=15&ie=UTF8&iwloc=&output=embed",
+      hours: {
+        weekdays: '08:00 to 18:00',
+        saturdays: '09:00 to 14:00',
+        sundays: '09:00 to 15:00',
+        holidays: '09:00 to 14:00'
+      }
+    },
+    {
+      id: 'vredekloof',
+      name: 'Vredekloof',
+      fullName: 'King Cars Vredekloof',
+      address: '2 Hillcrest Rd, Vredekloof, Cape Town, 7560',
+      phones: ['021 910 1343'],
+      email: 'hansie@kingcars.co.za',
+      mapUrl: "https://maps.google.com/maps?q=2%20Hillcrest%20Rd%2C%20Vredekloof%2C%20Cape%20Town%2C%207560&t=&z=15&ie=UTF8&iwloc=&output=embed",
+      hours: {
+        weekdays: '08:00 to 18:00',
+        saturdays: '09:00 to 14:00',
+        sundays: '09:00 to 15:00',
+        holidays: '09:00 to 14:00'
+      }
+    },
+    {
+      id: 'cape-road',
+      name: 'Cape Road',
+      fullName: 'King Cars Cape Road',
+      address: '343 Cape Rd, Newton Park, Port Elizabeth',
+      phones: ['(041) 365 3900'],
+      email: 'justin@kingcars.co.za',
+      mapUrl: "https://maps.google.com/maps?q=343%20Cape%20Rd%2C%20Newton%20Park%2C%20Port%20Elizabeth&t=&z=15&ie=UTF8&iwloc=&output=embed",
+      hours: {
+        weekdays: '08:00 to 18:00',
+        saturdays: '09:00 to 14:00',
+        sundays: '09:00 to 15:00',
+        holidays: '09:00 to 14:00'
+      }
+    },
+    {
+      id: 'sydenham',
+      name: 'Sydenham',
+      fullName: 'King Cars Sydenham',
+      address: '19 - 21 Uitenhage Road, Sydenham, Port Elizabeth',
+      phones: ['(041) 487 1241'],
+      email: 'derick@kingcars.co.za',
+      mapUrl: "https://maps.google.com/maps?q=19%20-%2021%20Uitenhage%20Road%2C%20Sydenham%2C%20Port%20Elizabeth&t=&z=15&ie=UTF8&iwloc=&output=embed",
+      hours: {
+        weekdays: '08:00 to 18:00',
+        saturdays: '09:00 to 14:00',
+        sundays: '09:00 to 15:00',
+        holidays: '09:00 to 14:00'
+      }
+    }
+  ];
+
+  const [activeBranch, setActiveBranch] = useState(branches[0]);
+
+  return (
+    <div className="space-y-8">
+      {/* Branch Tabs */}
+      <div className="flex flex-wrap gap-3 overflow-x-auto pb-4 scrollbar-hide">
+        {branches.map((branch) => (
+          <button
+            key={branch.id}
+            onClick={() => setActiveBranch(branch)}
+            className={`px-6 py-2.5 rounded-full border-2 font-semibold transition-all duration-300 whitespace-nowrap ${activeBranch.id === branch.id
+              ? 'bg-king-blue border-king-blue text-white shadow-lg shadow-king-blue/20 scale-105'
+              : 'border-king-blue text-king-blue hover:bg-king-blue/5'
+              }`}
+          >
+            {branch.name}
+          </button>
+        ))}
+      </div>
+
+      {/* Details Card */}
+      <div className="bg-white rounded-[2rem] border border-gray-100 shadow-2xl overflow-hidden transition-all duration-500 animate-fade-in">
+        <div className="flex flex-col lg:flex-row">
+          {/* Info Side */}
+          <div className="lg:w-2/5 p-10 lg:p-14 space-y-10">
+            <div>
+              <h3 className="font-display font-bold text-3xl text-gray-900 mb-8 lowercase first-letter:uppercase">
+                {activeBranch.fullName}
+              </h3>
+              <div className="flex flex-col gap-4">
+                <a
+                  href={`mailto:${activeBranch.email}`}
+                  className="w-full sm:w-64 py-4 px-8 bg-king-blue text-white font-bold rounded-xl text-center hover:bg-king-blue/90 transition-all hover:-translate-y-1 shadow-md"
+                >
+                  Email us
+                </a>
+                <a
+                  href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(activeBranch.address)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-64 py-4 px-8 bg-king-blue text-white font-bold rounded-xl text-center hover:bg-king-blue/90 transition-all hover:-translate-y-1 shadow-md"
+                >
+                  Get directions
+                </a>
+              </div>
+            </div>
+
+            <div className="space-y-8">
+              <div>
+                <h4 className="font-bold text-gray-900 mb-2">Physical address:</h4>
+                <p className="text-gray-600 leading-relaxed max-w-xs">
+                  {activeBranch.address}
+                </p>
+              </div>
+
+              <div>
+                <h4 className="font-bold text-gray-900 mb-2">Contact numbers:</h4>
+                {activeBranch.phones.map((phone, idx) => (
+                  <p key={idx} className="text-gray-600">{phone}</p>
+                ))}
+              </div>
+
+              <div>
+                <h4 className="font-bold text-gray-900 mb-2">Trading hours:</h4>
+                <div className="grid grid-cols-[1fr_auto] gap-x-4 gap-y-1 text-gray-600">
+                  <span>Monday to Friday:</span>
+                  <span className="font-medium">{activeBranch.hours.weekdays}</span>
+                  <span>Saturdays:</span>
+                  <span className="font-medium">{activeBranch.hours.saturdays}</span>
+                  <span>Sundays:</span>
+                  <span className="font-medium">{activeBranch.hours.sundays}</span>
+                  <span>Public holidays:</span>
+                  <span className="font-medium">{activeBranch.hours.holidays}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Map Side */}
+          <div className="lg:w-3/5 min-h-[400px] lg:min-h-[600px] relative bg-gray-50 border-l border-gray-100">
+            <iframe
+              title={`${activeBranch.fullName} Map`}
+              width="100%"
+              height="100%"
+              style={{ border: 0, minHeight: '100%' }}
+              src={activeBranch.mapUrl}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="absolute inset-0 grayscale-[0.2] contrast-[1.1]"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

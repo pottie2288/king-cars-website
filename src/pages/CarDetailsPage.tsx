@@ -99,212 +99,203 @@ export function CarDetailsPage({ isFavourite, onToggleFavourite }: CarDetailsPag
             <div className="section-padding py-8">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
 
-                    {/* Main Content (Images & Details) */}
-                    <div className="lg:col-span-8 space-y-8">
-                        {/* Image Gallery */}
-                        <div className="space-y-4">
-                            <div className="aspect-[16/10] bg-gray-100 rounded-2xl overflow-hidden relative shadow-lg group">
-                                <img
-                                    src={images[activeImageIndex]}
-                                    alt={`${car.make} ${car.model}`}
-                                    className="w-full h-full object-cover"
-                                />
+                    {/* Image Gallery - Order 1 */}
+                    <div className="lg:col-span-8 order-1 space-y-4">
+                        <div className="aspect-[16/10] bg-gray-100 rounded-2xl overflow-hidden relative shadow-lg group">
+                            <img
+                                src={images[activeImageIndex]}
+                                alt={`${car.make} ${car.model}`}
+                                className="w-full h-full object-cover"
+                            />
+                            <div className="absolute bottom-4 right-4 bg-black/70 backdrop-blur-md text-white text-sm px-3 py-1.5 rounded-full">
+                                {activeImageIndex + 1} / {images.length}
+                            </div>
+                        </div>
 
-                                {/* Image Navigation Overlay */}
-                                <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-between px-4 pointer-events-none">
-                                    {/* Arrows could go here */}
+                        <div className="grid grid-cols-4 gap-4">
+                            {images.map((img, idx) => (
+                                <button
+                                    key={idx}
+                                    onClick={() => setActiveImageIndex(idx)}
+                                    className={`aspect-[4/3] rounded-xl overflow-hidden border-2 transition-all ${activeImageIndex === idx ? 'border-king-blue shadow-md' : 'border-transparent opacity-70 hover:opacity-100'
+                                        }`}
+                                >
+                                    <img src={img} alt="Thumbnail" className="w-full h-full object-cover" />
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Sidebar Section (Price & Actions) - Order 2 on Mobile, Sidebar on Desktop */}
+                    <div className="lg:col-span-4 lg:col-start-9 lg:row-start-1 order-2 lg:order-none self-start lg:sticky lg:top-24">
+                        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+                            <div className="flex items-start justify-between mb-4">
+                                <div>
+                                    <h1 className="font-display font-bold text-2xl md:text-3xl text-gray-900 mb-2">
+                                        {car.make} {car.model}
+                                    </h1>
+                                    <p className="text-gray-500 font-medium">
+                                        {car.year} • {formatMileage(car.mileage)} km
+                                    </p>
                                 </div>
+                                <button
+                                    onClick={() => onToggleFavourite(car.id)}
+                                    className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${isFavourite(car.id)
+                                        ? 'bg-red-50 text-red-500'
+                                        : 'bg-gray-50 text-gray-400 hover:bg-gray-100'
+                                        }`}
+                                >
+                                    <Heart className={`w-6 h-6 ${isFavourite(car.id) ? 'fill-current' : ''}`} />
+                                </button>
+                            </div>
 
-                                <div className="absolute bottom-4 right-4 bg-black/70 backdrop-blur-md text-white text-sm px-3 py-1.5 rounded-full">
-                                    {activeImageIndex + 1} / {images.length}
+                            <div className="mb-8">
+                                <span className="text-3xl font-bold text-king-blue">
+                                    {formatPrice(car.price)}
+                                </span>
+                                <span className="text-sm text-gray-400 block mt-1">
+                                    Excludes on-the-road fees
+                                </span>
+                            </div>
+
+                            {/* Key Specs */}
+                            <div className="grid grid-cols-2 gap-4 mb-8">
+                                <div className="p-3 bg-gray-50 rounded-xl">
+                                    <div className="flex items-center gap-2 text-gray-400 text-xs uppercase tracking-wider mb-1">
+                                        <Settings className="w-3 h-3" />
+                                        Transmission
+                                    </div>
+                                    <p className="font-semibold text-gray-900">{car.transmission}</p>
+                                </div>
+                                <div className="p-3 bg-gray-50 rounded-xl">
+                                    <div className="flex items-center gap-2 text-gray-400 text-xs uppercase tracking-wider mb-1">
+                                        <Fuel className="w-3 h-3" />
+                                        Fuel Type
+                                    </div>
+                                    <p className="font-semibold text-gray-900">{car.fuelType}</p>
+                                </div>
+                                <div className="p-3 bg-gray-50 rounded-xl">
+                                    <div className="flex items-center gap-2 text-gray-400 text-xs uppercase tracking-wider mb-1">
+                                        <MapPin className="w-3 h-3" />
+                                        Location
+                                    </div>
+                                    <p className="font-semibold text-gray-900">{car.location}</p>
+                                </div>
+                                <div className="p-3 bg-gray-50 rounded-xl">
+                                    <div className="flex items-center gap-2 text-gray-400 text-xs uppercase tracking-wider mb-1">
+                                        <Calendar className="w-3 h-3" />
+                                        Year
+                                    </div>
+                                    <p className="font-semibold text-gray-900">{car.year}</p>
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-4 gap-4">
-                                {images.map((img, idx) => (
-                                    <button
-                                        key={idx}
-                                        onClick={() => setActiveImageIndex(idx)}
-                                        className={`aspect-[4/3] rounded-xl overflow-hidden border-2 transition-all ${activeImageIndex === idx ? 'border-king-blue shadow-md' : 'border-transparent opacity-70 hover:opacity-100'
-                                            }`}
+                            {/* Actions */}
+                            <div className="space-y-3">
+                                <button
+                                    onClick={() => setShowEnquiryForm(!showEnquiryForm)}
+                                    className="w-full btn-primary py-4 text-lg shadow-lg flex items-center justify-center gap-2"
+                                >
+                                    <Mail className="w-5 h-5" />
+                                    Enquire Now
+                                </button>
+                                <div className="grid grid-cols-2 gap-3">
+                                    <a
+                                        href="tel:0215551234"
+                                        className="flex items-center justify-center gap-2 py-3 px-4 bg-gray-100 text-gray-900 font-bold rounded-xl hover:bg-gray-200 transition-colors"
                                     >
-                                        <img src={img} alt="Thumbnail" className="w-full h-full object-cover" />
+                                        <Phone className="w-4 h-4" />
+                                        Call Us
+                                    </a>
+                                    <button
+                                        onClick={handleShare}
+                                        className="flex items-center justify-center gap-2 py-3 px-4 bg-gray-100 text-gray-900 font-bold rounded-xl hover:bg-gray-200 transition-colors"
+                                    >
+                                        <Share2 className="w-4 h-4" />
+                                        Share
                                     </button>
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* Car Description */}
-                        <div className="bg-white rounded-2xl shadow-sm p-8 border border-gray-100">
-                            <h2 className="font-display font-bold text-2xl mb-6">Vehicle Overview</h2>
-                            <div className="prose max-w-none text-gray-600">
-                                <p className="leading-relaxed">
-                                    This stunning {car.year} {car.make} {car.model} represents exceptional value.
-                                    Finished in a beautiful {car.color}, it comes equipped with all standard features
-                                    and has been meticulously maintained. The vehicle has passed our comprehensive
-                                    101-point quality check and is ready for immediately delivery.
-                                </p>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                                    {[
-                                        'Full Service History',
-                                        'Spare Keys',
-                                        'Accident Free',
-                                        'Roadworthy Certificate',
-                                        'Finance Available',
-                                        'Trade-ins Welcome'
-                                    ].map((feature) => (
-                                        <div key={feature} className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                                            <CheckCircle className="w-4 h-4 text-green-500" />
-                                            {feature}
-                                        </div>
-                                    ))}
                                 </div>
                             </div>
-                        </div>
 
-                        {/* Features */}
-                        <div className="bg-white rounded-2xl shadow-sm p-8 border border-gray-100">
-                            <h2 className="font-display font-bold text-2xl mb-6">Features & Specifications</h2>
-                            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-                                {(car.features || []).map((feature, idx) => (
-                                    <div key={idx} className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
-                                        <Info className="w-4 h-4 text-king-blue" />
-                                        <span className="text-sm font-medium text-gray-700">{feature}</span>
+                            {/* Enquiry Form */}
+                            {showEnquiryForm && (
+                                <div className="mt-8 pt-8 border-t border-gray-100 animate-slide-in">
+                                    <h3 className="font-bold text-gray-900 mb-4">Send Enquiry</h3>
+                                    <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+                                        <input
+                                            type="text"
+                                            placeholder="Your Name"
+                                            className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-king-blue focus:ring-1 focus:ring-king-blue outline-none"
+                                        />
+                                        <input
+                                            type="email"
+                                            placeholder="Email Address"
+                                            className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-king-blue focus:ring-1 focus:ring-king-blue outline-none"
+                                        />
+                                        <input
+                                            type="tel"
+                                            placeholder="Phone Number"
+                                            className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-king-blue focus:ring-1 focus:ring-king-blue outline-none"
+                                        />
+                                        <textarea
+                                            placeholder="Message"
+                                            rows={3}
+                                            className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-king-blue focus:ring-1 focus:ring-king-blue outline-none resize-none"
+                                            defaultValue={`I'm interested in the ${car.year} ${car.make} ${car.model}. Please contact me.`}
+                                        />
+                                        <button className="w-full btn-secondary py-3">
+                                            Send Message
+                                        </button>
+                                    </form>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Vehicle Overview - Order 3 */}
+                    <div className="lg:col-span-8 order-3 bg-white rounded-2xl shadow-sm p-8 border border-gray-100">
+                        <h2 className="font-display font-bold text-2xl mb-6">Vehicle Overview</h2>
+                        <div className="prose max-w-none text-gray-600">
+                            <p className="leading-relaxed">
+                                This stunning {car.year} {car.make} {car.model} represents exceptional value.
+                                Finished in a beautiful {car.color}, it comes equipped with all standard features
+                                and has been meticulously maintained. The vehicle has passed our comprehensive
+                                101-point quality check and is ready for immediately delivery.
+                            </p>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                                {[
+                                    'Full Service History',
+                                    'Spare Keys',
+                                    'Accident Free',
+                                    'Roadworthy Certificate',
+                                    'Finance Available',
+                                    'Trade-ins Welcome'
+                                ].map((feature) => (
+                                    <div key={feature} className="flex items-center gap-2 text-sm font-medium text-gray-700">
+                                        <CheckCircle className="w-4 h-4 text-green-500" />
+                                        {feature}
                                     </div>
                                 ))}
                             </div>
                         </div>
                     </div>
 
-                    {/* Sidebar (Price & Enquiry) */}
-                    <div className="lg:col-span-4">
-                        <div className="sticky top-24 space-y-6">
-                            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
-                                <div className="flex items-start justify-between mb-4">
-                                    <div>
-                                        <h1 className="font-display font-bold text-2xl md:text-3xl text-gray-900 mb-2">
-                                            {car.make} {car.model}
-                                        </h1>
-                                        <p className="text-gray-500 font-medium">
-                                            {car.year} • {formatMileage(car.mileage)} km
-                                        </p>
-                                    </div>
-                                    <button
-                                        onClick={() => onToggleFavourite(car.id)}
-                                        className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${isFavourite(car.id)
-                                            ? 'bg-red-50 text-red-500'
-                                            : 'bg-gray-50 text-gray-400 hover:bg-gray-100'
-                                            }`}
-                                    >
-                                        <Heart className={`w-6 h-6 ${isFavourite(car.id) ? 'fill-current' : ''}`} />
-                                    </button>
+                    {/* Features & Specifications - Order 4 */}
+                    <div className="lg:col-span-8 order-4 bg-white rounded-2xl shadow-sm p-8 border border-gray-100">
+                        <h2 className="font-display font-bold text-2xl mb-6">Features & Specifications</h2>
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+                            {(car.features || []).map((feature, idx) => (
+                                <div key={idx} className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+                                    <Info className="w-4 h-4 text-king-blue" />
+                                    <span className="text-sm font-medium text-gray-700">{feature}</span>
                                 </div>
-
-                                <div className="mb-8">
-                                    <span className="text-3xl font-bold text-king-blue">
-                                        {formatPrice(car.price)}
-                                    </span>
-                                    <span className="text-sm text-gray-400 block mt-1">
-                                        Excludes on-the-road fees
-                                    </span>
-                                </div>
-
-                                {/* Key Specs */}
-                                <div className="grid grid-cols-2 gap-4 mb-8">
-                                    <div className="p-3 bg-gray-50 rounded-xl">
-                                        <div className="flex items-center gap-2 text-gray-400 text-xs uppercase tracking-wider mb-1">
-                                            <Settings className="w-3 h-3" />
-                                            Transmission
-                                        </div>
-                                        <p className="font-semibold text-gray-900">{car.transmission}</p>
-                                    </div>
-                                    <div className="p-3 bg-gray-50 rounded-xl">
-                                        <div className="flex items-center gap-2 text-gray-400 text-xs uppercase tracking-wider mb-1">
-                                            <Fuel className="w-3 h-3" />
-                                            Fuel Type
-                                        </div>
-                                        <p className="font-semibold text-gray-900">{car.fuelType}</p>
-                                    </div>
-                                    <div className="p-3 bg-gray-50 rounded-xl">
-                                        <div className="flex items-center gap-2 text-gray-400 text-xs uppercase tracking-wider mb-1">
-                                            <MapPin className="w-3 h-3" />
-                                            Location
-                                        </div>
-                                        <p className="font-semibold text-gray-900">{car.location}</p>
-                                    </div>
-                                    <div className="p-3 bg-gray-50 rounded-xl">
-                                        <div className="flex items-center gap-2 text-gray-400 text-xs uppercase tracking-wider mb-1">
-                                            <Calendar className="w-3 h-3" />
-                                            Year
-                                        </div>
-                                        <p className="font-semibold text-gray-900">{car.year}</p>
-                                    </div>
-                                </div>
-
-                                {/* Actions */}
-                                <div className="space-y-3">
-                                    <button
-                                        onClick={() => setShowEnquiryForm(!showEnquiryForm)}
-                                        className="w-full btn-primary py-4 text-lg shadow-lg flex items-center justify-center gap-2"
-                                    >
-                                        <Mail className="w-5 h-5" />
-                                        Enquire Now
-                                    </button>
-                                    <div className="grid grid-cols-2 gap-3">
-                                        <a
-                                            href="tel:0215551234"
-                                            className="flex items-center justify-center gap-2 py-3 px-4 bg-gray-100 text-gray-900 font-bold rounded-xl hover:bg-gray-200 transition-colors"
-                                        >
-                                            <Phone className="w-4 h-4" />
-                                            Call Us
-                                        </a>
-                                        <button
-                                            onClick={handleShare}
-                                            className="flex items-center justify-center gap-2 py-3 px-4 bg-gray-100 text-gray-900 font-bold rounded-xl hover:bg-gray-200 transition-colors"
-                                        >
-                                            <Share2 className="w-4 h-4" />
-                                            Share
-                                        </button>
-                                    </div>
-                                </div>
-
-                                {/* Enquiry Form */}
-                                {showEnquiryForm && (
-                                    <div className="mt-8 pt-8 border-t border-gray-100 animate-slide-in">
-                                        <h3 className="font-bold text-gray-900 mb-4">Send Enquiry</h3>
-                                        <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-                                            <input
-                                                type="text"
-                                                placeholder="Your Name"
-                                                className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-king-blue focus:ring-1 focus:ring-king-blue outline-none"
-                                            />
-                                            <input
-                                                type="email"
-                                                placeholder="Email Address"
-                                                className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-king-blue focus:ring-1 focus:ring-king-blue outline-none"
-                                            />
-                                            <input
-                                                type="tel"
-                                                placeholder="Phone Number"
-                                                className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-king-blue focus:ring-1 focus:ring-king-blue outline-none"
-                                            />
-                                            <textarea
-                                                placeholder="Message"
-                                                rows={3}
-                                                className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-king-blue focus:ring-1 focus:ring-king-blue outline-none resize-none"
-                                                defaultValue={`I'm interested in the ${car.year} ${car.make} ${car.model}. Please contact me.`}
-                                            />
-                                            <button className="w-full btn-secondary py-3">
-                                                Send Message
-                                            </button>
-                                        </form>
-                                    </div>
-                                )}
-                            </div>
-
-                            {/* Finance Calculator Section - Moved to Sidebar */}
-                            <FinanceCalculator vehiclePrice={car.price} />
+                            ))}
                         </div>
+                    </div>
+
+                    {/* Finance Calculator Section - Order 5 on Mobile, Below Sidebar on Desktop */}
+                    <div className="lg:col-span-4 lg:col-start-9 order-5 lg:order-none">
+                        <FinanceCalculator vehiclePrice={car.price} />
                     </div>
                 </div>
             </div>

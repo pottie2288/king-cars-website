@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { StickyContactBar } from '@/components/StickyContactBar';
@@ -72,6 +73,9 @@ function App() {
 
       {/* Add padding to bottom on mobile to account for sticky bar */}
       <div className="h-20 lg:hidden" />
+
+      {/* Vercel Speed Insights */}
+      <SpeedInsights />
     </div>
   );
 }

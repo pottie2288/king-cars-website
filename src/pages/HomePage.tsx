@@ -50,7 +50,7 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
   const stats = [
     { value: '30+', label: 'Years Experience' },
     { value: '50,000', label: 'Cars Sold' },
-    { value: '4.6', label: 'Star Google Reviews' },
+    { value: '4.6', label: 'Google Reviews' },
     { value: '6', label: 'Locations' },
   ];
 
@@ -172,8 +172,11 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 animate-fade-in animate-delay-400">
               {stats.map((stat, index) => (
                 <div key={index} className="text-center">
-                  <p className="font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-gray-900 mb-2">
+                  <p className="font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-gray-900 mb-2 flex items-center justify-center gap-2">
                     {stat.value}
+                    {stat.value === '4.6' && (
+                      <Star className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 fill-yellow-400 text-yellow-400 inline-block" />
+                    )}
                   </p>
                   <p className="text-gray-600 text-lg sm:text-xl">{stat.label}</p>
                 </div>

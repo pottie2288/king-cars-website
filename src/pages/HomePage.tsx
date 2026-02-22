@@ -49,9 +49,9 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
 
   const stats = [
     { value: '30+', label: 'Years Experience' },
-    { value: '5,000+', label: 'Cars Sold' },
-    { value: '98%', label: 'Customer Satisfaction' },
-    { value: '5', label: 'Locations' },
+    { value: '50,000', label: 'Cars Sold' },
+    { value: '4.6', label: 'Star Google Reviews' },
+    { value: '6', label: 'Locations' },
   ];
 
   const benefits = [

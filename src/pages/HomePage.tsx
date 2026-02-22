@@ -49,7 +49,7 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
 
   const stats = [
     { value: '30+', label: 'Years Experience' },
-    { value: '50,000', label: 'Cars Sold' },
+    { value: '50,000+', label: 'Cars Sold' },
     { value: '4.6', label: 'Google Reviews' },
     { value: '6', label: 'Locations' },
   ];

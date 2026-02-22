@@ -1,4 +1,4 @@
-import { Award, Users, Target, Heart } from 'lucide-react';
+import { Award, Users, Target, Heart, Shield } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { SEO } from '@/components/SEO';
 
@@ -222,6 +222,55 @@ export function AboutPage() {
               </div>
             </div>
           </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Trust & Partnerships Section */}
+      <section className="section-padding pb-24 border-t border-gray-100 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <AnimatedSection className="text-center mb-16">
+            <span className="text-king-cyan font-medium text-sm uppercase tracking-wider">
+              Trust & Partnerships
+            </span>
+            <h2 className="font-display font-bold text-3xl sm:text-4xl text-gray-900 mt-2">
+              Our Professional Affiliations
+            </h2>
+          </AnimatedSection>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <AnimatedSection>
+              <div className="bg-gray-50 rounded-2xl p-8 border border-gray-100 text-center hover:shadow-card transition-all duration-300 h-full flex flex-col items-center justify-center">
+                <div className="w-16 h-16 bg-king-blue/5 rounded-full flex items-center justify-center mb-4">
+                  <Shield className="w-8 h-8 text-king-blue" />
+                </div>
+                <h3 className="font-display font-bold text-xl text-gray-900 mb-2">Authorised Service Provider</h3>
+                <p className="text-king-blue font-semibold mb-2">FSP Licence No. 10220</p>
+                <p className="text-gray-500 text-sm">Compliant with financial regulations to provide expert advice.</p>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <div className="bg-gray-50 rounded-2xl p-8 border border-gray-100 text-center hover:shadow-card transition-all duration-300 h-full flex flex-col items-center justify-center">
+                <div className="flex items-center justify-center mb-4">
+                  <div className="w-20 h-20 bg-king-blue rounded-2xl flex items-center justify-center rotate-3 shadow-lg">
+                    <span className="text-white font-display font-black text-2xl">BC</span>
+                  </div>
+                </div>
+                <h3 className="font-display font-bold text-xl text-gray-900 mb-2">Blue Chip Dealer Group</h3>
+                <p className="text-gray-500 text-sm">Exclusive association of elite dealerships focused on integrity.</p>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <div className="bg-gray-50 rounded-2xl p-8 border border-gray-100 text-center hover:shadow-card transition-all duration-300 h-full flex flex-col items-center justify-center">
+                <div className="w-16 h-16 bg-king-blue/5 rounded-full flex items-center justify-center mb-4">
+                  <Award className="w-8 h-8 text-king-blue" />
+                </div>
+                <h3 className="font-display font-bold text-xl text-gray-900 mb-2">IDA Member</h3>
+                <p className="text-gray-500 text-sm">Proud member of the Independent Dealers Association of South Africa.</p>
+              </div>
+            </AnimatedSection>
+          </div>
         </div>
       </section>
 

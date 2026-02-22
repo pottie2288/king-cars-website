@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
-import { ArrowRight, Shield, Clock, Award, Phone, Star, Car as CarIcon, Coins, HandCoins } from 'lucide-react';
+import { useEffect, useState, useCallback } from 'react';
+import { ArrowRight, Shield, Clock, Award, Phone, Star, Car as CarIcon, Coins, HandCoins, ChevronLeft, ChevronRight } from 'lucide-react';
+import useEmblaCarousel from 'embla-carousel-react';
 import { useNavigate } from 'react-router-dom';
 import { SearchBar } from '@/components/SearchBar';
 import { CarCard } from '@/components/CarCard';
@@ -73,24 +74,56 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
 
   const testimonials = [
     {
-      name: 'John Peterson',
-      location: 'Cape Town',
+      name: 'Andre',
+      location: 'Bellville',
       rating: 5,
-      text: 'Excellent service from start to finish. Found my dream car at a great price!',
+      text: 'Andre gave me excellent service right from the start. I highly recommend him and King Cars.',
+      date: '2 weeks ago'
     },
     {
-      name: 'Sarah Williams',
-      location: 'Port Elizabeth',
+      name: 'Tamaryne',
+      location: 'Bellville',
       rating: 5,
-      text: 'Professional team, hassle-free process. Highly recommend King Cars!',
+      text: 'Excellent Service. Thank you King Cars Bellville for the excellent service received.',
+      date: '1 month ago'
     },
     {
-      name: 'Michael Brown',
+      name: 'Ollie',
       location: 'Cape Town',
       rating: 5,
-      text: 'Sold my car within a week. Fair price and excellent customer service.',
+      text: "GREAT WORK & SERVICE. Just a word thanks to you and Nigel for the great work and the service you gave me and Barbara at your dealership last Friday.",
+      date: '3 weeks ago'
     },
+    {
+      name: 'Teresa Booysen',
+      location: 'Bellville',
+      rating: 5,
+      text: 'Customer service is nie meer soos dit vroeer jare was nie maar Justin het my gewys dat daar nog mense is wat belangstel in hulle kliente. Dankie weereens.',
+      date: '2 months ago'
+    },
+    {
+      name: 'Michael',
+      location: 'Cape Town',
+      rating: 5,
+      text: 'Thank you for keeping on trying. The effort you put into finding the right car for my budget was exceptional.',
+      date: '4 days ago'
+    }
   ];
+
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: 'start',
+    loop: true,
+    skipSnaps: false,
+    dragFree: true
+  });
+
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
+
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
 
   return (
     <div className="min-h-screen">
@@ -311,32 +344,72 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
             </h2>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {testimonials.map((testimonial, index) => (
-              <AnimatedSection key={index}>
-                <div className="bg-white rounded-2xl p-8 shadow-card h-full">
-                  <div className="flex gap-1 mb-4">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                    ))}
-                  </div>
-                  <p className="text-gray-700 mb-6 leading-relaxed">
-                    "{testimonial.text}"
-                  </p>
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-king-blue/10 rounded-full flex items-center justify-center">
-                      <span className="font-display font-bold text-king-blue">
-                        {testimonial.name.charAt(0)}
-                      </span>
+          <div className="relative group">
+            <div className="overflow-hidden cursor-grab active:cursor-grabbing" ref={emblaRef}>
+              <div className="flex">
+                {testimonials.map((testimonial, index) => (
+                  <div key={index} className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] min-w-0 pl-6">
+                    <div className="bg-white rounded-2xl p-8 shadow-card h-full border border-gray-100 flex flex-col">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex gap-1">
+                          {[...Array(testimonial.rating)].map((_, i) => (
+                            <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                          ))}
+                        </div>
+                        <div className="flex items-center gap-1.5 grayscale opacity-60">
+                          <img src="https://www.google.com/favicon.ico" alt="Google" className="w-4 h-4" />
+                          <span className="text-[10px] uppercase tracking-tighter font-bold">Review</span>
+                        </div>
+                      </div>
+                      <p className="text-gray-700 mb-6 leading-relaxed flex-grow italic">
+                        "{testimonial.text}"
+                      </p>
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-12 bg-king-blue/10 rounded-full flex items-center justify-center flex-shrink-0">
+                          <span className="font-display font-bold text-king-blue">
+                            {testimonial.name.charAt(0)}
+                          </span>
+                        </div>
+                        <div>
+                          <p className="font-bold text-gray-900 leading-none mb-1">{testimonial.name}</p>
+                          <div className="flex items-center gap-2 text-xs text-gray-400">
+                            <span>{testimonial.location}</span>
+                            <span className="w-1 h-1 bg-gray-300 rounded-full" />
+                            <span>{testimonial.date}</span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <p className="font-medium text-gray-900">{testimonial.name}</p>
-                      <p className="text-sm text-gray-500">{testimonial.location}</p>
-                    </div>
                   </div>
-                </div>
-              </AnimatedSection>
-            ))}
+                ))}
+              </div>
+            </div>
+
+            {/* Carousel Controls */}
+            <button
+              onClick={scrollPrev}
+              className="absolute -left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full shadow-lg border border-gray-100 flex items-center justify-center text-king-blue hover:bg-king-blue hover:text-white transition-all z-10 opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+            <button
+              onClick={scrollNext}
+              className="absolute -right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full shadow-lg border border-gray-100 flex items-center justify-center text-king-blue hover:bg-king-blue hover:text-white transition-all z-10 opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+          </div>
+
+          <div className="mt-12 text-center">
+            <a
+              href="https://www.google.com/search?q=King+Cars+Bellville+reviews"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-white border border-gray-200 rounded-full text-gray-600 font-medium hover:bg-gray-50 transition-colors shadow-sm"
+            >
+              <img src="https://www.google.com/favicon.ico" alt="Google" className="w-4 h-4" />
+              See more Google Reviews
+            </a>
           </div>
         </div>
       </section>

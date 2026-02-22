@@ -93,8 +93,8 @@ export function FinancePage() {
                 <span className="block text-gray-900 font-light">MADE SIMPLE</span>
               </h1>
 
-              <div className="flex flex-wrap gap-8 mt-12">
-                <div className="flex flex-col items-center text-center w-28">
+              <div className="flex flex-row justify-center lg:justify-start gap-4 sm:gap-8 mt-8 lg:mt-12">
+                <div className="flex flex-col items-center text-center w-24 sm:w-28">
                   <div className="w-16 h-16 bg-white rounded-full shadow-lg flex items-center justify-center mb-4 text-king-blue">
                     <Clock className="w-8 h-8" />
                   </div>
@@ -103,7 +103,7 @@ export function FinancePage() {
                   </p>
                 </div>
 
-                <div className="flex flex-col items-center text-center w-28">
+                <div className="flex flex-col items-center text-center w-24 sm:w-28">
                   <div className="w-16 h-16 bg-white rounded-full shadow-lg flex items-center justify-center mb-4 text-king-blue">
                     <Wallet className="w-8 h-8" />
                   </div>
@@ -112,7 +112,7 @@ export function FinancePage() {
                   </p>
                 </div>
 
-                <div className="flex flex-col items-center text-center w-28">
+                <div className="flex flex-col items-center text-center w-24 sm:w-28">
                   <div className="w-16 h-16 bg-white rounded-full shadow-lg flex items-center justify-center mb-4 text-king-blue">
                     <TrendingDown className="w-8 h-8" />
                   </div>
@@ -123,7 +123,7 @@ export function FinancePage() {
               </div>
             </AnimatedSection>
 
-            <AnimatedSection className="relative lg:h-[500px] flex items-center justify-center">
+            <AnimatedSection className="relative lg:h-[500px] flex items-center justify-center -mt-8 lg:mt-0">
               <div className="relative z-10 rounded-3xl overflow-hidden shadow-2xl transform rotate-3 hover:rotate-0 transition-transform duration-500">
                 <img
                   src="/hero-showroom.png"

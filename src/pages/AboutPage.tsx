@@ -1,19 +1,7 @@
 import { Award, Users, Target, Heart, Shield } from 'lucide-react';
-import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { SEO } from '@/components/SEO';
 
-function AnimatedSection({ children, className = '' }: { children: React.ReactNode; className?: string }) {
-  const { ref, isVisible } = useScrollAnimation();
-  return (
-    <div
-      ref={ref}
-      className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-        } ${className}`}
-    >
-      {children}
-    </div>
-  );
-}
+import { AnimatedSection } from '@/components/AnimatedSection';
 
 export function AboutPage() {
   const values = [

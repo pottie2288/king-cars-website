@@ -85,11 +85,6 @@ export function ShowroomPage({ favourites, onToggleFavourite }: ShowroomPageProp
     return true;
   });
 
-  // Scroll to top on mount
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
     <div className="min-h-screen bg-gray-50 pt-20">
       <SEO

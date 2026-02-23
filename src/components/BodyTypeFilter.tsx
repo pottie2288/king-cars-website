@@ -50,7 +50,6 @@ export function BodyTypeFilter() {
             maxMileage: null,
             searchQuery: ''
         }));
-        window.scrollTo(0, 0); // Force scroll to top, especially for mobile
         navigate('/showroom');
     };
 

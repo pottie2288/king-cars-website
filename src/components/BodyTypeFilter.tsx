@@ -50,6 +50,7 @@ export function BodyTypeFilter() {
             maxMileage: null,
             searchQuery: ''
         }));
+        window.scrollTo(0, 0); // Force scroll to top, especially for mobile
         navigate('/showroom');
     };
 
@@ -79,7 +80,7 @@ export function BodyTypeFilter() {
                                 <div className="relative w-full aspect-[16/9] mb-4 overflow-hidden rounded-xl">
                                     <img
                                         src={type.image}
-                                        alt={type.name}
+                                        alt=""
                                         className="w-full h-full object-contain transform group-hover:scale-110 transition-transform duration-500"
                                     />
                                 </div>

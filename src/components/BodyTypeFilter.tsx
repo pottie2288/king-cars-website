@@ -4,32 +4,32 @@ import { AnimatedSection } from './AnimatedSection';
 const bodyTypes = [
     {
         name: 'SUV',
-        image: '/body-types/suv.png',
+        image: '/body-types/suv.png.png',
         category: 'SUV'
     },
     {
         name: 'HATCHBACK',
-        image: '/body-types/hatchback.png',
+        image: '/body-types/hatchback.png.png',
         category: 'Hatchback'
     },
     {
         name: 'DOUBLE CAB',
-        image: '/body-types/double-cab.png',
+        image: '/body-types/doublecab.png.png',
         category: 'Bakkie'
     },
     {
         name: 'SEDAN',
-        image: '/body-types/sedan.png',
+        image: '/body-types/sedan.png.png',
         category: 'Sedan'
     },
     {
         name: 'SINGLE CAB',
-        image: '/body-types/single-cab.png',
+        image: '/body-types/singlecab.png.png',
         category: 'Bakkie'
     },
     {
         name: 'PANEL VAN / MINI',
-        image: '/body-types/van.png',
+        image: '/body-types/minivan.png.png',
         category: 'Bakkie'
     }
 ];

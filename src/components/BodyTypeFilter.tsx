@@ -4,42 +4,32 @@ import { AnimatedSection } from './AnimatedSection';
 const bodyTypes = [
     {
         name: 'SUV',
-        image: '/cars/hyundai-tucson.jpg', // Realistic dark blue SUV
+        image: '/body-types/suv.png',
         category: 'SUV'
     },
     {
         name: 'HATCHBACK',
-        image: '/cars/vw-golf.jpg', // Realistic red hatchback
+        image: '/body-types/hatchback.png',
         category: 'Hatchback'
     },
     {
         name: 'DOUBLE CAB',
-        image: '/cars/toyota-hilux.jpg', // Realistic white bakkie (will look for color later, hilux is iconic)
+        image: '/body-types/double-cab.png',
         category: 'Bakkie'
     },
     {
         name: 'SEDAN',
-        image: '/cars/bmw-3series.jpg', // Realistic blue sedan
+        image: '/body-types/sedan.png',
         category: 'Sedan'
     },
     {
-        name: 'MPV',
-        image: '/cars/hyundai-tucson.jpg', // Placeholder for MPV
-        category: 'SUV'
-    },
-    {
-        name: 'LWB / EXTRA CAB',
-        image: '/cars/ford-ranger.jpg', // Realistic grey bakkie 
+        name: 'SINGLE CAB',
+        image: '/body-types/single-cab.png',
         category: 'Bakkie'
     },
     {
-        name: 'CROSSOVER',
-        image: '/cars/nissan-qashqai.jpg', // Realistic grey crossover
-        category: 'SUV'
-    },
-    {
         name: 'PANEL VAN / MINI',
-        image: '/cars/ford-ranger.jpg', // Placeholder for Van
+        image: '/body-types/van.png',
         category: 'Bakkie'
     }
 ];
@@ -64,18 +54,18 @@ export function BodyTypeFilter() {
     };
 
     return (
-        <section className="py-20 bg-gray-100">
+        <section className="py-20 bg-king-blue">
             <div className="section-padding max-w-7xl mx-auto">
                 <AnimatedSection className="text-center mb-16">
-                    <h2 className="font-display font-bold text-3xl sm:text-4xl text-gray-900 mb-4">
+                    <h2 className="font-display font-bold text-3xl sm:text-4xl text-white mb-4">
                         Choose by body type
                     </h2>
-                    <p className="text-gray-600 text-lg">
+                    <p className="text-blue-100 text-lg">
                         Click to filter our showroom by body type
                     </p>
                 </AnimatedSection>
 
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-8">
                     {bodyTypes.map((type, index) => (
                         <AnimatedSection
                             key={index}
@@ -93,7 +83,7 @@ export function BodyTypeFilter() {
                                         className="w-full h-full object-contain transform group-hover:scale-110 transition-transform duration-500"
                                     />
                                 </div>
-                                <span className="font-display font-bold text-sm sm:text-base text-gray-800 tracking-wider">
+                                <span className="font-display font-bold text-sm sm:text-base text-white tracking-wider">
                                     {type.name}
                                 </span>
                             </button>

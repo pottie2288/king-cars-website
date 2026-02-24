@@ -40,7 +40,7 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
   const stats = [
     { value: '30+', label: 'Years Experience' },
     { value: '50,000+', label: 'Cars Sold' },
-    { value: '4.6', label: 'Google Reviews' },
+    { value: '4.8', label: 'Google Reviews' },
     { value: '6', label: 'Locations' },
   ];
 
@@ -164,7 +164,7 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
                 <div key={index} className="text-center">
                   <p className="font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-gray-900 mb-2 flex items-center justify-center gap-2">
                     {stat.value}
-                    {stat.value === '4.6' && (
+                    {stat.value === '4.8' && (
                       <Star className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 fill-yellow-400 text-yellow-400 inline-block" />
                     )}
                   </p>

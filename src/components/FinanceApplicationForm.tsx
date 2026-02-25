@@ -99,7 +99,10 @@ export function FinanceApplicationForm() {
                     Thank you for applying. One of our finance experts will review your application and contact you within 24-48 hours.
                 </p>
                 <Button
-                    onClick={() => window.location.reload()}
+                    onClick={() => {
+                        setIsSubmitted(false);
+                        setStep(1);
+                    }}
                     className="bg-king-blue hover:bg-primary-light text-white px-8 py-6 rounded-xl text-lg"
                 >
                     Back to Finance

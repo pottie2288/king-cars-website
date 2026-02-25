@@ -10,7 +10,7 @@ interface SEOProps {
 
 export function SEO({
     title,
-    description = "Find your dream car at King Cars. We offer a wide range of quality used cars in Cape Town and Port Elizabeth. Finance available.",
+    description = "Find your dream car at King Cars. We offer a wide range of quality used cars in Western Cape and Eastern Cape. Finance available.",
     canonical,
     type = 'website',
     image = '/og-image.jpg' // We should ensure this image exists or use a logo

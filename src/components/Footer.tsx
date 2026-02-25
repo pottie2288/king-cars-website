@@ -22,7 +22,7 @@ export function Footer() {
             </div>
             <p className="text-gray-400 text-sm leading-relaxed mb-6">
               South Africa's trusted premium used car dealership. Quality vehicles,
-              transparent pricing, and exceptional service in Cape Town and Port Elizabeth.
+              transparent pricing, and exceptional service in Western Cape and Eastern Cape.
             </p>
             <div className="flex gap-3">
               <a
@@ -78,7 +78,7 @@ export function Footer() {
               <div>
                 <h5 className="text-white font-medium text-sm mb-2 flex items-center gap-2">
                   <MapPin className="w-4 h-4 text-king-cyan" />
-                  Cape Town
+                  Western Cape
                 </h5>
                 <ul className="space-y-2 text-sm text-gray-400 pl-6">
                   <li>
@@ -96,7 +96,7 @@ export function Footer() {
               <div>
                 <h5 className="text-white font-medium text-sm mb-2 flex items-center gap-2">
                   <MapPin className="w-4 h-4 text-king-cyan" />
-                  Port Elizabeth
+                  Eastern Cape
                 </h5>
                 <ul className="space-y-2 text-sm text-gray-400 pl-6">
                   <li>

@@ -229,16 +229,16 @@ export function SearchBar({ onSearch, locations = [], makes = [], getUniqueModel
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-4 border-t border-gray-100">
           <div className="hidden sm:flex gap-3">
             <button
-              onClick={() => setSelectedLocation('Cape Town')}
-              className={`filter-tag text-base px-6 py-3 ${selectedLocation === 'Cape Town' ? 'filter-tag-active' : ''}`}
+              onClick={() => setSelectedLocation('Western Cape')}
+              className={`filter-tag text-base px-6 py-3 ${selectedLocation === 'Western Cape' ? 'filter-tag-active' : ''}`}
             >
-              Cape Town
+              Western Cape
             </button>
             <button
-              onClick={() => setSelectedLocation('Port Elizabeth')}
-              className={`filter-tag text-base px-6 py-3 ${selectedLocation === 'Port Elizabeth' ? 'filter-tag-active' : ''}`}
+              onClick={() => setSelectedLocation('Eastern Cape')}
+              className={`filter-tag text-base px-6 py-3 ${selectedLocation === 'Eastern Cape' ? 'filter-tag-active' : ''}`}
             >
-              Port Elizabeth
+              Eastern Cape
             </button>
           </div>
 

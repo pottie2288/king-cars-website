@@ -34,7 +34,7 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
     navigate('/showroom');
   };
 
-  const locations = ['Cape Town', 'Port Elizabeth'];
+  const locations = ['Western Cape', 'Eastern Cape'];
   const makes = getUniqueMakes();
 
   const stats = [
@@ -119,7 +119,7 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
     <div className="min-h-screen">
       <SEO
         title="Home"
-        description="King Cars - Premium used cars in Cape Town and Port Elizabeth. Quality guaranteed with transparent pricing and exceptional service."
+        description="King Cars - Premium used cars in Western Cape and Eastern Cape. Quality guaranteed with transparent pricing and exceptional service."
       />
 
       {/* Hero Section - Blue Gradient Background */}
@@ -144,7 +144,7 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
               <span className="block text-king-blue">King Cars</span>
             </h1>
             <p className="text-gray-600 text-2xl sm:text-3xl max-w-4xl mx-auto mb-16 animate-fade-in animate-delay-200">
-              Premium used cars in Cape Town and Port Elizabeth.
+              Premium used cars in Western Cape and Eastern Cape.
               Quality guaranteed with transparent pricing and exceptional service.
             </p>
 

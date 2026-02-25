@@ -85,7 +85,7 @@ export function AboutPage() {
                 How It Started
               </h3>
               <p className="text-gray-600 leading-relaxed">
-                It all started in 1995 in Port Elizabeth, now known as Gqeberha. Jacques Du Plessis, youngest brother of the Springbok Rugby legendary Du Plessis brothers, Carel, Michael and Willie started King Cars as an independently owned business. Playing rugby at the highest provincial level for WP and the Eastern Province, Jacques hard-working ethics, integrity and passion for the motor industry led to King Cars being a trusted household name, still many years later.
+                It all started in 1995 in Port Elizabeth, now known as Gqeberha. Jacques Du Plessis, youngest brother of the Springbok Rugby legendary Du Plessis brothers, Carel, Michael and Willie started King Cars as an independently owned business. Playing rugby at the highest provincial level for WP and the Eastern Cape, Jacques hard-working ethics, integrity and passion for the motor industry led to King Cars being a trusted household name, still many years later.
               </p>
             </AnimatedSection>
             <AnimatedSection>

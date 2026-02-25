@@ -24,7 +24,7 @@ const carMakes = [
 
 const years = Array.from({ length: 25 }, (_, i) => (2024 - i).toString());
 
-const locations = ['Cape Town', 'Port Elizabeth', 'Other'];
+const locations = ['Western Cape', 'Eastern Cape', 'Other'];
 
 const conditions = ['Excellent', 'Good', 'Fair', 'Poor'];
 
@@ -102,7 +102,7 @@ export function SellYourCarPage() {
     <div className="min-h-screen bg-gray-50">
       <SEO
         title="Sell Your Car"
-        description="Get an instant, obligation-free valuation for your vehicle. We buy cars for cash in Cape Town and Port Elizabeth."
+        description="Get an instant, obligation-free valuation for your vehicle. We buy cars for cash in Western Cape and Eastern Cape."
       />
       {/* Hero Section with Valuation Card */}
       <div className="relative bg-gradient-to-b from-king-blue to-blue-900 pt-36 pb-32 lg:pt-48 lg:pb-48">

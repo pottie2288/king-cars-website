@@ -105,56 +105,25 @@ export function FinancePage() {
         </div>
       </div>
 
-      {/* Finance Options Section */}
-      <div className="section-padding py-20 bg-white">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+      {/* Call to Action Section */}
+      <div className="section-padding py-24 bg-king-blue relative overflow-hidden">
+        {/* Decorative background elements */}
+        <div className="absolute top-0 right-0 w-1/3 h-full bg-king-cyan/10 skew-x-12 translate-x-1/4" />
+        <div className="absolute bottom-0 left-0 w-1/4 h-1/2 bg-white/5 -skew-x-12 -translate-x-1/4" />
 
+        <div className="max-w-4xl mx-auto text-center relative z-10">
           <AnimatedSection>
-            <h2 className="font-display font-bold text-3xl sm:text-4xl text-gray-900 leading-tight mb-6">
-              We provide various vehicle financing options to meet your needs.
+            <h2 className="font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-white mb-10 leading-tight">
+              Put us to the test, <span className="text-king-cyan">apply online</span>
             </h2>
-            <p className="text-gray-600 text-lg leading-relaxed mb-8">
-              Whether you're purchasing your new ride directly from King Cars or a private owner,
-              or simply looking to refinance your current vehicle, our finance division is staffed
-              by top financing experts that will guide you through every step of the process.
-            </p>
+            <a
+              href="#application-form"
+              className="inline-flex items-center justify-center px-12 py-5 bg-king-cyan text-white font-bold text-xl rounded-2xl shadow-lg shadow-king-cyan/30 hover:bg-white hover:text-king-blue hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 group"
+            >
+              APPLY NOW
+              <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-2 transition-transform" />
+            </a>
           </AnimatedSection>
-
-          <div className="space-y-4">
-            <AnimatedSection>
-              <div className="group bg-gray-50 border border-gray-100 hover:border-king-blue/30 rounded-2xl p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer">
-                <h3 className="font-display font-semibold text-lg text-gray-900 mb-4">
-                  I am buying a vehicle from King Cars
-                </h3>
-                <a href="#application-form" className="inline-flex items-center text-king-blue font-medium group-hover:gap-2 transition-all">
-                  Apply now <ArrowRight className="w-4 h-4 ml-1" />
-                </a>
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection>
-              <div className="group bg-gray-50 border border-gray-100 hover:border-king-blue/30 rounded-2xl p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer">
-                <h3 className="font-display font-semibold text-lg text-gray-900 mb-4">
-                  I am buying/selling a vehicle privately
-                </h3>
-                <a href="#application-form" className="inline-flex items-center text-king-blue font-medium group-hover:gap-2 transition-all">
-                  Apply now <ArrowRight className="w-4 h-4 ml-1" />
-                </a>
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection>
-              <div className="group bg-gray-50 border border-gray-100 hover:border-king-blue/30 rounded-2xl p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer">
-                <h3 className="font-display font-semibold text-lg text-gray-900 mb-4">
-                  I need to refinance my current vehicle
-                </h3>
-                <a href="#application-form" className="inline-flex items-center text-king-blue font-medium group-hover:gap-2 transition-all">
-                  Apply now <ArrowRight className="w-4 h-4 ml-1" />
-                </a>
-              </div>
-            </AnimatedSection>
-          </div>
-
         </div>
       </div>
 

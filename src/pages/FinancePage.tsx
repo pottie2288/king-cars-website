@@ -1,35 +1,11 @@
 import { useState } from 'react';
-import { Calculator, Check, Clock, ChevronDown, Phone, Mail, Wallet, TrendingDown, ArrowRight } from 'lucide-react';
-
+import { Check, Clock, ChevronDown, Phone, Wallet, TrendingDown, ArrowRight, ShieldCheck, FileCheck, Ban, AlertCircle } from 'lucide-react';
 import { AnimatedSection } from '@/components/AnimatedSection';
+import { FinanceApplicationForm } from '@/components/FinanceApplicationForm';
 
 import { SEO } from '@/components/SEO';
 
 export function FinancePage() {
-  const [loanAmount, setLoanAmount] = useState(300000);
-  const [deposit, setDeposit] = useState(50000);
-  const [term, setTerm] = useState(60);
-  const [interestRate, setInterestRate] = useState(11.5);
-
-  // Calculate monthly payment
-  const principal = loanAmount - deposit;
-  const monthlyRate = interestRate / 100 / 12;
-  const numberOfPayments = term;
-  const monthlyPayment =
-    (principal * monthlyRate * Math.pow(1 + monthlyRate, numberOfPayments)) /
-    (Math.pow(1 + monthlyRate, numberOfPayments) - 1);
-
-  const totalPayment = monthlyPayment * numberOfPayments;
-  const totalInterest = totalPayment - principal;
-
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-ZA', {
-      style: 'currency',
-      currency: 'ZAR',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
 
 
 
@@ -150,7 +126,7 @@ export function FinancePage() {
                 <h3 className="font-display font-semibold text-lg text-gray-900 mb-4">
                   I am buying a vehicle from King Cars
                 </h3>
-                <a href="#contact" className="inline-flex items-center text-king-blue font-medium group-hover:gap-2 transition-all">
+                <a href="#application-form" className="inline-flex items-center text-king-blue font-medium group-hover:gap-2 transition-all">
                   Apply now <ArrowRight className="w-4 h-4 ml-1" />
                 </a>
               </div>
@@ -161,7 +137,7 @@ export function FinancePage() {
                 <h3 className="font-display font-semibold text-lg text-gray-900 mb-4">
                   I am buying/selling a vehicle privately
                 </h3>
-                <a href="#contact" className="inline-flex items-center text-king-blue font-medium group-hover:gap-2 transition-all">
+                <a href="#application-form" className="inline-flex items-center text-king-blue font-medium group-hover:gap-2 transition-all">
                   Apply now <ArrowRight className="w-4 h-4 ml-1" />
                 </a>
               </div>
@@ -172,7 +148,7 @@ export function FinancePage() {
                 <h3 className="font-display font-semibold text-lg text-gray-900 mb-4">
                   I need to refinance my current vehicle
                 </h3>
-                <a href="#contact" className="inline-flex items-center text-king-blue font-medium group-hover:gap-2 transition-all">
+                <a href="#application-form" className="inline-flex items-center text-king-blue font-medium group-hover:gap-2 transition-all">
                   Apply now <ArrowRight className="w-4 h-4 ml-1" />
                 </a>
               </div>
@@ -182,232 +158,79 @@ export function FinancePage() {
         </div>
       </div>
 
-      {/* Calculator Section - Reinserted */}
+      {/* Eligibility & Application Section */}
       <div className="section-padding py-20 bg-gray-50">
-        <div className="max-w-4xl mx-auto text-center mb-12">
-          <AnimatedSection>
-            <h2 className="font-display font-bold text-3xl sm:text-4xl text-gray-900 mb-4">
-              Calculate Your Repayments
-            </h2>
-            <p className="text-gray-600">
-              Use our calculator to estimate your monthly installments based on your budget.
-            </p>
-          </AnimatedSection>
-        </div>
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          {/* Calculator */}
-          <AnimatedSection>
-            <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-card">
-              <div className="flex items-center gap-3 mb-8">
-                <div className="w-12 h-12 bg-king-blue/10 rounded-xl flex items-center justify-center">
-                  <Calculator className="w-6 h-6 text-king-blue" />
-                </div>
-                <div>
-                  <h2 className="font-display font-semibold text-xl text-gray-900">
-                    Finance Calculator
-                  </h2>
-                  <p className="text-sm text-gray-500">Estimate your monthly payments</p>
-                </div>
-              </div>
+            {/* Sidebar: Requirements & Eligibility */}
+            <div className="lg:col-span-1 space-y-8">
+              <AnimatedSection>
+                <div className="bg-white rounded-3xl p-8 shadow-card border border-gray-100">
+                  <h3 className="font-display font-bold text-2xl text-gray-900 mb-6 flex items-center gap-2">
+                    <ShieldCheck className="w-6 h-6 text-king-blue" />
+                    Am I Eligible?
+                  </h3>
+                  <ul className="space-y-4">
+                    {[
+                      { icon: FileCheck, text: 'Earn R9,500 or more per month', color: 'text-green-600' },
+                      { icon: Ban, text: 'Not under debt review', color: 'text-amber-600' },
+                      { icon: Check, text: 'Valid SA Driver\'s License', color: 'text-blue-600' },
+                      { icon: Ban, text: 'No bad credit or blacklisting', color: 'text-red-500' },
+                      { icon: AlertCircle, text: 'No Rent-To-Own deals', color: 'text-gray-500' },
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-3">
+                        <item.icon className={`w-5 h-5 mt-0.5 shrink-0 ${item.color}`} />
+                        <span className="text-gray-700 font-medium">{item.text}</span>
+                      </li>
+                    ))}
+                  </ul>
 
-              <div className="space-y-6">
-                {/* Loan Amount */}
-                <div>
-                  <div className="flex justify-between mb-2">
-                    <label className="text-sm font-medium text-gray-700">Vehicle Price</label>
-                    <span className="text-sm font-semibold text-king-blue">
-                      {formatCurrency(loanAmount)}
-                    </span>
-                  </div>
-                  <input
-                    type="range"
-                    min="50000"
-                    max="2000000"
-                    step="10000"
-                    value={loanAmount}
-                    onChange={(e) => setLoanAmount(Number(e.target.value))}
-                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-king-blue"
-                  />
-                  <div className="flex justify-between text-xs text-gray-500 mt-1">
-                    <span>R50,000</span>
-                    <span>R2,000,000</span>
+                  <div className="mt-8 pt-8 border-t border-gray-100">
+                    <h4 className="font-semibold text-gray-900 mb-4">Supporting Documents</h4>
+                    <p className="text-sm text-gray-500 mb-4 italic">Please have these ready to upload or email:</p>
+                    <div className="space-y-3">
+                      {requirements.map((req, index) => (
+                        <div key={index} className="flex items-start gap-4">
+                          <div className="w-6 h-6 bg-king-cyan/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <Check className="w-4 h-4 text-king-cyan" />
+                          </div>
+                          <span className="text-sm text-gray-700">{req}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
+              </AnimatedSection>
 
-                {/* Deposit */}
-                <div>
-                  <div className="flex justify-between mb-2">
-                    <label className="text-sm font-medium text-gray-700">Deposit</label>
-                    <span className="text-sm font-semibold text-king-blue">
-                      {formatCurrency(deposit)}
-                    </span>
-                  </div>
-                  <input
-                    type="range"
-                    min="0"
-                    max={loanAmount * 0.5}
-                    step="5000"
-                    value={deposit}
-                    onChange={(e) => setDeposit(Number(e.target.value))}
-                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-king-blue"
-                  />
-                  <div className="flex justify-between text-xs text-gray-500 mt-1">
-                    <span>R0</span>
-                    <span>{formatCurrency(loanAmount * 0.5)}</span>
+              <AnimatedSection>
+                <div className="bg-king-dark rounded-3xl p-8 text-white">
+                  <h3 className="font-display font-bold text-2xl mb-4">Direct Assistance</h3>
+                  <p className="text-white/70 mb-6 text-sm">
+                    Prefer to speak with an expert? Our finance team is standing by to help you.
+                  </p>
+                  <div className="space-y-4">
+                    <a href="tel:+27215551234" className="flex items-center gap-3 p-4 bg-white/10 rounded-xl hover:bg-white/20 transition-all">
+                      <Phone className="w-5 h-5 text-king-cyan" />
+                      <div>
+                        <p className="text-xs text-white/50">Call Finance Dept</p>
+                        <p className="font-medium text-sm">+27 21 555 1234</p>
+                      </div>
+                    </a>
                   </div>
                 </div>
-
-                {/* Term */}
-                <div>
-                  <div className="flex justify-between mb-2">
-                    <label className="text-sm font-medium text-gray-700">Repayment Term</label>
-                    <span className="text-sm font-semibold text-king-blue">{term} months</span>
-                  </div>
-                  <input
-                    type="range"
-                    min="12"
-                    max="72"
-                    step="12"
-                    value={term}
-                    onChange={(e) => setTerm(Number(e.target.value))}
-                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-king-blue"
-                  />
-                  <div className="flex justify-between text-xs text-gray-500 mt-1">
-                    <span>12 months</span>
-                    <span>72 months</span>
-                  </div>
-                </div>
-
-                {/* Interest Rate */}
-                <div>
-                  <div className="flex justify-between mb-2">
-                    <label className="text-sm font-medium text-gray-700">Interest Rate</label>
-                    <span className="text-sm font-semibold text-king-blue">{interestRate}%</span>
-                  </div>
-                  <input
-                    type="range"
-                    min="7"
-                    max="20"
-                    step="0.5"
-                    value={interestRate}
-                    onChange={(e) => setInterestRate(Number(e.target.value))}
-                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-king-blue"
-                  />
-                  <div className="flex justify-between text-xs text-gray-500 mt-1">
-                    <span>7%</span>
-                    <span>20%</span>
-                  </div>
-                </div>
-              </div>
+              </AnimatedSection>
             </div>
-          </AnimatedSection>
 
-          {/* Results */}
-          <AnimatedSection>
-            <div className="bg-king-blue rounded-3xl p-6 sm:p-8 text-white h-full flex flex-col">
-              <h3 className="font-display font-semibold text-xl mb-8">
-                Estimated Monthly Payment
-              </h3>
-
-              <div className="text-center mb-8">
-                <p className="text-5xl sm:text-6xl font-display font-bold text-king-cyan">
-                  {formatCurrency(monthlyPayment)}
-                </p>
-                <p className="text-white/70 mt-2">per month</p>
-              </div>
-
-              <div className="space-y-4 flex-1">
-                <div className="flex justify-between py-3 border-b border-white/20">
-                  <span className="text-white/70">Vehicle Price</span>
-                  <span className="font-medium">{formatCurrency(loanAmount)}</span>
-                </div>
-                <div className="flex justify-between py-3 border-b border-white/20">
-                  <span className="text-white/70">Less: Deposit</span>
-                  <span className="font-medium">{formatCurrency(deposit)}</span>
-                </div>
-                <div className="flex justify-between py-3 border-b border-white/20">
-                  <span className="text-white/70">Loan Amount</span>
-                  <span className="font-medium">{formatCurrency(principal)}</span>
-                </div>
-                <div className="flex justify-between py-3 border-b border-white/20">
-                  <span className="text-white/70">Total Interest</span>
-                  <span className="font-medium">{formatCurrency(totalInterest)}</span>
-                </div>
-                <div className="flex justify-between py-3">
-                  <span className="text-white/70">Total Cost</span>
-                  <span className="font-medium">{formatCurrency(totalPayment + deposit)}</span>
-                </div>
-              </div>
-
-              <div className="mt-8 pt-6 border-t border-white/20">
-                <a
-                  href="tel:+27215551234"
-                  className="flex items-center justify-center gap-2 w-full py-4 bg-king-cyan text-white rounded-xl font-medium hover:bg-accent-light transition-all"
-                >
-                  <Phone className="w-5 h-5" />
-                  Apply for Finance
-                </a>
-                <p className="text-center text-sm text-white/60 mt-4">
-                  This is an estimate. Actual rates may vary.
-                </p>
-              </div>
+            {/* Main Content: The Form */}
+            <div className="lg:col-span-2">
+              <AnimatedSection>
+                <FinanceApplicationForm />
+              </AnimatedSection>
             </div>
-          </AnimatedSection>
-        </div>
-      </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-        <AnimatedSection>
-          <div className="bg-white rounded-3xl p-8 shadow-card">
-            <h2 className="font-display font-semibold text-2xl text-gray-900 mb-6">
-              What You Need to Apply
-            </h2>
-            <div className="space-y-4">
-              {requirements.map((req, index) => (
-                <div key={index} className="flex items-start gap-4">
-                  <div className="w-6 h-6 bg-king-cyan/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <Check className="w-4 h-4 text-king-cyan" />
-                  </div>
-                  <span className="text-gray-700">{req}</span>
-                </div>
-              ))}
-            </div>
+
           </div>
-        </AnimatedSection>
-
-        <AnimatedSection>
-          <div id="contact" className="bg-king-dark rounded-3xl p-8 text-white h-full">
-            <h2 className="font-display font-semibold text-2xl mb-6">
-              Get Pre-Approved Today
-            </h2>
-            <p className="text-white/70 mb-8">
-              Take the first step towards owning your dream car. Our finance team
-              will guide you through the process and find the best solution for your needs.
-            </p>
-            <div className="space-y-4">
-              <a
-                href="tel:+27215551234"
-                className="flex items-center gap-3 p-4 bg-white/10 rounded-xl hover:bg-white/20 transition-all"
-              >
-                <Phone className="w-6 h-6 text-king-cyan" />
-                <div>
-                  <p className="text-sm text-white/60">Call us</p>
-                  <p className="font-medium">+27 21 555 1234</p>
-                </div>
-              </a>
-              <a
-                href="mailto:finance@kingcars.co.za"
-                className="flex items-center gap-3 p-4 bg-white/10 rounded-xl hover:bg-white/20 transition-all"
-              >
-                <Mail className="w-6 h-6 text-king-cyan" />
-                <div>
-                  <p className="text-sm text-white/60">Email us</p>
-                  <p className="font-medium">finance@kingcars.co.za</p>
-                </div>
-              </a>
-            </div>
-          </div>
-        </AnimatedSection>
+        </div>
       </div>
 
 

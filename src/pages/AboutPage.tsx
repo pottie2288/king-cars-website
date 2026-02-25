@@ -177,42 +177,6 @@ export function AboutPage() {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="section-padding mb-20">
-        <div className="max-w-6xl mx-auto">
-          <AnimatedSection>
-            <div className="bg-king-blue rounded-3xl p-8 sm:p-12 text-white">
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-                <div className="text-center">
-                  <p className="font-display font-bold text-4xl sm:text-5xl text-king-cyan mb-2">
-                    5,000+
-                  </p>
-                  <p className="text-white/80">Cars Sold</p>
-                </div>
-                <div className="text-center">
-                  <p className="font-display font-bold text-4xl sm:text-5xl text-king-cyan mb-2">
-                    98%
-                  </p>
-                  <p className="text-white/80">Satisfaction Rate</p>
-                </div>
-                <div className="text-center">
-                  <p className="font-display font-bold text-4xl sm:text-5xl text-king-cyan mb-2">
-                    30+
-                  </p>
-                  <p className="text-white/80">Years Experience</p>
-                </div>
-                <div className="text-center">
-                  <p className="font-display font-bold text-4xl sm:text-5xl text-king-cyan mb-2">
-                    2
-                  </p>
-                  <p className="text-white/80">Locations</p>
-                </div>
-              </div>
-            </div>
-          </AnimatedSection>
-        </div>
-      </section>
-
       {/* Trust & Partnerships Section */}
       <section className="section-padding pb-24 border-t border-gray-100 bg-white">
         <div className="max-w-6xl mx-auto">

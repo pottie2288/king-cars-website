@@ -114,7 +114,7 @@ export function FinancePage() {
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <AnimatedSection>
             <h2 className="font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-white mb-10 leading-tight">
-              Put us to the test, <span className="text-king-cyan">apply online</span>
+              Put us to the test <span className="text-king-cyan">apply online</span>
             </h2>
             <a
               href="#application-form"

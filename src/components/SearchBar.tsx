@@ -59,7 +59,9 @@ export function SearchBar({ onSearch, locations = [], makes = [], getUniqueModel
       <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-10 transition-all duration-300 hover:shadow-2xl">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-0 mb-8">
-          <h2 className="text-3xl sm:text-4xl font-display font-bold text-gray-800">Find Your Dream Car</h2>
+          <h2 className="text-3xl sm:text-4xl font-display font-bold text-gray-800">
+            Find Your <span className="text-king-blue">Perfect</span> Car
+          </h2>
           <button
             onClick={() => setShowAdvanced(!showAdvanced)}
             className="text-king-blue font-medium text-lg flex items-center gap-2 hover:text-primary-light transition-colors"

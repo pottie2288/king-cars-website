@@ -140,8 +140,7 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
               </span>
             </div>
             <h1 className="font-display font-bold text-5xl sm:text-7xl lg:text-8xl text-gray-900 mb-8 leading-tight animate-fade-in animate-delay-100">
-              Find your next car at
-              <span className="block text-king-blue">King Cars</span>
+              Find Your <span className="text-king-blue">Perfect</span> Car
             </h1>
             <p className="text-gray-600 text-2xl sm:text-3xl max-w-4xl mx-auto mb-16 animate-fade-in animate-delay-200">
               Premium used cars in Western Cape and Eastern Cape.

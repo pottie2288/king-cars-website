@@ -161,5 +161,4 @@ export function SearchBar({ onSearch, locations = [], makes = [], getUniqueModel
       </div>
     </div>
   );
-        );
 }

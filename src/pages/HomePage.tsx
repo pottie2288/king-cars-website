@@ -34,7 +34,6 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
     navigate('/showroom');
   };
 
-  const locations = ['Western Cape', 'Eastern Cape'];
   const makes = getUniqueMakes();
 
   const stats = [

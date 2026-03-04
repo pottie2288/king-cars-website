@@ -4,12 +4,11 @@ import type { FilterState } from '@/types';
 
 interface SearchBarProps {
   onSearch: (filters: FilterState) => void;
-  locations?: string[];
   makes?: string[];
   getUniqueModels: (make: string) => string[];
 }
 
-export function SearchBar({ onSearch, locations = [], makes = [], getUniqueModels }: SearchBarProps) {
+export function SearchBar({ onSearch, makes = [], getUniqueModels }: SearchBarProps) {
   const [category, setCategory] = useState<string>('');
   const [selectedMake, setSelectedMake] = useState<string>('');
   const [selectedModel, setSelectedModel] = useState<string>('');

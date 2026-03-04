@@ -147,7 +147,6 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
             <div className="animate-fade-in animate-delay-300">
               <SearchBar
                 onSearch={handleSearch}
-                locations={locations}
                 makes={makes}
                 getUniqueModels={getUniqueModels}
               />

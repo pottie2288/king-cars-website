@@ -30,7 +30,7 @@ export function SearchBar({ onSearch, locations = [], makes = [], getUniqueModel
 
   const handleSearch = () => {
     onSearch({
-      searchQuery: variant || '',
+      searchQuery: '',
       location: null,
       make: selectedMake || null,
       model: selectedModel || null,

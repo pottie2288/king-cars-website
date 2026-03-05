@@ -128,7 +128,7 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
         </div>
 
         {/* Content */}
-        <div className="relative z-10 w-full section-padding pt-36 lg:pt-56 pb-20">
+        <div className="relative z-10 w-full section-padding pt-36 lg:pt-56">
           <div className="max-w-7xl mx-auto text-center">
 
             {/* Pill Label */}
@@ -171,6 +171,9 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
         <div className="absolute bottom-10 left-10 md:left-20 w-64 md:w-96 animate-fade-in animate-delay-500 hidden lg:block pointer-events-none">
         </div>
       </section>
+
+      {/* Body Type Filter Section */}
+      <BodyTypeFilter />
 
       {/* Featured Cars Section */}
       <section className="py-20 bg-gray-50">
@@ -220,9 +223,6 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
           )}
         </div>
       </section>
-
-      {/* Body Type Filter Section */}
-      <BodyTypeFilter />
 
       {/* Benefits Section */}
       <section className="py-20 bg-white">

@@ -124,8 +124,7 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
       {/* Hero Section - Blue Gradient Background */}
       <section className="relative min-h-screen flex items-center">
         {/* Background Image */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white via-[#87CEFA] to-[#00aeef]">
-          <div className="absolute inset-0 opacity-30 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] mix-blend-overlay"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-white to-king-blue">
         </div>
 
         {/* Content */}

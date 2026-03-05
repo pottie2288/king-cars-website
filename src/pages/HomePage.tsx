@@ -125,11 +125,15 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
           <div className="max-w-7xl mx-auto text-center">
 
             {/* Pill Label */}
-            <div className="animate-fade-in flex justify-center">
-              <span className="inline-block px-6 py-3 bg-king-blue/10 backdrop-blur-sm text-king-blue rounded-full text-base sm:text-lg font-medium mb-8 border border-king-blue/20">
-                South Africa's Trusted Car Dealer
+            <AnimatedSection className="mb-8">
+              <span className="inline-flex items-center justify-center px-6 py-2 sm:py-2.5 rounded-full bg-king-blue/10 border border-king-blue/20 transition-all hover:bg-king-blue/15 hover:scale-105 cursor-default backdrop-blur-sm">
+                <img
+                  src="/bluechip-dealer-logo.png"
+                  alt="Bluechip Dealer"
+                  className="h-5 sm:h-6 w-auto object-contain"
+                />
               </span>
-            </div>
+            </AnimatedSection>
             <h1 className="font-display font-bold text-5xl sm:text-7xl lg:text-8xl text-gray-900 mb-16 leading-tight animate-fade-in animate-delay-100">
               Find Your <span className="text-king-blue">Perfect</span> Car
             </h1>

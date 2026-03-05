@@ -14,6 +14,7 @@ export function SearchBar({ onSearch, makes = [], getUniqueModels }: SearchBarPr
   const [selectedModel, setSelectedModel] = useState<string>('');
   const [variant, setVariant] = useState<string>('');
   const [maxPrice, setMaxPrice] = useState<string>('');
+  const [location, setLocation] = useState<string>('');
 
   // UI State
   const [availableModels, setAvailableModels] = useState<string[]>([]);
@@ -30,7 +31,7 @@ export function SearchBar({ onSearch, makes = [], getUniqueModels }: SearchBarPr
   const handleSearch = () => {
     onSearch({
       searchQuery: '',
-      location: null,
+      location: location || null,
       make: selectedMake || null,
       model: selectedModel || null,
       minPrice: null,
@@ -44,9 +45,10 @@ export function SearchBar({ onSearch, makes = [], getUniqueModels }: SearchBarPr
 
   const categories = ['Hatchback', 'Sedan', 'SUV', 'Bakkie', 'Coupe', 'Convertible'];
   const priceRanges = [100000, 200000, 300000, 400000, 500000, 750000, 1000000];
+  const locations = ['Western Cape', 'Eastern Cape'];
 
   return (
-    <div className="w-full max-w-6xl mx-auto relative z-20">
+    <div className="w-full max-w-7xl mx-auto relative z-20">
       <div className="bg-white rounded-[1.5rem] md:rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.12)] p-4 md:p-3 flex flex-col md:flex-row items-center justify-between gap-3 md:gap-0 transition-all duration-300">
 
         {/* Type / Category */}
@@ -129,7 +131,7 @@ export function SearchBar({ onSearch, makes = [], getUniqueModels }: SearchBarPr
         </div>
 
         {/* Max Price */}
-        <div className="shrink-0 md:flex-1 w-full relative px-5 md:px-6 border border-gray-200 md:border-0 rounded-full md:rounded-none flex items-center h-[56px] md:h-14 bg-white md:bg-transparent">
+        <div className="shrink-0 md:flex-1 w-full relative px-5 md:px-6 border border-gray-200 md:border-0 md:border-r md:border-gray-100 rounded-full md:rounded-none flex items-center h-[56px] md:h-14 bg-white md:bg-transparent">
           <select
             value={maxPrice}
             onChange={(e) => setMaxPrice(e.target.value)}
@@ -139,6 +141,26 @@ export function SearchBar({ onSearch, makes = [], getUniqueModels }: SearchBarPr
             <option value="">No Max Price</option>
             {priceRanges.map((price) => (
               <option key={price} value={price}>R {price.toLocaleString()}</option>
+            ))}
+          </select>
+          <div className="absolute right-6 pointer-events-none text-gray-900">
+            <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1.5 1.5L6 6L10.5 1.5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </div>
+        </div>
+
+        {/* Location */}
+        <div className="shrink-0 md:flex-1 w-full relative px-5 md:px-6 border border-gray-200 md:border-0 rounded-full md:rounded-none flex items-center h-[56px] md:h-14 bg-white md:bg-transparent">
+          <select
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            className="w-full bg-transparent text-gray-700 font-bold text-sm md:text-[15px] outline-none appearance-none cursor-pointer"
+          >
+            <option value="" disabled hidden>Location</option>
+            <option value="">All Locations</option>
+            {locations.map((loc) => (
+              <option key={loc} value={loc}>{loc}</option>
             ))}
           </select>
           <div className="absolute right-6 pointer-events-none text-gray-900">

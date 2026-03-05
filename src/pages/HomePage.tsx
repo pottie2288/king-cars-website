@@ -125,12 +125,12 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
           <div className="max-w-7xl mx-auto text-center">
 
             {/* Pill Label */}
-            <AnimatedSection className="mb-8">
-              <span className="inline-flex items-center justify-center px-8 py-3 sm:py-4 rounded-full bg-king-cyan/10 border border-king-cyan/20 transition-all hover:bg-king-cyan/15 hover:scale-105 cursor-default backdrop-blur-sm">
+            <AnimatedSection className="mb-8 flex justify-center">
+              <span className="inline-flex items-center justify-center px-10 h-16 sm:h-20 rounded-full bg-king-cyan/10 border border-king-cyan/20 transition-all hover:bg-king-cyan/15 hover:scale-105 cursor-default">
                 <img
                   src="/bluechip-dealer-logo.png"
                   alt="Bluechip Dealer"
-                  className="h-8 sm:h-10 w-auto object-contain"
+                  className="h-10 sm:h-12 w-auto object-contain block"
                 />
               </span>
             </AnimatedSection>

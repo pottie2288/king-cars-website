@@ -54,15 +54,12 @@ export function BodyTypeFilter() {
     };
 
     return (
-        <section className="py-20 bg-king-blue">
+        <section className="pt-8 pb-20 bg-king-blue">
             <div className="section-padding max-w-7xl mx-auto">
-                <AnimatedSection className="text-center mb-16">
+                <AnimatedSection className="text-center mb-8">
                     <h2 className="font-display font-bold text-3xl sm:text-4xl text-white mb-4">
                         Choose by body type
                     </h2>
-                    <p className="text-blue-100 text-lg">
-                        Click to filter our showroom by body type
-                    </p>
                 </AnimatedSection>
 
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-8">

@@ -36,13 +36,6 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
 
   const makes = getUniqueMakes();
 
-  const stats = [
-    { value: '30+', label: 'Years Experience' },
-    { value: '50,000+', label: 'Cars Sold' },
-    { value: '4.8', label: 'Google Reviews' },
-    { value: '6', label: 'Locations' },
-  ];
-
   const benefits = [
     {
       icon: Shield,
@@ -122,13 +115,13 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
       />
 
       {/* Hero Section - Blue Gradient Background */}
-      <section className="relative min-h-screen flex items-center">
+      <section className="relative flex flex-col justify-center">
         {/* Background Image */}
         <div className="absolute inset-0 bg-gradient-to-b from-white to-king-blue">
         </div>
 
         {/* Content */}
-        <div className="relative z-10 w-full section-padding pt-36 lg:pt-56">
+        <div className="relative z-10 w-full section-padding pt-32 lg:pt-48 pb-12 lg:pb-16">
           <div className="max-w-7xl mx-auto text-center">
 
             {/* Pill Label */}
@@ -148,21 +141,6 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
                 makes={makes}
                 getUniqueModels={getUniqueModels}
               />
-            </div>
-
-            {/* Quick Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 animate-fade-in animate-delay-400">
-              {stats.map((stat, index) => (
-                <div key={index} className="text-center">
-                  <p className="font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-gray-900 mb-2 flex items-center justify-center gap-2">
-                    {stat.value}
-                    {stat.value === '4.8' && (
-                      <Star className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 fill-yellow-400 text-yellow-400 inline-block" />
-                    )}
-                  </p>
-                  <p className="text-gray-600 text-lg sm:text-xl">{stat.label}</p>
-                </div>
-              ))}
             </div>
           </div>
         </div>

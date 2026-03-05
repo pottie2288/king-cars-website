@@ -1,4 +1,4 @@
-import { Award, Users, Target, Heart, Shield } from 'lucide-react';
+import { Award, Users, Target, Heart, Shield, Star } from 'lucide-react';
 import { SEO } from '@/components/SEO';
 
 import { AnimatedSection } from '@/components/AnimatedSection';
@@ -27,10 +27,11 @@ export function AboutPage() {
     },
   ];
 
-  const milestones = [
-    { year: '1995', event: 'King Cars founded by Jacques du Plessis' },
-    { year: '2014', event: 'Pierre Potgieter appointed Group CEO' },
-    { year: '2026', event: 'Continuing legacy of integrity & service' },
+  const stats = [
+    { value: '30+', label: 'Years Experience' },
+    { value: '50,000+', label: 'Cars Sold' },
+    { value: '4.8', label: 'Google Reviews' },
+    { value: '6', label: 'Locations' },
   ];
 
 
@@ -136,44 +137,33 @@ export function AboutPage() {
         </div>
       </section>
 
-      {/* Milestones Section */}
+      {/* Quick Stats Section */}
       <section className="section-padding mb-20">
-        <div className="max-w-4xl mx-auto">
-          <AnimatedSection className="text-center mb-12">
+        <div className="max-w-6xl mx-auto">
+          <AnimatedSection className="text-center mb-16">
             <span className="text-king-cyan font-medium text-sm uppercase tracking-wider">
-              Our Journey
+              Our Impact
             </span>
             <h2 className="font-display font-bold text-3xl sm:text-4xl text-gray-900 mt-2 mb-4">
-              Milestones
+              King Cars in Numbers
             </h2>
           </AnimatedSection>
 
-          <div className="relative">
-            {/* Timeline Line */}
-            <div className="absolute left-4 sm:left-1/2 top-0 bottom-0 w-0.5 bg-king-blue/20 sm:-translate-x-1/2" />
-
-            <div className="space-y-8">
-              {milestones.map((milestone, index) => (
-                <AnimatedSection key={index}>
-                  <div className={`flex items-center gap-8 ${index % 2 === 0 ? 'sm:flex-row' : 'sm:flex-row-reverse'
-                    }`}>
-                    <div className={`flex-1 ${index % 2 === 0 ? 'sm:text-right' : 'sm:text-left'}`}>
-                      <div className="bg-white rounded-2xl p-6 shadow-card inline-block">
-                        <span className="text-king-cyan font-display font-bold text-xl">
-                          {milestone.year}
-                        </span>
-                        <p className="text-gray-700 mt-1">{milestone.event}</p>
-                      </div>
-                    </div>
-                    <div className="w-8 h-8 bg-king-blue rounded-full flex items-center justify-center relative z-10 flex-shrink-0">
-                      <div className="w-3 h-3 bg-white rounded-full" />
-                    </div>
-                    <div className="flex-1 hidden sm:block" />
-                  </div>
-                </AnimatedSection>
+          <AnimatedSection>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              {stats.map((stat, index) => (
+                <div key={index} className="text-center">
+                  <p className="font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-king-blue mb-2 flex items-center justify-center gap-2">
+                    {stat.value}
+                    {stat.value === '4.8' && (
+                      <Star className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 fill-yellow-400 text-yellow-400 inline-block" />
+                    )}
+                  </p>
+                  <p className="text-gray-600 font-medium text-lg sm:text-xl">{stat.label}</p>
+                </div>
               ))}
             </div>
-          </div>
+          </AnimatedSection>
         </div>
       </section>
 

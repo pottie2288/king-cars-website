@@ -9,7 +9,6 @@ interface SearchBarProps {
 }
 
 export function SearchBar({ onSearch, makes = [], getUniqueModels }: SearchBarProps) {
-  const [category, setCategory] = useState<string>('');
   const [selectedMake, setSelectedMake] = useState<string>('');
   const [selectedModel, setSelectedModel] = useState<string>('');
   const [variant, setVariant] = useState<string>('');
@@ -39,11 +38,10 @@ export function SearchBar({ onSearch, makes = [], getUniqueModels }: SearchBarPr
       minYear: null,
       maxYear: null,
       maxMileage: null,
-      category: category || null,
+      category: null,
     });
   };
 
-  const categories = ['Hatchback', 'Sedan', 'SUV', 'Bakkie', 'Coupe', 'Convertible'];
   const priceRanges = [100000, 200000, 300000, 400000, 500000, 750000, 1000000];
   const locations = ['Western Cape', 'Eastern Cape'];
 

@@ -499,12 +499,12 @@ function BranchSection() {
   return (
     <div className="space-y-8">
       {/* Branch Tabs */}
-      <div className="flex flex-wrap gap-3 overflow-x-auto pb-4 scrollbar-hide">
+      <div className="flex flex-wrap gap-2 sm:gap-3 overflow-x-auto pb-4 scrollbar-hide px-1">
         {branches.map((branch) => (
           <button
             key={branch.id}
             onClick={() => setActiveBranch(branch)}
-            className={`px-6 py-2.5 rounded-full border-2 font-semibold transition-all duration-300 whitespace-nowrap ${activeBranch.id === branch.id
+            className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full border-2 text-sm sm:text-base font-semibold transition-all duration-300 whitespace-nowrap ${activeBranch.id === branch.id
               ? 'bg-king-blue border-king-blue text-white shadow-lg shadow-king-blue/20 scale-105'
               : 'border-king-blue text-king-blue hover:bg-king-blue/5'
               }`}

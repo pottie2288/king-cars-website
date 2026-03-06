@@ -71,80 +71,90 @@ export function Footer() {
           </div>
 
           {/* Contact Info */}
-          <div>
-            <h4 className="font-display font-semibold text-lg mb-6">Contact Us</h4>
-            <div className="space-y-6">
-              {/* Cape Town Region */}
-              <div>
-                <h5 className="text-white font-medium text-sm mb-2 flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-king-cyan" />
-                  Western Cape
-                </h5>
-                <ul className="space-y-2 text-sm text-gray-400 pl-6">
-                  <li>
-                    <span className="block text-gray-300">Cape Town</span>
-                    <a href="tel:0219101343" className="hover:text-king-cyan transition-colors">021 910 1343</a>
-                  </li>
-                  <li>
-                    <span className="block text-gray-300">Vredekloof</span>
-                    <a href="tel:0219101343" className="hover:text-king-cyan transition-colors">021 910 1343</a>
-                  </li>
-                </ul>
-              </div>
+          <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-10">
+            <div>
+              <h4 className="font-display font-semibold text-lg mb-6">Contact Us</h4>
+              <div className="space-y-6">
+                {/* Western Cape Region */}
+                <div>
+                  <h5 className="text-white font-medium text-sm mb-2 flex items-center gap-2">
+                    <MapPin className="w-4 h-4 text-king-cyan" />
+                    Western Cape
+                  </h5>
+                  <ul className="space-y-2 text-sm text-gray-400 pl-6">
+                    <li className="flex justify-between md:justify-start gap-4">
+                      <span className="text-gray-300 w-24">Bellville:</span>
+                      <a href="tel:0219101343" className="hover:text-king-cyan transition-colors">021 910 1343</a>
+                    </li>
+                    <li className="flex justify-between md:justify-start gap-4">
+                      <span className="text-gray-300 w-24">Vredekloof:</span>
+                      <a href="tel:0219101343" className="hover:text-king-cyan transition-colors">021 910 1343</a>
+                    </li>
+                    <li className="flex justify-between md:justify-start gap-4">
+                      <span className="text-gray-300 w-24">Brackenfell:</span>
+                      <a href="tel:0219101343" className="hover:text-king-cyan transition-colors">021 910 1343</a>
+                    </li>
+                  </ul>
+                </div>
 
-              {/* Port Elizabeth Region */}
-              <div>
-                <h5 className="text-white font-medium text-sm mb-2 flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-king-cyan" />
-                  Eastern Cape
-                </h5>
-                <ul className="space-y-2 text-sm text-gray-400 pl-6">
-                  <li>
-                    <span className="block text-gray-300">Cape Road</span>
-                    <a href="tel:0413653900" className="hover:text-king-cyan transition-colors">(041) 365 3900</a>
-                  </li>
-                  <li>
-                    <span className="block text-gray-300">Sydenham</span>
-                    <a href="tel:0414871241" className="hover:text-king-cyan transition-colors">(041) 487 1241</a>
-                  </li>
-                </ul>
-              </div>
+                {/* Eastern Cape Region */}
+                <div>
+                  <h5 className="text-white font-medium text-sm mb-2 flex items-center gap-2">
+                    <MapPin className="w-4 h-4 text-king-cyan" />
+                    Eastern Cape
+                  </h5>
+                  <ul className="space-y-2 text-sm text-gray-400 pl-6">
+                    <li className="flex justify-between md:justify-start gap-4">
+                      <span className="text-gray-300 w-24">17th Ave:</span>
+                      <a href="tel:0413653900" className="hover:text-king-cyan transition-colors">041 365 3900</a>
+                    </li>
+                    <li className="flex justify-between md:justify-start gap-4">
+                      <span className="text-gray-300 w-24">Sydenham:</span>
+                      <a href="tel:0414871241" className="hover:text-king-cyan transition-colors">041 487 1241</a>
+                    </li>
+                    <li className="flex justify-between md:justify-start gap-4">
+                      <span className="text-gray-300 w-24">Newton Park:</span>
+                      <a href="tel:0413640167" className="hover:text-king-cyan transition-colors">041 364 0167</a>
+                    </li>
+                  </ul>
+                </div>
 
-              <div className="flex items-center gap-3 pl-1">
-                <Mail className="w-4 h-4 text-king-cyan flex-shrink-0" />
-                <a href="mailto:info@kingcars.co.za" className="text-sm text-gray-400 hover:text-king-cyan transition-colors">
-                  info@kingcars.co.za
-                </a>
+                <div className="flex items-center gap-3 pl-1">
+                  <Mail className="w-4 h-4 text-king-cyan flex-shrink-0" />
+                  <a href="mailto:info@kingcars.co.za" className="text-sm text-gray-400 hover:text-king-cyan transition-colors">
+                    info@kingcars.co.za
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Business Hours */}
-          <div>
-            <h4 className="font-display font-semibold text-lg mb-6">Business Hours</h4>
-            <ul className="space-y-3">
-              <li className="flex items-start gap-3">
-                <Clock className="w-5 h-5 text-king-cyan flex-shrink-0 mt-0.5" />
-                <div className="text-sm">
-                  <p className="text-white font-medium">Monday - Friday</p>
-                  <p className="text-gray-400">8:00 AM - 6:00 PM</p>
-                </div>
-              </li>
-              <li className="flex items-start gap-3">
-                <Clock className="w-5 h-5 text-king-cyan flex-shrink-0 mt-0.5" />
-                <div className="text-sm">
-                  <p className="text-white font-medium">Saturday</p>
-                  <p className="text-gray-400">9:00 AM - 4:00 PM</p>
-                </div>
-              </li>
-              <li className="flex items-start gap-3">
-                <Clock className="w-5 h-5 text-king-cyan flex-shrink-0 mt-0.5" />
-                <div className="text-sm">
-                  <p className="text-white font-medium">Sunday</p>
-                  <p className="text-gray-400">Closed</p>
-                </div>
-              </li>
-            </ul>
+            {/* Business Hours */}
+            <div>
+              <h4 className="font-display font-semibold text-lg mb-6">Business Hours</h4>
+              <ul className="space-y-3">
+                <li className="flex items-start gap-3">
+                  <Clock className="w-5 h-5 text-king-cyan flex-shrink-0 mt-0.5" />
+                  <div className="text-sm">
+                    <p className="text-white font-medium">Monday - Friday</p>
+                    <p className="text-gray-400">8:00 AM - 5:30 PM</p>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Clock className="w-5 h-5 text-king-cyan flex-shrink-0 mt-0.5" />
+                  <div className="text-sm">
+                    <p className="text-white font-medium">Saturday</p>
+                    <p className="text-gray-400">9:00 AM - 1:00 PM</p>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Clock className="w-5 h-5 text-king-cyan flex-shrink-0 mt-0.5" />
+                  <div className="text-sm">
+                    <p className="text-white font-medium">Sunday & Public Holidays</p>
+                    <p className="text-gray-400">Closed</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

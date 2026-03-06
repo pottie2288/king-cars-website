@@ -403,13 +403,28 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
 function BranchSection() {
   const branches = [
     {
-      id: 'cape-town',
-      name: 'Cape Town',
-      fullName: 'King Cars Cape Town',
-      address: '25 Strand Rd, Belgravia, Cape Town, 7530',
-      phones: ['(021) 910 1343'],
+      id: 'bellville',
+      name: 'Bellville',
+      fullName: 'King Cars Bellville',
+      address: '25 Strand Rd, Bellville, Cape Town, 7530',
+      phones: ['021 910 1343'],
       email: 'andresadie@kingcars.co.za',
-      mapUrl: "https://maps.google.com/maps?q=25%20Strand%20Rd%2C%20Belgravia%2C%20Cape%20Town%2C%207530&t=&z=15&ie=UTF8&iwloc=&output=embed",
+      mapUrl: "https://maps.google.com/maps?q=25%20Strand%20Rd%2C%20Bellville%2C%20Cape%20Town&t=&z=15&ie=UTF8&iwloc=&output=embed",
+      hours: {
+        weekdays: '08:00 to 18:00',
+        saturdays: '09:00 to 14:00',
+        sundays: '09:00 to 15:00',
+        holidays: '09:00 to 14:00'
+      }
+    },
+    {
+      id: '17th',
+      name: '17th Ave',
+      fullName: 'King Cars on 17th',
+      address: '1 William Moffett Express Way, Walmer, Gqeberha',
+      phones: ['041 365 3900'],
+      email: 'info@kingcars.co.za',
+      mapUrl: "https://maps.google.com/maps?q=1%20William%20Moffett%20Express%20Way%2C%20Gqeberha&t=&z=15&ie=UTF8&iwloc=&output=embed",
       hours: {
         weekdays: '08:00 to 18:00',
         saturdays: '09:00 to 14:00',
@@ -433,13 +448,13 @@ function BranchSection() {
       }
     },
     {
-      id: 'cape-road',
-      name: 'Cape Road',
-      fullName: 'King Cars Cape Road',
-      address: '343 Cape Rd, Newton Park, Port Elizabeth',
-      phones: ['(041) 365 3900'],
-      email: 'justin@kingcars.co.za',
-      mapUrl: "https://maps.google.com/maps?q=343%20Cape%20Rd%2C%20Newton%20Park%2C%20Port%20Elizabeth&t=&z=15&ie=UTF8&iwloc=&output=embed",
+      id: 'sydenham',
+      name: 'Sydenham',
+      fullName: 'King Cars Sydenham',
+      address: '19 - 21 Uitenhage Road, Sydenham, Gqeberha',
+      phones: ['041 487 1241'],
+      email: 'derick@kingcars.co.za',
+      mapUrl: "https://maps.google.com/maps?q=19%20-%2021%20Uitenhage%20Road%2C%20Sydenham%2C%20Gqeberha&t=&z=15&ie=UTF8&iwloc=&output=embed",
       hours: {
         weekdays: '08:00 to 18:00',
         saturdays: '09:00 to 14:00',
@@ -448,13 +463,28 @@ function BranchSection() {
       }
     },
     {
-      id: 'sydenham',
-      name: 'Sydenham',
-      fullName: 'King Cars Sydenham',
-      address: '19 - 21 Uitenhage Road, Sydenham, Port Elizabeth',
-      phones: ['(041) 487 1241'],
-      email: 'derick@kingcars.co.za',
-      mapUrl: "https://maps.google.com/maps?q=19%20-%2021%20Uitenhage%20Road%2C%20Sydenham%2C%20Port%20Elizabeth&t=&z=15&ie=UTF8&iwloc=&output=embed",
+      id: 'newton-park',
+      name: 'Newton Park',
+      fullName: 'King Cars Newton Park',
+      address: '343 Cape Rd, Newton Park, Gqeberha',
+      phones: ['041 364 0167'],
+      email: 'justin@kingcars.co.za',
+      mapUrl: "https://maps.google.com/maps?q=343%20Cape%20Rd%2C%20Newton%20Park%2C%20Gqeberha&t=&z=15&ie=UTF8&iwloc=&output=embed",
+      hours: {
+        weekdays: '08:00 to 18:00',
+        saturdays: '09:00 to 14:00',
+        sundays: '09:00 to 15:00',
+        holidays: '09:00 to 14:00'
+      }
+    },
+    {
+      id: 'brackenfell',
+      name: 'Brackenfell',
+      fullName: 'King Cars Brackenfell',
+      address: 'Corner of Old Paarl and Ferndale St, Brackenfell, Cape Town',
+      phones: ['021 910 1343'],
+      email: 'info@kingcars.co.za',
+      mapUrl: "https://maps.google.com/maps?q=Corner%20of%20Old%20Paarl%20and%20Ferndale%20St%2C%20Brackenfell%2C%20Cape%20Town&t=&z=15&ie=UTF8&iwloc=&output=embed",
       hours: {
         weekdays: '08:00 to 18:00',
         saturdays: '09:00 to 14:00',

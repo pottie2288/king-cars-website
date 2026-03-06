@@ -51,26 +51,6 @@ export function SearchBar({ onSearch, makes = [], getUniqueModels }: SearchBarPr
     <div className="w-full max-w-7xl mx-auto relative z-20">
       <div className="bg-white rounded-[1.5rem] md:rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.12)] p-4 md:p-3 flex flex-col md:flex-row items-center justify-between gap-3 md:gap-0 transition-all duration-300">
 
-        {/* Type / Category */}
-        <div className="shrink-0 md:flex-1 w-full relative px-5 md:px-6 border border-gray-200 md:border-0 md:border-r md:border-gray-100 rounded-full md:rounded-none flex items-center h-[56px] md:h-14 bg-white md:bg-transparent">
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            className="w-full bg-transparent text-gray-700 font-bold text-sm md:text-[15px] outline-none appearance-none cursor-pointer"
-          >
-            <option value="" disabled hidden>Type</option>
-            <option value="">All Types</option>
-            {categories.map((c) => (
-              <option key={c} value={c}>{c}</option>
-            ))}
-          </select>
-          <div className="absolute right-6 pointer-events-none text-gray-900">
-            <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M1.5 1.5L6 6L10.5 1.5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </div>
-        </div>
-
         {/* Make */}
         <div className="shrink-0 md:flex-1 w-full relative px-5 md:px-6 border border-gray-200 md:border-0 md:border-r md:border-gray-100 rounded-full md:rounded-none flex items-center h-[56px] md:h-14 bg-white md:bg-transparent">
           <select

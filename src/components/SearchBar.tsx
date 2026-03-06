@@ -54,7 +54,7 @@ export function SearchBar({ onSearch, makes = [], getUniqueModels }: SearchBarPr
           <select
             value={selectedMake}
             onChange={(e) => setSelectedMake(e.target.value)}
-            className="w-full bg-transparent text-gray-700 font-bold text-sm md:text-[15px] outline-none appearance-none cursor-pointer"
+            className="w-full bg-transparent text-gray-700 font-bold text-sm md:text-[15px] outline-none focus:outline-none focus:ring-0 appearance-none cursor-pointer"
           >
             <option value="" disabled hidden>All Makes</option>
             <option value="">All Makes</option>
@@ -75,7 +75,7 @@ export function SearchBar({ onSearch, makes = [], getUniqueModels }: SearchBarPr
             value={selectedModel}
             onChange={(e) => setSelectedModel(e.target.value)}
             disabled={!selectedMake}
-            className={`w-full bg-transparent font-bold text-sm md:text-[15px] outline-none appearance-none cursor-pointer ${!selectedMake ? 'text-gray-400' : 'text-gray-700'}`}
+            className={`w-full bg-transparent font-bold text-sm md:text-[15px] outline-none focus:outline-none focus:ring-0 appearance-none cursor-pointer ${!selectedMake ? 'text-gray-400' : 'text-gray-700'}`}
           >
             <option value="" disabled hidden>All Models</option>
             <option value="">All Models</option>
@@ -96,7 +96,7 @@ export function SearchBar({ onSearch, makes = [], getUniqueModels }: SearchBarPr
             value={variant}
             onChange={(e) => setVariant(e.target.value)}
             disabled={!selectedModel}
-            className={`w-full bg-transparent font-bold text-sm md:text-[15px] outline-none appearance-none cursor-pointer ${!selectedModel ? 'text-gray-400' : 'text-gray-700'}`}
+            className={`w-full bg-transparent font-bold text-sm md:text-[15px] outline-none focus:outline-none focus:ring-0 appearance-none cursor-pointer ${!selectedModel ? 'text-gray-400' : 'text-gray-700'}`}
           >
             <option value="" disabled hidden>Variant</option>
             <option value="">All Variants</option>
@@ -113,7 +113,7 @@ export function SearchBar({ onSearch, makes = [], getUniqueModels }: SearchBarPr
           <select
             value={maxPrice}
             onChange={(e) => setMaxPrice(e.target.value)}
-            className="w-full bg-transparent text-gray-700 font-bold text-sm md:text-[15px] outline-none appearance-none cursor-pointer"
+            className="w-full bg-transparent text-gray-700 font-bold text-sm md:text-[15px] outline-none focus:outline-none focus:ring-0 appearance-none cursor-pointer"
           >
             <option value="" disabled hidden>Max Price</option>
             <option value="">No Max Price</option>
@@ -133,7 +133,7 @@ export function SearchBar({ onSearch, makes = [], getUniqueModels }: SearchBarPr
           <select
             value={location}
             onChange={(e) => setLocation(e.target.value)}
-            className="w-full bg-transparent text-gray-700 font-bold text-sm md:text-[15px] outline-none appearance-none cursor-pointer"
+            className="w-full bg-transparent text-gray-700 font-bold text-sm md:text-[15px] outline-none focus:outline-none focus:ring-0 appearance-none cursor-pointer"
           >
             <option value="" disabled hidden>Location</option>
             <option value="">All Locations</option>

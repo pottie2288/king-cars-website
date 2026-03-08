@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 80" width="240" height="80">
-  <rect width="240" height="80" fill="white"/>
-  <!-- Standard Bank blue icon -->
-  <circle cx="30" cy="40" r="22" fill="#0033A0"/>
-  <text x="30" y="47" font-family="Arial" font-weight="bold" font-size="18" fill="white" text-anchor="middle">SB</text>
-  <!-- Text -->
-  <text x="145" y="35" font-family="Arial" font-weight="bold" font-size="15" fill="#0033A0" text-anchor="middle">STANDARD</text>
-  <text x="145" y="55" font-family="Arial" font-weight="bold" font-size="15" fill="#0033A0" text-anchor="middle">BANK</text>
-</svg>

@@ -11,6 +11,7 @@ import { FinancePage } from '@/pages/FinancePage';
 import { AboutPage } from '@/pages/AboutPage';
 import { CarDetailsPage } from '@/pages/CarDetailsPage';
 import { FavouritesPage } from '@/pages/FavouritesPage';
+import { ComplaintsPage } from '@/pages/ComplaintsPage';
 import './App.css';
 
 function App() {
@@ -59,6 +60,7 @@ function App() {
           <Route path="/finance" element={<FinancePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/favourites" element={<FavouritesPage favourites={favourites} onToggleFavourite={toggleFavourite} />} />
+          <Route path="/compliments-complaints" element={<ComplaintsPage />} />
           {/* Fallback */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

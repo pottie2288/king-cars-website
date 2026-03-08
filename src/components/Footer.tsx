@@ -56,6 +56,7 @@ export function Footer() {
                 { label: 'Sell Your Car', path: '/sell-your-car' },
                 { label: 'Finance', path: '/finance' },
                 { label: 'About Us', path: '/about' },
+                { label: 'Compliments & Complaints', path: '/compliments-complaints' },
               ].map((item) => (
                 <li key={item.path}>
                   <Link

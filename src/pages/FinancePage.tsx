@@ -142,18 +142,14 @@ export function FinancePage() {
                     Banks We Work With
                   </h3>
                   <p className="text-sm text-gray-500 mb-6">We submit your application to all major South African banks to get you the best rate.</p>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-3 gap-5">
                     {SA_BANKS.map((bank) => (
-                      <div
+                      <img
                         key={bank.name}
-                        className="flex items-center justify-center p-4 rounded-2xl border border-gray-100 bg-gray-50 hover:bg-white hover:shadow-md hover:border-gray-200 transition-all duration-300"
-                      >
-                        <img
-                          src={bank.logo}
-                          alt={bank.name}
-                          className="h-8 w-auto object-contain"
-                        />
-                      </div>
+                        src={bank.logo}
+                        alt={bank.name}
+                        className="w-full h-14 object-contain rounded-xl transition-transform duration-200 hover:scale-110"
+                      />
                     ))}
                   </div>
                 </div>

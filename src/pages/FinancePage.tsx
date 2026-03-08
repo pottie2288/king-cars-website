@@ -6,39 +6,16 @@ import { FinanceApplicationForm } from '@/components/FinanceApplicationForm';
 import { SEO } from '@/components/SEO';
 
 const SA_BANKS = [
-  {
-    name: 'ABSA',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/ABSA_Bank.svg/320px-ABSA_Bank.svg.png',
-  },
-  {
-    name: 'Standard Bank',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Standard_Bank_Logo.svg/320px-Standard_Bank_Logo.svg.png',
-  },
-  {
-    name: 'FNB',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/FNB_logo.svg/320px-FNB_logo.svg.png',
-  },
-  {
-    name: 'Nedbank',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Nedbank.svg/320px-Nedbank.svg.png',
-  },
-  {
-    name: 'Investec',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Investec_logo.svg/320px-Investec_logo.svg.png',
-  },
-  {
-    name: 'Capitec',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Capitec_Bank_logo.svg/320px-Capitec_Bank_logo.svg.png',
-  },
-  {
-    name: 'African Bank',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/African_Bank_logo.svg/320px-African_Bank_logo.svg.png',
-  },
-  {
-    name: 'WesBank',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/WesBank_Logo.svg/320px-WesBank_Logo.svg.png',
-  },
+  { name: 'ABSA',          logo: '/banks/absa.png' },
+  { name: 'Standard Bank', logo: '/banks/standardbank.png' },
+  { name: 'FNB',           logo: '/banks/fnb.png' },
+  { name: 'Nedbank',       logo: '/banks/nedbank.png' },
+  { name: 'Investec',      logo: '/banks/investec.png' },
+  { name: 'Capitec',       logo: '/banks/capitec.png' },
+  { name: 'African Bank',  logo: '/banks/africanbank.png' },
+  { name: 'WesBank',       logo: '/banks/wesbank.png' },
 ];
+
 
 export function FinancePage() {
 
@@ -177,17 +154,6 @@ export function FinancePage() {
                           src={bank.logo}
                           alt={bank.name}
                           className="h-8 w-auto object-contain"
-                          onError={(e) => {
-                            const target = e.currentTarget as HTMLImageElement;
-                            target.style.display = 'none';
-                            const parent = target.parentElement;
-                            if (parent) {
-                              const fallback = document.createElement('span');
-                              fallback.className = 'text-sm font-bold text-gray-700';
-                              fallback.textContent = bank.name;
-                              parent.appendChild(fallback);
-                            }
-                          }}
                         />
                       </div>
                     ))}

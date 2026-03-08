@@ -1,21 +1,46 @@
 import { useState } from 'react';
-import { Check, Clock, ChevronDown, Phone, Wallet, TrendingDown, ArrowRight, ShieldCheck, FileCheck, Ban, AlertCircle } from 'lucide-react';
+import { Clock, ChevronDown, Phone, Wallet, TrendingDown, ArrowRight, Building2 } from 'lucide-react';
 import { AnimatedSection } from '@/components/AnimatedSection';
 import { FinanceApplicationForm } from '@/components/FinanceApplicationForm';
 
 import { SEO } from '@/components/SEO';
 
+const SA_BANKS = [
+  {
+    name: 'ABSA',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/ABSA_Bank.svg/320px-ABSA_Bank.svg.png',
+  },
+  {
+    name: 'Standard Bank',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Standard_Bank_Logo.svg/320px-Standard_Bank_Logo.svg.png',
+  },
+  {
+    name: 'FNB',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/FNB_logo.svg/320px-FNB_logo.svg.png',
+  },
+  {
+    name: 'Nedbank',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Nedbank.svg/320px-Nedbank.svg.png',
+  },
+  {
+    name: 'Investec',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Investec_logo.svg/320px-Investec_logo.svg.png',
+  },
+  {
+    name: 'Capitec',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Capitec_Bank_logo.svg/320px-Capitec_Bank_logo.svg.png',
+  },
+  {
+    name: 'African Bank',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/African_Bank_logo.svg/320px-African_Bank_logo.svg.png',
+  },
+  {
+    name: 'WesBank',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/WesBank_Logo.svg/320px-WesBank_Logo.svg.png',
+  },
+];
+
 export function FinancePage() {
-
-
-
-  const requirements = [
-    'Valid South African ID or passport',
-    'Proof of residence (not older than 3 months)',
-    'Latest 3 months bank statements',
-    'Latest payslip or proof of income',
-    'Valid driver\'s license',
-  ];
 
   const faqs = [
     {
@@ -137,41 +162,39 @@ export function FinancePage() {
             <div className="lg:col-span-1 space-y-8">
               <AnimatedSection>
                 <div className="bg-white rounded-3xl p-8 shadow-card border border-gray-100">
-                  <h3 className="font-display font-bold text-2xl text-gray-900 mb-6 flex items-center gap-2">
-                    <ShieldCheck className="w-6 h-6 text-king-blue" />
-                    Am I Eligible?
+                  <h3 className="font-display font-bold text-2xl text-gray-900 mb-2 flex items-center gap-2">
+                    <Building2 className="w-6 h-6 text-king-blue" />
+                    Banks We Work With
                   </h3>
-                  <ul className="space-y-4">
-                    {[
-                      { icon: FileCheck, text: 'Earn R9,500 or more per month', color: 'text-green-600' },
-                      { icon: Ban, text: 'Not under debt review', color: 'text-amber-600' },
-                      { icon: Check, text: 'Valid SA Driver\'s License', color: 'text-blue-600' },
-                      { icon: Ban, text: 'No bad credit or blacklisting', color: 'text-red-500' },
-                      { icon: AlertCircle, text: 'No Rent-To-Own deals', color: 'text-gray-500' },
-                    ].map((item, i) => (
-                      <li key={i} className="flex items-start gap-3">
-                        <item.icon className={`w-5 h-5 mt-0.5 shrink-0 ${item.color}`} />
-                        <span className="text-gray-700 font-medium">{item.text}</span>
-                      </li>
+                  <p className="text-sm text-gray-500 mb-6">We submit your application to all major South African banks to get you the best rate.</p>
+                  <div className="grid grid-cols-2 gap-4">
+                    {SA_BANKS.map((bank) => (
+                      <div
+                        key={bank.name}
+                        className="flex items-center justify-center p-4 rounded-2xl border border-gray-100 bg-gray-50 hover:bg-white hover:shadow-md hover:border-gray-200 transition-all duration-300"
+                      >
+                        <img
+                          src={bank.logo}
+                          alt={bank.name}
+                          className="h-8 w-auto object-contain"
+                          onError={(e) => {
+                            const target = e.currentTarget as HTMLImageElement;
+                            target.style.display = 'none';
+                            const parent = target.parentElement;
+                            if (parent) {
+                              const fallback = document.createElement('span');
+                              fallback.className = 'text-sm font-bold text-gray-700';
+                              fallback.textContent = bank.name;
+                              parent.appendChild(fallback);
+                            }
+                          }}
+                        />
+                      </div>
                     ))}
-                  </ul>
-
-                  <div className="mt-8 pt-8 border-t border-gray-100">
-                    <h4 className="font-semibold text-gray-900 mb-4">Supporting Documents</h4>
-                    <p className="text-sm text-gray-500 mb-4 italic">Please have these ready to upload or email:</p>
-                    <div className="space-y-3">
-                      {requirements.map((req, index) => (
-                        <div key={index} className="flex items-start gap-4">
-                          <div className="w-6 h-6 bg-king-cyan/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                            <Check className="w-4 h-4 text-king-cyan" />
-                          </div>
-                          <span className="text-sm text-gray-700">{req}</span>
-                        </div>
-                      ))}
-                    </div>
                   </div>
                 </div>
               </AnimatedSection>
+
 
               <AnimatedSection>
                 <div className="bg-king-dark rounded-3xl p-8 text-white">

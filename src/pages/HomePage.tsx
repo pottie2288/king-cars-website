@@ -405,7 +405,7 @@ function BranchSection() {
     {
       id: 'bellville',
       name: 'Bellville',
-      fullName: 'KING CARS BELLVILLE',
+      fullName: 'King Cars Bellville',
       address: '25 Strand Rd, Bellville, Cape Town, 7530',
       phones: ['021 910 1343'],
       email: 'andresadie@kingcars.co.za',
@@ -420,7 +420,7 @@ function BranchSection() {
     {
       id: '17th',
       name: '17th Ave',
-      fullName: 'KING CARS ON 17TH',
+      fullName: 'King Cars On 17th',
       address: '1 William Moffett Express Way, Walmer, Gqeberha',
       phones: ['041 365 3900'],
       email: 'info@kingcars.co.za',
@@ -435,7 +435,7 @@ function BranchSection() {
     {
       id: 'vredekloof',
       name: 'Vredekloof',
-      fullName: 'KING CARS VREDEKLOOF',
+      fullName: 'King Cars Vredekloof',
       address: '2 Hillcrest Rd, Vredekloof, Cape Town, 7560',
       phones: ['021 910 1343'],
       email: 'hansie@kingcars.co.za',
@@ -450,7 +450,7 @@ function BranchSection() {
     {
       id: 'sydenham',
       name: 'Sydenham',
-      fullName: 'KING CARS SYDENHAM',
+      fullName: 'King Cars Sydenham',
       address: '19 - 21 Uitenhage Road, Sydenham, Gqeberha',
       phones: ['041 487 1241'],
       email: 'derick@kingcars.co.za',
@@ -465,7 +465,7 @@ function BranchSection() {
     {
       id: 'newton-park',
       name: 'Newton Park',
-      fullName: 'KING CARS NEWTON PARK',
+      fullName: 'King Cars Newton Park',
       address: '343 Cape Rd, Newton Park, Gqeberha',
       phones: ['041 364 0167'],
       email: 'justin@kingcars.co.za',
@@ -480,7 +480,7 @@ function BranchSection() {
     {
       id: 'brackenfell',
       name: 'Brackenfell',
-      fullName: 'KING CARS BRACKENFELL',
+      fullName: 'King Cars Brackenfell',
       address: 'Corner of Old Paarl and Ferndale St, Brackenfell, Cape Town',
       phones: ['021 910 1343'],
       email: 'info@kingcars.co.za',
@@ -520,7 +520,7 @@ function BranchSection() {
           {/* Info Side */}
           <div className="lg:w-2/5 p-10 lg:p-14 space-y-10">
             <div>
-              <h3 className="font-display font-bold text-3xl text-gray-900 mb-8 lowercase first-letter:uppercase">
+              <h3 className="font-display font-bold text-3xl text-gray-900 mb-8">
                 {activeBranch.fullName}
               </h3>
 

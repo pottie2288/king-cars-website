@@ -12,8 +12,6 @@ const SA_BANKS = [
   { name: 'Nedbank',       logo: '/banks/nedbank.png' },
   { name: 'Investec',      logo: '/banks/investec.png' },
   { name: 'Capitec',       logo: '/banks/capitec.png' },
-  { name: 'African Bank',  logo: '/banks/africanbank.png' },
-  { name: 'WesBank',       logo: '/banks/wesbank.png' },
 ];
 
 

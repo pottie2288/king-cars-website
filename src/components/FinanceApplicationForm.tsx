@@ -289,7 +289,7 @@ export function FinanceApplicationForm() {
                     <div className="space-y-6 animate-fade-in">
                         <div className="flex items-center gap-3 mb-6">
                             <ShieldCheck className="w-5 h-5 text-king-blue" />
-                            <h3 className="font-display font-semibold text-xl text-gray-900">Finalize Application</h3>
+                            <h3 className="font-display font-semibold text-xl text-gray-900">Get Pre-Approved</h3>
                         </div>
 
                         <div className="bg-blue-50 p-6 rounded-2xl border border-blue-100 mb-8">

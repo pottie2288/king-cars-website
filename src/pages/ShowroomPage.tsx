@@ -120,26 +120,26 @@ export function ShowroomPage({ favourites, onToggleFavourite }: ShowroomPageProp
 
           {/* Filters Sidebar */}
           <aside className={`
-            fixed inset-0 z-50 lg:z-10 bg-white lg:bg-transparent lg:static lg:w-1/4 lg:block
+            fixed inset-0 z-50 lg:z-10 bg-gradient-to-br from-king-blue to-blue-900 lg:bg-transparent lg:static lg:w-1/4 lg:block
             overflow-y-auto lg:overflow-visible lg:sticky lg:top-24 lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto lg:scrollbar-hide
             transition-transform duration-300
             ${showMobileFilters ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
           `}>
             {/* Mobile Header */}
-            <div className="lg:hidden flex items-center justify-between p-4 border-b border-gray-100 sticky top-0 bg-white z-10">
-              <h2 className="font-bold text-lg">Filters</h2>
+            <div className="lg:hidden flex items-center justify-between p-4 border-b border-white/10 sticky top-0 bg-king-blue z-10">
+              <h2 className="font-bold text-lg text-white">Filters</h2>
               <button
                 onClick={() => setShowMobileFilters(false)}
-                className="p-2 hover:bg-gray-100 rounded-lg"
+                className="p-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
               >
                 <X className="w-6 h-6" />
               </button>
             </div>
 
-            <div className="p-4 lg:p-6 bg-white rounded-2xl shadow-sm border border-gray-200 space-y-6">
+            <div className="p-4 lg:p-6 lg:bg-gradient-to-br lg:from-king-blue lg:to-blue-900 rounded-none lg:rounded-2xl lg:shadow-xl border-none lg:border lg:border-white/10 space-y-6">
               {/* Search */}
               <div className="space-y-3">
-                <label className="text-sm font-semibold text-gray-900 ml-1">Search</label>
+                <label className="text-sm font-semibold text-white ml-1">Search</label>
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                   <input
@@ -152,12 +152,12 @@ export function ShowroomPage({ favourites, onToggleFavourite }: ShowroomPageProp
                 </div>
               </div>
 
-              <div className="h-px bg-gray-100" />
+              <div className="h-px bg-white/10" />
 
               {/* Make & Category */}
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-900 ml-1">Make</label>
+                  <label className="text-sm font-semibold text-white ml-1">Make</label>
                   <div className="relative group">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 group-hover:text-king-blue transition-colors">
                       <CarIcon className="h-4 w-4" />
@@ -179,7 +179,7 @@ export function ShowroomPage({ favourites, onToggleFavourite }: ShowroomPageProp
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-900 ml-1">Body Type</label>
+                  <label className="text-sm font-semibold text-white ml-1">Body Type</label>
                   <div className="relative group">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 group-hover:text-king-blue transition-colors">
                       <Shapes className="h-4 w-4" />
@@ -201,7 +201,7 @@ export function ShowroomPage({ favourites, onToggleFavourite }: ShowroomPageProp
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-900 ml-1">Location</label>
+                  <label className="text-sm font-semibold text-white ml-1">Location</label>
                   <div className="relative group">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 group-hover:text-king-blue transition-colors">
                       <MapPin className="h-4 w-4" />
@@ -223,11 +223,11 @@ export function ShowroomPage({ favourites, onToggleFavourite }: ShowroomPageProp
                 </div>
               </div>
 
-              <div className="h-px bg-gray-100" />
+              <div className="h-px bg-white/10" />
 
               {/* Price Range */}
               <div className="space-y-3">
-                <label className="text-sm font-semibold text-gray-900 ml-1">Price Range</label>
+                <label className="text-sm font-semibold text-white ml-1">Price Range</label>
                 <div className="grid grid-cols-2 gap-3">
                   <div className="relative">
                     <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 font-medium text-sm">R</span>
@@ -254,7 +254,7 @@ export function ShowroomPage({ favourites, onToggleFavourite }: ShowroomPageProp
 
               {/* Year Range */}
               <div className="space-y-3">
-                <label className="text-sm font-semibold text-gray-900 ml-1">Year</label>
+                <label className="text-sm font-semibold text-white ml-1">Year</label>
                 <div className="grid grid-cols-2 gap-3">
                   <input
                     type="number"
@@ -275,7 +275,7 @@ export function ShowroomPage({ favourites, onToggleFavourite }: ShowroomPageProp
 
               <button
                 onClick={clearFilters}
-                className="w-full py-2.5 text-king-blue font-medium text-sm hover:bg-blue-50 rounded-lg transition-colors border border-dashed border-king-blue/30"
+                className="w-full py-2.5 text-white font-medium text-sm hover:bg-white/10 rounded-lg transition-colors border border-dashed border-white/30"
               >
                 Clear All Filters
               </button>

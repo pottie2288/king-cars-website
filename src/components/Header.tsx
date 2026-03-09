@@ -7,8 +7,8 @@ interface HeaderProps {
 }
 
 const navItems = [
-  { label: 'Showroom', path: '/showroom' },
   { label: 'Sell Your Car', path: '/sell-your-car' },
+  { label: 'Showroom', path: '/showroom' },
   { label: 'Finance', path: '/finance' },
   { label: 'About', path: '/about' },
   { label: 'Compliments & Complaints', path: '/compliments-complaints' },

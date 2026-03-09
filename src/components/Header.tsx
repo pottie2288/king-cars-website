@@ -127,7 +127,7 @@ export function Header({ favouritesCount = 0 }: HeaderProps) {
                 item.path === '/sell-your-car'
                   ? `text-left px-4 py-3 rounded-xl font-semibold transition-all bg-king-blue text-white shadow-md`
                   : `text-left px-4 py-3 rounded-xl font-medium transition-all ${isActive
-                    ? 'bg-king-blue text-white'
+                    ? 'bg-gray-100 text-king-blue font-semibold'
                     : 'text-gray-700 hover:bg-gray-100'
                   }`
               }

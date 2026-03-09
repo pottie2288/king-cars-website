@@ -48,14 +48,14 @@ export function ComplaintsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-24 pb-16">
+    <div className="min-h-screen bg-gray-50 pb-16">
       <SEO
         title="Compliments & Complaints"
         description="Share your experience with King Cars. We value your feedback and use it to continuously improve our service."
       />
 
       {/* Hero Banner */}
-      <div className="bg-king-blue py-14 px-4 mb-12">
+      <div className="bg-king-blue pt-32 pb-14 px-4 mb-12">
         <div className="max-w-3xl mx-auto text-center">
           <AnimatedSection>
             <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-5">

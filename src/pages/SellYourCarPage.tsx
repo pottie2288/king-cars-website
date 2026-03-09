@@ -331,19 +331,12 @@ export function SellYourCarPage() {
       {/* Bring Your Car In & Contact Us Section */}
       <section className="bg-white border-b border-gray-100 py-16 overflow-hidden">
         <div className="section-padding">
-          <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="text-center max-w-3xl mx-auto mb-8">
             <h2 className="font-display font-light text-4xl sm:text-5xl text-gray-900 mb-4">
               Bring Your Car In
             </h2>
-            <p className="text-gray-600 mb-12 leading-relaxed">
+            <p className="text-gray-600 leading-relaxed">
               Bring your vehicle to one of our branches and our friendly staff will give you an assessment while you wait! You get an instant appraisal and immediate cash payment should you decide to sell.
-            </p>
-            
-            <h2 className="font-display font-light text-4xl sm:text-5xl text-gray-900 mb-4">
-              Contact Us
-            </h2>
-            <p className="text-gray-600 leading-relaxed mb-4">
-              For more information on selling your car, getting an estimate, or how our process works, please feel free to get in touch with us! We're always happy to help.
             </p>
           </div>
 

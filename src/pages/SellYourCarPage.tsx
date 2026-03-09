@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Check, ChevronRight, Send, Shield, Clock, Banknote } from 'lucide-react';
+import { Check, ChevronRight, Send, Shield, Clock, Banknote, Phone, MapPin, Mail, MessageCircle, UploadCloud } from 'lucide-react';
 
 
 type Step = 1 | 2 | 3 | 4;
@@ -216,45 +216,40 @@ export function SellYourCarPage() {
                           </div>
                         </div>
 
-                        {/* Condition */}
-                        <div>
-                          <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">Condition</label>
-                          <select
-                            value={formData.condition}
-                            onChange={(e) => updateFormData('condition', e.target.value)}
-                            className="w-full h-12 px-4 rounded-xl border-2 border-gray-200 focus:border-king-blue focus:ring-0 font-medium transition-colors bg-gray-50"
-                          >
-                            <option value="">Select Condition</option>
-                            {conditions.map(c => <option key={c} value={c}>{c}</option>)}
-                          </select>
+                        {/* File Upload Box */}
+                        <div className="md:col-span-2">
+                          <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">Upload Your Car Photos</label>
+                          <div className="w-full sm:w-1/2 border-2 border-dashed border-gray-300 rounded-xl p-8 hover:bg-gray-50 transition-colors cursor-pointer group flex flex-col items-center justify-center text-center">
+                            <UploadCloud className="w-6 h-6 text-gray-400 group-hover:text-king-blue mb-3 transition-colors" />
+                            <p className="text-gray-600 text-sm font-medium">Drop a file here or click to upload (Max. 5 images)</p>
+                            <p className="text-gray-400 text-xs mt-1">Maximum file size: 2MB</p>
+                          </div>
                         </div>
 
-                        {/* Location */}
+                        {/* Privacy Policy text */}
+                        <div className="md:col-span-2 mt-4 text-sm text-gray-600">
+                          <span className="font-bold text-gray-900">Privacy Policy</span> By sending this enquiry, you agree to be contacted by King Cars and have your personal information processed for the purpose of this enquiry, and in doing so agree to our <a href="#" className="text-king-cyan hover:underline hover:text-king-blue font-medium transition-colors">Privacy Policy</a>.
+                        </div>
+
+                        {/* Where did you find out about us */}
                         <div className="md:col-span-2">
-                          <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">Location</label>
-                          <div className="grid grid-cols-3 gap-4">
-                            {locations.map(loc => (
-                              <button
-                                key={loc}
-                                onClick={() => updateFormData('location', loc)}
-                                className={`h-12 rounded-xl font-medium border-2 transition-all ${formData.location === loc
-                                  ? 'border-king-blue bg-king-blue text-white shadow-lg transform scale-[1.02]'
-                                  : 'border-gray-200 text-gray-600 hover:border-gray-300 hover:bg-gray-50'
-                                  }`}
-                              >
-                                {loc}
-                              </button>
-                            ))}
-                          </div>
+                          <label className="block text-sm text-gray-700 mb-2">Where did you find out about us?</label>
+                          <select className="w-full h-12 px-4 rounded border border-gray-300 focus:border-king-blue focus:ring-0 text-sm text-gray-500 bg-white">
+                            <option value="">Please select one of the options below</option>
+                            <option value="google">Google Search</option>
+                            <option value="facebook">Facebook</option>
+                            <option value="friend">Friend / Family</option>
+                            <option value="other">Other</option>
+                          </select>
                         </div>
                       </div>
 
                       <button
                         onClick={handleNext}
                         disabled={!canProceedToNext()}
-                        className="w-full btn-primary h-14 text-lg shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="btn-primary bg-king-dark hover:bg-black text-white px-8 h-12 rounded mt-4"
                       >
-                        Get My Valuation
+                        Submit
                       </button>
                     </div>
                   )}
@@ -335,8 +330,136 @@ export function SellYourCarPage() {
         </div>
       </div>
 
+      {/* Bring Your Car In Section */}
+      <div className="bg-white border-b border-gray-100 py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            
+            {/* Map Side */}
+            <div>
+              <h2 className="font-display font-light text-3xl sm:text-4xl text-gray-900 mb-4">
+                Bring Your <span className="font-bold">Car In</span>
+              </h2>
+              <p className="text-gray-600 mb-8 leading-relaxed">
+                Bring your vehicle to one of our branches and our friendly staff will give you an assessment while you wait! You get an instant appraisal and immediate cash payment should you decide to sell.
+              </p>
+              
+              <div className="rounded-2xl overflow-hidden shadow-lg border border-gray-100 h-[300px] w-full">
+                <iframe 
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d105995.66018318063!2d18.558776611391515!3d-33.88204642277884!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1dcc5a1b2413725b%3King%20Cars!5e0!3m2!1sen!2sza!4v1714574900000!5m2!1sen!2sza" 
+                  width="100%" 
+                  height="100%" 
+                  style={{ border: 0 }} 
+                  allowFullScreen={false} 
+                  loading="lazy" 
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="King Cars Locations Map"
+                ></iframe>
+              </div>
+            </div>
+
+            {/* Contact Details Side */}
+            <div>
+              <h2 className="font-display font-light text-3xl sm:text-4xl text-gray-900 mb-8 lg:mt-0 mt-8">
+                Contact <span className="font-bold">Us</span>
+              </h2>
+              <p className="text-gray-600 mb-10 leading-relaxed">
+                For more information on selling your car, getting an estimate, or how our process works, please feel free to get in touch with us! We're always happy to help.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-10">
+                
+                {/* Contact Option 1 */}
+                <div>
+                  <h3 className="font-bold text-lg text-gray-900 mb-4">Western Cape</h3>
+                  <ul className="space-y-4">
+                    <li className="flex items-start gap-3">
+                      <div className="w-8 h-8 rounded-full bg-king-blue/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <Phone className="w-4 h-4 text-king-blue" />
+                      </div>
+                      <div>
+                        <span className="block text-sm font-medium text-gray-900">Bellville</span>
+                        <a href="tel:0219101343" className="text-sm text-gray-600 hover:text-king-blue">021 910 1343</a>
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="w-8 h-8 rounded-full bg-king-blue/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <Phone className="w-4 h-4 text-king-blue" />
+                      </div>
+                      <div>
+                        <span className="block text-sm font-medium text-gray-900">Vredekloof</span>
+                        <a href="tel:0219101343" className="text-sm text-gray-600 hover:text-king-blue">021 910 1343</a>
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="w-8 h-8 rounded-full bg-king-blue/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <Phone className="w-4 h-4 text-king-blue" />
+                      </div>
+                      <div>
+                        <span className="block text-sm font-medium text-gray-900">Brackenfell</span>
+                        <a href="tel:0219101343" className="text-sm text-gray-600 hover:text-king-blue">021 910 1343</a>
+                      </div>
+                    </li>
+                  </ul>
+                  
+                  {/* Whatsapp Button */}
+                  <a href="https://wa.me/27821234567" target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center gap-2 px-6 py-2.5 bg-[#25D366] hover:bg-[#20bd5a] text-white font-medium rounded-lg transition-colors shadow-sm">
+                    <MessageCircle className="w-5 h-5" />
+                    WhatsApp Now
+                  </a>
+                </div>
+
+                {/* Contact Option 2 */}
+                <div>
+                  <h3 className="font-bold text-lg text-gray-900 mb-4">Eastern Cape</h3>
+                  <ul className="space-y-4">
+                     <li className="flex items-start gap-3">
+                      <div className="w-8 h-8 rounded-full bg-king-blue/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <Phone className="w-4 h-4 text-king-blue" />
+                      </div>
+                      <div>
+                        <span className="block text-sm font-medium text-gray-900">17th Ave</span>
+                        <a href="tel:0413653900" className="text-sm text-gray-600 hover:text-king-blue">041 365 3900</a>
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-3">
+                       <div className="w-8 h-8 rounded-full bg-king-blue/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <Phone className="w-4 h-4 text-king-blue" />
+                      </div>
+                      <div>
+                        <span className="block text-sm font-medium text-gray-900">Sydenham</span>
+                        <a href="tel:0414871241" className="text-sm text-gray-600 hover:text-king-blue">041 487 1241</a>
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-3">
+                       <div className="w-8 h-8 rounded-full bg-king-blue/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <Phone className="w-4 h-4 text-king-blue" />
+                      </div>
+                      <div>
+                        <span className="block text-sm font-medium text-gray-900">Newton Park</span>
+                        <a href="tel:0413640167" className="text-sm text-gray-600 hover:text-king-blue">041 364 0167</a>
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-3 mt-2">
+                      <div className="w-8 h-8 rounded-full bg-king-cyan/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <Mail className="w-4 h-4 text-king-cyan" />
+                      </div>
+                      <div>
+                        <span className="block text-sm font-medium text-gray-900">Email Enquiries</span>
+                        <a href="mailto:info@kingcars.co.za" className="text-sm text-gray-600 hover:text-king-blue break-all">info@kingcars.co.za</a>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Trust Indicators Section (Why King Cars?) */}
-      <div className="bg-white border-b border-gray-100">
+      <div className="bg-gray-50 border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center mb-12">
             <h2 className="font-display font-bold text-3xl text-gray-900">Why Sell to King Cars?</h2>

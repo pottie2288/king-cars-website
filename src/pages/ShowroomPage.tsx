@@ -121,7 +121,8 @@ export function ShowroomPage({ favourites, onToggleFavourite }: ShowroomPageProp
           {/* Filters Sidebar */}
           <aside className={`
             fixed inset-0 z-50 bg-white lg:bg-transparent lg:static lg:w-1/4 lg:block
-            overflow-y-auto lg:overflow-visible transition-transform duration-300
+            overflow-y-auto lg:overflow-visible lg:sticky lg:top-24 lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto lg:scrollbar-hide
+            transition-transform duration-300
             ${showMobileFilters ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
           `}>
             {/* Mobile Header */}

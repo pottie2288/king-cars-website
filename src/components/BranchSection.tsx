@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 export function BranchSection() {
   const branches = [
@@ -165,7 +165,7 @@ export function BranchSection() {
 
               <div>
                 <h4 className="font-bold text-gray-900 mb-2">Contact numbers:</h4>
-                {activeBranch.phones.map((phone, idx) => (
+                {activeBranch.phones.map((phone: string, idx: number) => (
                   <p key={idx} className="text-gray-600">{phone}</p>
                 ))}
               </div>

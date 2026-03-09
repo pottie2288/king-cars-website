@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Check, ChevronRight, Send, Shield, Clock, Banknote, Phone, MapPin, Mail, MessageCircle, UploadCloud } from 'lucide-react';
+import { Check, ChevronRight, Send, Shield, Clock, Banknote, Phone, Mail, MessageCircle, UploadCloud } from 'lucide-react';
 
 
 type Step = 1 | 2 | 3 | 4;
@@ -24,10 +24,6 @@ const carMakes = [
 
 const years = Array.from({ length: 25 }, (_, i) => (2024 - i).toString());
 
-const locations = ['Western Cape', 'Eastern Cape', 'Other'];
-
-const conditions = ['Excellent', 'Good', 'Fair', 'Poor'];
-
 import { SEO } from '@/components/SEO';
 
 export function SellYourCarPage() {
@@ -48,14 +44,14 @@ export function SellYourCarPage() {
   });
 
   const updateFormData = (field: keyof FormData, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+    setFormData((prev: FormData) => ({ ...prev, [field]: value }));
   };
 
 
 
   const canProceedToNext = () => {
     if (currentStep === 1) {
-      return formData.year && formData.make && formData.model && formData.mileage && formData.location && formData.condition;
+      return formData.year && formData.make && formData.model && formData.mileage;
     }
     if (currentStep === 2) {
       return formData.name && formData.email && formData.phone;

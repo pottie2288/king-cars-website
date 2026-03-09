@@ -7,11 +7,11 @@ interface HeaderProps {
 }
 
 const navItems = [
-  { label: 'Home', path: '/' },
   { label: 'Showroom', path: '/showroom' },
   { label: 'Sell Your Car', path: '/sell-your-car' },
   { label: 'Finance', path: '/finance' },
   { label: 'About', path: '/about' },
+  { label: 'Compliments & Complaints', path: '/compliments-complaints' },
   { label: 'Favourites', path: '/favourites' },
 ];
 
@@ -63,12 +63,12 @@ export function Header({ favouritesCount = 0 }: HeaderProps) {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav className="hidden lg:flex items-center gap-5">
             {navItems.map((item) => (
               <NavLink
                 key={item.path}
                 to={item.path}
-                className={({ isActive }) => `nav-link lg:text-lg xl:text-xl text-gray-700 hover:text-king-blue after:bg-king-blue ${isActive ? 'nav-link-active' : ''
+                className={({ isActive }) => `nav-link text-sm xl:text-base text-gray-700 hover:text-king-blue after:bg-king-blue ${isActive ? 'nav-link-active' : ''
                   } relative`}
               >
                 {item.label}

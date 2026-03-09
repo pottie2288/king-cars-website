@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Check, ChevronRight, Send, Shield, Clock, Banknote, UploadCloud } from 'lucide-react';
+import { SEO } from '@/components/SEO';
+import { BranchSection } from '@/components/BranchSection';
 
 
 type Step = 1 | 2 | 3 | 4;
@@ -24,8 +26,7 @@ const carMakes = [
 
 const years = Array.from({ length: 25 }, (_, i) => (2024 - i).toString());
 
-import { SEO } from '@/components/SEO';
-import { BranchSection } from '@/components/BranchSection';
+
 
 export function SellYourCarPage() {
   const [currentStep, setCurrentStep] = useState<Step>(1);

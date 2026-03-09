@@ -8,6 +8,7 @@ import { useInventory } from '@/hooks/useInventory';
 import { SEO } from '@/components/SEO';
 import { AnimatedSection } from '@/components/AnimatedSection';
 import { BodyTypeFilter } from '@/components/BodyTypeFilter';
+import { BranchSection } from '@/components/BranchSection';
 import type { FilterState, Car } from '@/types';
 
 interface HomePageProps {
@@ -15,7 +16,6 @@ interface HomePageProps {
   onToggleFavourite: (carId: string) => void;
 }
 
-import { BranchSection } from '@/components/BranchSection';
 
 export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
   const navigate = useNavigate();

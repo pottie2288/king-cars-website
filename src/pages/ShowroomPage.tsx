@@ -136,7 +136,7 @@ export function ShowroomPage({ favourites, onToggleFavourite }: ShowroomPageProp
               </button>
             </div>
 
-            <div className="p-4 lg:p-8 lg:bg-gradient-to-br lg:from-king-blue lg:to-blue-900 rounded-[2rem] lg:shadow-xl border-none lg:border lg:border-white/10 space-y-6">
+            <div className="p-4 lg:p-8 lg:bg-gradient-to-br lg:from-king-blue lg:to-blue-900 rounded-none lg:rounded-xl lg:shadow-xl border-none lg:border lg:border-white/10 space-y-6">
               {/* Search */}
               <div className="space-y-3">
                 <label className="text-sm font-semibold text-white ml-1">Search</label>

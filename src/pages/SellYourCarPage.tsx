@@ -332,9 +332,12 @@ export function SellYourCarPage() {
       <section className="bg-white border-b border-gray-100 py-16 overflow-hidden">
         <div className="section-padding">
           <div className="text-center max-w-3xl mx-auto mb-8">
-            <h2 className="font-display font-light text-4xl sm:text-5xl text-gray-900 mb-4">
-              Bring Your Car In
-            </h2>
+            <div className="mb-8 relative inline-block">
+              <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-gray-900 tracking-tight">
+                Bring Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-king-blue to-king-cyan">Car In</span>
+              </h2>
+              <div className="w-20 sm:w-24 h-1.5 bg-gradient-to-r from-king-blue to-king-cyan rounded-full mx-auto mt-4 opacity-90"></div>
+            </div>
             <p className="text-gray-600 leading-relaxed">
               Bring your vehicle to one of our branches and our friendly staff will give you an assessment while you wait! You get an instant appraisal and immediate cash payment should you decide to sell.
             </p>

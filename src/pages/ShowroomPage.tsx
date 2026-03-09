@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Search, SlidersHorizontal, MapPin, Grid, List as ListIcon, X } from 'lucide-react';
+import { Search, SlidersHorizontal, MapPin, Grid, List as ListIcon, X, ChevronDown, Car as CarIcon, Shapes } from 'lucide-react';
 import { CarCard } from '@/components/CarCard';
 import { useInventory } from '@/hooks/useInventory';
 import type { FilterState } from '@/types';
@@ -138,7 +138,7 @@ export function ShowroomPage({ favourites, onToggleFavourite }: ShowroomPageProp
             <div className="p-4 lg:p-6 bg-white rounded-2xl shadow-sm border border-gray-200 space-y-6">
               {/* Search */}
               <div className="space-y-3">
-                <label className="text-sm font-semibold text-gray-900">Search</label>
+                <label className="text-sm font-semibold text-gray-900 ml-1">Search</label>
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                   <input
@@ -146,7 +146,7 @@ export function ShowroomPage({ favourites, onToggleFavourite }: ShowroomPageProp
                     placeholder="Make, model, or keyword..."
                     value={filters.searchQuery}
                     onChange={(e) => handleFilterChange('searchQuery', e.target.value)}
-                    className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:border-king-cyan focus:ring-2 focus:ring-king-cyan/20 outline-none text-sm"
+                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 focus:border-king-cyan focus:ring-4 focus:ring-king-cyan/10 outline-none text-sm bg-white shadow-sm hover:border-king-cyan/50 transition-all"
                   />
                 </div>
               </div>
@@ -156,47 +156,68 @@ export function ShowroomPage({ favourites, onToggleFavourite }: ShowroomPageProp
               {/* Make & Category */}
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-900">Make</label>
-                  <select
-                    value={filters.make || ''}
-                    onChange={(e) => handleFilterChange('make', e.target.value || null)}
-                    className="w-full p-2.5 rounded-lg border border-gray-200 focus:border-king-cyan focus:ring-2 focus:ring-king-cyan/20 outline-none text-sm bg-white"
-                  >
-                    <option value="">All Makes</option>
-                    {makes.map(make => (
-                      <option key={make} value={make}>{make}</option>
-                    ))}
-                  </select>
+                  <label className="text-sm font-semibold text-gray-900 ml-1">Make</label>
+                  <div className="relative group">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 group-hover:text-king-blue transition-colors">
+                      <CarIcon className="h-4 w-4" />
+                    </div>
+                    <select
+                      value={filters.make || ''}
+                      onChange={(e) => handleFilterChange('make', e.target.value || null)}
+                      className="w-full pl-10 pr-10 py-3 rounded-xl border border-gray-200 focus:border-king-cyan focus:ring-4 focus:ring-king-cyan/10 outline-none text-sm bg-white text-gray-700 hover:border-king-cyan/50 transition-all cursor-pointer appearance-none shadow-sm"
+                    >
+                      <option value="">All Makes</option>
+                      {makes.map(make => (
+                        <option key={make} value={make} className="py-2">{make}</option>
+                      ))}
+                    </select>
+                    <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-400 group-hover:text-king-blue transition-colors">
+                      <ChevronDown className="h-4 w-4" />
+                    </div>
+                  </div>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-900">Category</label>
-                  <select
-                    value={filters.category || ''}
-                    onChange={(e) => handleFilterChange('category', e.target.value || null)}
-                    className="w-full p-2.5 rounded-lg border border-gray-200 focus:border-king-cyan focus:ring-2 focus:ring-king-cyan/20 outline-none text-sm bg-white"
-                  >
-                    <option value="">All Categories</option>
-                    {categories.map(cat => (
-                      <option key={cat} value={cat}>{cat}</option>
-                    ))}
-                  </select>
+                  <label className="text-sm font-semibold text-gray-900 ml-1">Category</label>
+                  <div className="relative group">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 group-hover:text-king-blue transition-colors">
+                      <Shapes className="h-4 w-4" />
+                    </div>
+                    <select
+                      value={filters.category || ''}
+                      onChange={(e) => handleFilterChange('category', e.target.value || null)}
+                      className="w-full pl-10 pr-10 py-3 rounded-xl border border-gray-200 focus:border-king-cyan focus:ring-4 focus:ring-king-cyan/10 outline-none text-sm bg-white text-gray-700 hover:border-king-cyan/50 transition-all cursor-pointer appearance-none shadow-sm"
+                    >
+                      <option value="">All Categories</option>
+                      {categories.map(cat => (
+                        <option key={cat} value={cat} className="py-2">{cat}</option>
+                      ))}
+                    </select>
+                    <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-400 group-hover:text-king-blue transition-colors">
+                      <ChevronDown className="h-4 w-4" />
+                    </div>
+                  </div>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-900">Location</label>
-                  <div className="relative">
-                    <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <label className="text-sm font-semibold text-gray-900 ml-1">Location</label>
+                  <div className="relative group">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 group-hover:text-king-blue transition-colors">
+                      <MapPin className="h-4 w-4" />
+                    </div>
                     <select
                       value={filters.location || ''}
                       onChange={(e) => handleFilterChange('location', e.target.value || null)}
-                      className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-200 focus:border-king-cyan focus:ring-2 focus:ring-king-cyan/20 outline-none text-sm bg-white text-gray-600"
+                      className="w-full pl-10 pr-10 py-3 rounded-xl border border-gray-200 focus:border-king-cyan focus:ring-4 focus:ring-king-cyan/10 outline-none text-sm bg-white text-gray-700 hover:border-king-cyan/50 transition-all cursor-pointer appearance-none shadow-sm"
                     >
                       <option value="">All Locations</option>
                       {locations.map(loc => (
-                        <option key={loc} value={loc}>{loc}</option>
+                        <option key={loc} value={loc} className="py-2">{loc}</option>
                       ))}
                     </select>
+                    <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-400 group-hover:text-king-blue transition-colors">
+                      <ChevronDown className="h-4 w-4" />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -205,42 +226,48 @@ export function ShowroomPage({ favourites, onToggleFavourite }: ShowroomPageProp
 
               {/* Price Range */}
               <div className="space-y-3">
-                <label className="text-sm font-semibold text-gray-900">Price Range</label>
-                <div className="grid grid-cols-2 gap-2">
-                  <input
-                    type="number"
-                    placeholder="Min"
-                    value={filters.minPrice || ''}
-                    onChange={(e) => handleFilterChange('minPrice', e.target.value ? parseInt(e.target.value) : null)}
-                    className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-king-cyan focus:ring-2 focus:ring-king-cyan/20 outline-none text-sm"
-                  />
-                  <input
-                    type="number"
-                    placeholder="Max"
-                    value={filters.maxPrice || ''}
-                    onChange={(e) => handleFilterChange('maxPrice', e.target.value ? parseInt(e.target.value) : null)}
-                    className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-king-cyan focus:ring-2 focus:ring-king-cyan/20 outline-none text-sm"
-                  />
+                <label className="text-sm font-semibold text-gray-900 ml-1">Price Range</label>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 font-medium text-sm">R</span>
+                    <input
+                      type="number"
+                      placeholder="Min"
+                      value={filters.minPrice || ''}
+                      onChange={(e) => handleFilterChange('minPrice', e.target.value ? parseInt(e.target.value) : null)}
+                      className="w-full pl-8 pr-3 py-2.5 rounded-xl border border-gray-200 focus:border-king-cyan focus:ring-4 focus:ring-king-cyan/10 outline-none text-sm bg-white shadow-sm hover:border-king-cyan/50 transition-all font-medium"
+                    />
+                  </div>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 font-medium text-sm">R</span>
+                    <input
+                      type="number"
+                      placeholder="Max"
+                      value={filters.maxPrice || ''}
+                      onChange={(e) => handleFilterChange('maxPrice', e.target.value ? parseInt(e.target.value) : null)}
+                      className="w-full pl-8 pr-3 py-2.5 rounded-xl border border-gray-200 focus:border-king-cyan focus:ring-4 focus:ring-king-cyan/10 outline-none text-sm bg-white shadow-sm hover:border-king-cyan/50 transition-all font-medium"
+                    />
+                  </div>
                 </div>
               </div>
 
               {/* Year Range */}
               <div className="space-y-3">
-                <label className="text-sm font-semibold text-gray-900">Year</label>
-                <div className="grid grid-cols-2 gap-2">
+                <label className="text-sm font-semibold text-gray-900 ml-1">Year</label>
+                <div className="grid grid-cols-2 gap-3">
                   <input
                     type="number"
                     placeholder="From"
                     value={filters.minYear || ''}
                     onChange={(e) => handleFilterChange('minYear', e.target.value ? parseInt(e.target.value) : null)}
-                    className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-king-cyan focus:ring-2 focus:ring-king-cyan/20 outline-none text-sm"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-king-cyan focus:ring-4 focus:ring-king-cyan/10 outline-none text-sm bg-white shadow-sm hover:border-king-cyan/50 transition-all font-medium text-center"
                   />
                   <input
                     type="number"
                     placeholder="To"
                     value={filters.maxYear || ''}
                     onChange={(e) => handleFilterChange('maxYear', e.target.value ? parseInt(e.target.value) : null)}
-                    className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-king-cyan focus:ring-2 focus:ring-king-cyan/20 outline-none text-sm"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-king-cyan focus:ring-4 focus:ring-king-cyan/10 outline-none text-sm bg-white shadow-sm hover:border-king-cyan/50 transition-all font-medium text-center"
                   />
                 </div>
               </div>

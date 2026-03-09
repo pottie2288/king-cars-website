@@ -63,13 +63,12 @@ export function Header({ favouritesCount = 0 }: HeaderProps) {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-5">
+          <nav className="hidden lg:flex items-center gap-8">
             {navItems.map((item) => (
               <NavLink
                 key={item.path}
                 to={item.path}
-                className={({ isActive }) => `nav-link text-sm xl:text-base text-gray-700 hover:text-king-blue after:bg-king-blue ${isActive ? 'nav-link-active' : ''
-                  } relative`}
+                className={({ isActive }) => `nav-link lg:text-lg xl:text-xl text-gray-700 hover:text-king-blue after:bg-king-blue ${isActive ? 'nav-link-active' : ''} relative`}
               >
                 {item.label}
                 {item.path === '/favourites' && (favouritesCount ?? 0) > 0 && (

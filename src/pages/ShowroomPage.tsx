@@ -178,7 +178,7 @@ export function ShowroomPage({ favourites, onToggleFavourite }: ShowroomPageProp
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-900 ml-1">Category</label>
+                  <label className="text-sm font-semibold text-gray-900 ml-1">Body Type</label>
                   <div className="relative group">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 group-hover:text-king-blue transition-colors">
                       <Shapes className="h-4 w-4" />
@@ -188,7 +188,7 @@ export function ShowroomPage({ favourites, onToggleFavourite }: ShowroomPageProp
                       onChange={(e) => handleFilterChange('category', e.target.value || null)}
                       className="w-full pl-10 pr-10 py-3 rounded-xl border border-gray-200 focus:border-king-cyan focus:ring-4 focus:ring-king-cyan/10 outline-none text-sm bg-white text-gray-700 hover:border-king-cyan/50 transition-all cursor-pointer appearance-none shadow-sm"
                     >
-                      <option value="">All Categories</option>
+                      <option value="">All Body Types</option>
                       {categories.map(cat => (
                         <option key={cat} value={cat} className="py-2">{cat}</option>
                       ))}

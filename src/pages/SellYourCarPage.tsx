@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Check, ChevronRight, Send, Shield, Clock, Banknote, Phone, Mail, MessageCircle, UploadCloud } from 'lucide-react';
+import { Check, ChevronRight, Send, Shield, Clock, Banknote, UploadCloud } from 'lucide-react';
 
 
 type Step = 1 | 2 | 3 | 4;
@@ -25,6 +25,7 @@ const carMakes = [
 const years = Array.from({ length: 25 }, (_, i) => (2024 - i).toString());
 
 import { SEO } from '@/components/SEO';
+import { BranchSection } from '@/components/BranchSection';
 
 export function SellYourCarPage() {
   const [currentStep, setCurrentStep] = useState<Step>(1);
@@ -326,133 +327,28 @@ export function SellYourCarPage() {
         </div>
       </div>
 
-      {/* Bring Your Car In Section */}
-      <div className="bg-white border-b border-gray-100 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+      {/* Bring Your Car In & Contact Us Section */}
+      <section className="bg-white border-b border-gray-100 py-16 overflow-hidden">
+        <div className="section-padding">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="font-display font-light text-4xl sm:text-5xl text-gray-900 mb-4">
+              Bring Your Car In
+            </h2>
+            <p className="text-gray-600 mb-12 leading-relaxed">
+              Bring your vehicle to one of our branches and our friendly staff will give you an assessment while you wait! You get an instant appraisal and immediate cash payment should you decide to sell.
+            </p>
             
-            {/* Map Side */}
-            <div>
-              <h2 className="font-display font-light text-3xl sm:text-4xl text-gray-900 mb-4">
-                Bring Your <span className="font-bold">Car In</span>
-              </h2>
-              <p className="text-gray-600 mb-8 leading-relaxed">
-                Bring your vehicle to one of our branches and our friendly staff will give you an assessment while you wait! You get an instant appraisal and immediate cash payment should you decide to sell.
-              </p>
-              
-              <div className="rounded-2xl overflow-hidden shadow-lg border border-gray-100 h-[300px] w-full">
-                <iframe 
-                  src="https://maps.google.com/maps?q=King%20Cars%20Bellville&t=&z=13&ie=UTF8&iwloc=&output=embed" 
-                  width="100%" 
-                  height="100%" 
-                  style={{ border: 0 }} 
-                  allowFullScreen={false} 
-                  loading="lazy" 
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="King Cars Locations Map"
-                ></iframe>
-              </div>
-            </div>
-
-            {/* Contact Details Side */}
-            <div>
-              <h2 className="font-display font-light text-3xl sm:text-4xl text-gray-900 mb-8 lg:mt-0 mt-8">
-                Contact <span className="font-bold">Us</span>
-              </h2>
-              <p className="text-gray-600 mb-10 leading-relaxed">
-                For more information on selling your car, getting an estimate, or how our process works, please feel free to get in touch with us! We're always happy to help.
-              </p>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-10">
-                
-                {/* Contact Option 1 */}
-                <div>
-                  <h3 className="font-bold text-lg text-gray-900 mb-4">Western Cape</h3>
-                  <ul className="space-y-4">
-                    <li className="flex items-start gap-3">
-                      <div className="w-8 h-8 rounded-full bg-king-blue/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <Phone className="w-4 h-4 text-king-blue" />
-                      </div>
-                      <div>
-                        <span className="block text-sm font-medium text-gray-900">Bellville</span>
-                        <a href="tel:0219101343" className="text-sm text-gray-600 hover:text-king-blue">021 910 1343</a>
-                      </div>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <div className="w-8 h-8 rounded-full bg-king-blue/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <Phone className="w-4 h-4 text-king-blue" />
-                      </div>
-                      <div>
-                        <span className="block text-sm font-medium text-gray-900">Vredekloof</span>
-                        <a href="tel:0219101343" className="text-sm text-gray-600 hover:text-king-blue">021 910 1343</a>
-                      </div>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <div className="w-8 h-8 rounded-full bg-king-blue/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <Phone className="w-4 h-4 text-king-blue" />
-                      </div>
-                      <div>
-                        <span className="block text-sm font-medium text-gray-900">Brackenfell</span>
-                        <a href="tel:0219101343" className="text-sm text-gray-600 hover:text-king-blue">021 910 1343</a>
-                      </div>
-                    </li>
-                  </ul>
-                  
-                  {/* Whatsapp Button */}
-                  <a href="https://wa.me/27821234567" target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center gap-2 px-6 py-2.5 bg-[#25D366] hover:bg-[#20bd5a] text-white font-medium rounded-lg transition-colors shadow-sm">
-                    <MessageCircle className="w-5 h-5" />
-                    WhatsApp Now
-                  </a>
-                </div>
-
-                {/* Contact Option 2 */}
-                <div>
-                  <h3 className="font-bold text-lg text-gray-900 mb-4">Eastern Cape</h3>
-                  <ul className="space-y-4">
-                     <li className="flex items-start gap-3">
-                      <div className="w-8 h-8 rounded-full bg-king-blue/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <Phone className="w-4 h-4 text-king-blue" />
-                      </div>
-                      <div>
-                        <span className="block text-sm font-medium text-gray-900">17th Ave</span>
-                        <a href="tel:0413653900" className="text-sm text-gray-600 hover:text-king-blue">041 365 3900</a>
-                      </div>
-                    </li>
-                    <li className="flex items-start gap-3">
-                       <div className="w-8 h-8 rounded-full bg-king-blue/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <Phone className="w-4 h-4 text-king-blue" />
-                      </div>
-                      <div>
-                        <span className="block text-sm font-medium text-gray-900">Sydenham</span>
-                        <a href="tel:0414871241" className="text-sm text-gray-600 hover:text-king-blue">041 487 1241</a>
-                      </div>
-                    </li>
-                    <li className="flex items-start gap-3">
-                       <div className="w-8 h-8 rounded-full bg-king-blue/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <Phone className="w-4 h-4 text-king-blue" />
-                      </div>
-                      <div>
-                        <span className="block text-sm font-medium text-gray-900">Newton Park</span>
-                        <a href="tel:0413640167" className="text-sm text-gray-600 hover:text-king-blue">041 364 0167</a>
-                      </div>
-                    </li>
-                    <li className="flex items-start gap-3 mt-2">
-                      <div className="w-8 h-8 rounded-full bg-king-cyan/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <Mail className="w-4 h-4 text-king-cyan" />
-                      </div>
-                      <div>
-                        <span className="block text-sm font-medium text-gray-900">Email Enquiries</span>
-                        <a href="mailto:info@kingcars.co.za" className="text-sm text-gray-600 hover:text-king-blue break-all">info@kingcars.co.za</a>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-
-            </div>
+            <h2 className="font-display font-light text-4xl sm:text-5xl text-gray-900 mb-4">
+              Contact Us
+            </h2>
+            <p className="text-gray-600 leading-relaxed mb-4">
+              For more information on selling your car, getting an estimate, or how our process works, please feel free to get in touch with us! We're always happy to help.
+            </p>
           </div>
+
+          <BranchSection />
         </div>
-      </div>
+      </section>
 
       {/* Trust Indicators Section (Why King Cars?) */}
       <div className="bg-gray-50 border-b border-gray-100">

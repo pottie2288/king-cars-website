@@ -120,7 +120,7 @@ export function ShowroomPage({ favourites, onToggleFavourite }: ShowroomPageProp
 
           {/* Filters Sidebar */}
           <aside className={`
-            fixed inset-0 z-50 lg:z-10 bg-gradient-to-br from-king-blue to-blue-900 lg:bg-none lg:bg-transparent lg:static lg:w-1/4 lg:block
+            fixed inset-0 z-50 lg:z-10 bg-king-blue lg:bg-transparent lg:static lg:w-1/4 lg:block
             overflow-y-auto lg:overflow-visible lg:sticky lg:top-24 lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto lg:scrollbar-hide
             transition-transform duration-300
             ${showMobileFilters ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
@@ -136,7 +136,7 @@ export function ShowroomPage({ favourites, onToggleFavourite }: ShowroomPageProp
               </button>
             </div>
 
-            <div className="p-4 lg:p-8 lg:bg-gradient-to-br lg:from-king-blue lg:to-blue-900 rounded-none lg:rounded-xl lg:shadow-xl border-none lg:border lg:border-white/10 space-y-6">
+            <div className="p-4 lg:p-8 lg:bg-king-blue rounded-none lg:rounded-xl lg:shadow-xl border-none lg:border lg:border-white/10 space-y-6">
               {/* Search */}
               <div className="space-y-3">
                 <label className="text-sm font-semibold text-white ml-1">Search</label>

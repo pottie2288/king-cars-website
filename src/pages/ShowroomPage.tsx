@@ -333,6 +333,7 @@ export function ShowroomPage({ favourites, onToggleFavourite }: ShowroomPageProp
                       car={car}
                       isFavourite={favourites.includes(car.id)}
                       onToggleFavourite={() => onToggleFavourite(car.id)}
+                      viewMode={viewMode}
                     />
                   </div>
                 ))}

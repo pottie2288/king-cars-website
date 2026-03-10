@@ -8,9 +8,10 @@ interface CarCardProps {
   onToggleFavourite?: (e: React.MouseEvent) => void;
   // Kept for backward compatibility if needed, but we'll prefer internal navigation
   onClick?: (car: Car) => void;
+  viewMode?: 'grid' | 'list';
 }
 
-export function CarCard({ car, onClick, isFavourite = false, onToggleFavourite }: CarCardProps) {
+export function CarCard({ car, onClick, isFavourite = false, onToggleFavourite, viewMode = 'grid' }: CarCardProps) {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
@@ -36,11 +37,15 @@ export function CarCard({ car, onClick, isFavourite = false, onToggleFavourite }
 
   return (
     <div
-      className="card-vehicle group cursor-pointer hover-lift shadow-md border border-gray-200 rounded-2xl bg-white"
+      className={`card-vehicle group cursor-pointer hover-lift shadow-md border border-gray-200 rounded-2xl bg-white flex ${
+        viewMode === 'list' ? 'flex-col lg:flex-row' : 'flex-col'
+      }`}
       onClick={handleCardClick}
     >
       {/* Image Container */}
-      <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
+      <div className={`relative bg-gray-100 overflow-hidden shrink-0 ${
+        viewMode === 'list' ? 'w-full lg:w-[320px] aspect-[4/3] lg:aspect-auto lg:h-full' : 'w-full aspect-[4/3]'
+      }`}>
         <img
           src={car.image}
           alt={`${car.make} ${car.model}`}
@@ -77,15 +82,17 @@ export function CarCard({ car, onClick, isFavourite = false, onToggleFavourite }
       </div>
 
       {/* Content */}
-      <div className="p-5">
+      <div className={`p-5 flex flex-col flex-1 ${viewMode === 'list' ? 'justify-between' : ''}`}>
         {/* Title */}
-        <h3 className="font-display font-semibold text-lg text-gray-900 mb-1 group-hover:text-king-blue transition-colors">
-          {car.make} {car.model}
-        </h3>
-        <p className="text-gray-500 text-sm mb-4">{car.year} • {car.color}</p>
+        <div>
+          <h3 className="font-display font-semibold text-lg text-gray-900 mb-1 group-hover:text-king-blue transition-colors">
+            {car.make} {car.model}
+          </h3>
+          <p className="text-gray-500 text-sm mb-4">{car.year} • {car.color}</p>
+        </div>
 
         {/* Specs Grid */}
-        <div className="grid grid-cols-3 gap-3 mb-4">
+        <div className="grid grid-cols-3 gap-3 mb-4 mt-auto">
           <div className="flex items-center gap-1.5 text-gray-600">
             <Fuel className="w-4 h-4 text-king-cyan" />
             <span className="text-xs">{car.fuelType}</span>

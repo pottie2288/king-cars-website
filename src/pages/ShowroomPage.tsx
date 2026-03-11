@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Search, SlidersHorizontal, MapPin, Grid, List as ListIcon, X, ChevronDown, Car as CarIcon, Shapes } from 'lucide-react';
 import { CarCard } from '@/components/CarCard';
 import { useInventory } from '@/hooks/useInventory';
@@ -63,27 +63,29 @@ export function ShowroomPage({ favourites, onToggleFavourite }: ShowroomPageProp
   };
 
   // Filter Logic
-  const filteredCars = inventory.filter(car => {
-    if (filters.searchQuery) {
-      const query = filters.searchQuery.toLowerCase();
-      const match =
-        car.make.toLowerCase().includes(query) ||
-        car.model.toLowerCase().includes(query) ||
-        car.category.toLowerCase().includes(query);
-      if (!match) return false;
-    }
+  const filteredCars = useMemo(() => {
+    return inventory.filter(car => {
+      if (filters.searchQuery) {
+        const query = filters.searchQuery.toLowerCase();
+        const match =
+          car.make.toLowerCase().includes(query) ||
+          car.model.toLowerCase().includes(query) ||
+          car.category.toLowerCase().includes(query);
+        if (!match) return false;
+      }
 
-    if (filters.make && car.make !== filters.make) return false;
-    if (filters.category && car.category !== filters.category) return false;
-    if (filters.location && car.location !== filters.location) return false;
-    if (filters.minPrice && car.price < filters.minPrice) return false;
-    if (filters.maxPrice && car.price > filters.maxPrice) return false;
-    if (filters.minYear && car.year < filters.minYear) return false;
-    if (filters.maxYear && car.year > filters.maxYear) return false;
-    if (filters.maxMileage && car.mileage > filters.maxMileage) return false;
+      if (filters.make && car.make !== filters.make) return false;
+      if (filters.category && car.category !== filters.category) return false;
+      if (filters.location && car.location !== filters.location) return false;
+      if (filters.minPrice && car.price < filters.minPrice) return false;
+      if (filters.maxPrice && car.price > filters.maxPrice) return false;
+      if (filters.minYear && car.year < filters.minYear) return false;
+      if (filters.maxYear && car.year > filters.maxYear) return false;
+      if (filters.maxMileage && car.mileage > filters.maxMileage) return false;
 
-    return true;
-  });
+      return true;
+    });
+  }, [inventory, filters]);
 
   return (
     <div className="min-h-screen bg-gray-50 pt-20">

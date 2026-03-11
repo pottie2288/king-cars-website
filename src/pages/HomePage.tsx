@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import { ArrowRight, Shield, Clock, Award, Phone, Star, Car as CarIcon, Coins, HandCoins, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, Shield, Clock, Award, Phone, Star, ChevronLeft, ChevronRight } from 'lucide-react';
 import useEmblaCarousel from 'embla-carousel-react';
 import { useNavigate } from 'react-router-dom';
 import { SearchBar } from '@/components/SearchBar';

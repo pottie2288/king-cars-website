@@ -88,7 +88,7 @@ export function FinancePage() {
             </AnimatedSection>
 
             <AnimatedSection className="relative lg:h-[500px] flex items-center justify-center -mt-8 lg:mt-0">
-              <div className="relative z-10 rounded-3xl overflow-hidden shadow-2xl transform rotate-3 hover:rotate-0 transition-transform duration-500">
+              <div className="relative z-10 rounded-3xl overflow-hidden shadow-2xl">
                 <img
                   src="/hero-showroom.png"
                   alt="Happy couple financing a car"

@@ -83,7 +83,7 @@ export function FinanceApplicationForm() {
 
     const prevStep = () => setStep(prev => prev - 1);
 
-    const onSubmit = (data: FormData) => {
+    const onSubmit = () => {
         // Form success handling can go here
         setIsSubmitted(true);
     };

@@ -9,6 +9,7 @@ import { AnimatedSection } from '@/components/AnimatedSection';
 import { BodyTypeFilter } from '@/components/BodyTypeFilter';
 import { BranchSection } from '@/components/BranchSection';
 import { TestimonialCarousel } from '@/components/ui/testimonial';
+import { Typewriter } from '@/components/ui/typewriter';
 import type { FilterState, Car } from '@/types';
 
 interface HomePageProps {
@@ -243,8 +244,14 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
             {/* Center Content */}
             <div className="max-w-3xl text-center flex-1">
               <AnimatedSection>
-                <h2 className="font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-white mb-6">
-                  Ready to Sell Your Car?
+                <h2 className="font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-white mb-6 min-h-[2.5em] sm:min-h-[2em] flex items-center justify-center">
+                  <Typewriter
+                    words={["Ready to Sell Your Car?", "Get Instant Cash Today!", "We Buy Any Car!"]}
+                    speed={80}
+                    delayBetweenWords={2000}
+                    cursor={true}
+                    cursorChar="|"
+                  />
                 </h2>
                 <p className="text-white/80 text-lg mb-10 max-w-2xl mx-auto">
                   Get a fair market value for your vehicle. We buy cars in any condition

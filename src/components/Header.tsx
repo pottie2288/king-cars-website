@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Phone } from 'lucide-react';
+import { Phone } from 'lucide-react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
+import { MenuToggleIcon } from '@/components/ui/menu-toggle-icon';
 
 interface HeaderProps {
   favouritesCount?: number;
@@ -102,11 +103,11 @@ export function Header({ favouritesCount = 0 }: HeaderProps) {
               : 'text-king-blue hover:bg-white/50'
               }`}
           >
-            {isMobileMenuOpen ? (
-              <X className="w-6 h-6" />
-            ) : (
-              <Menu className="w-6 h-6" />
-            )}
+            <MenuToggleIcon 
+              open={isMobileMenuOpen} 
+              className="w-6 h-6" 
+              duration={400}
+            />
           </button>
         </div>
       </div>

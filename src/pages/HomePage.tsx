@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ArrowRight, Shield, Clock, Award, Phone, Car as CarIcon, Coins, HandCoins } from 'lucide-react';
+import { ArrowRight, Shield, Clock, Award, Car as CarIcon, Coins, HandCoins } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { SearchBar } from '@/components/SearchBar';
 import { CarCard } from '@/components/CarCard';
@@ -265,13 +265,6 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
                     Sell Your Car
                     <ArrowRight className="w-5 h-5" />
                   </button>
-                  <a
-                    href="tel:+27215551234"
-                    className="flex items-center justify-center gap-2 px-8 py-4 bg-transparent border-2 border-white/30 text-white rounded-xl font-medium hover:bg-white/10 transition-all hover:border-white"
-                  >
-                    <Phone className="w-5 h-5" />
-                    Call Us Now
-                  </a>
                 </div>
               </AnimatedSection>
             </div>

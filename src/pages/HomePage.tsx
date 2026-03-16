@@ -1,6 +1,5 @@
-import { useEffect, useState, useCallback } from 'react';
-import { ArrowRight, Shield, Clock, Award, Phone, Star, Car as CarIcon, Coins, HandCoins, ChevronLeft, ChevronRight } from 'lucide-react';
-import useEmblaCarousel from 'embla-carousel-react';
+import { useEffect, useState } from 'react';
+import { ArrowRight, Shield, Clock, Award, Phone, Car as CarIcon, Coins, HandCoins } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { SearchBar } from '@/components/SearchBar';
 import { CarCard } from '@/components/CarCard';
@@ -9,6 +8,7 @@ import { SEO } from '@/components/SEO';
 import { AnimatedSection } from '@/components/AnimatedSection';
 import { BodyTypeFilter } from '@/components/BodyTypeFilter';
 import { BranchSection } from '@/components/BranchSection';
+import { TestimonialCarousel } from '@/components/ui/testimonial';
 import type { FilterState, Car } from '@/types';
 
 interface HomePageProps {
@@ -56,56 +56,37 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
 
   const testimonials = [
     {
+      id: 1,
       name: 'Andre',
-      location: 'Bellville',
-      rating: 5,
-      text: 'Andre gave me excellent service right from the start. I highly recommend him and King Cars.',
-      date: '2 weeks ago'
+      avatar: 'https://randomuser.me/api/portraits/men/1.jpg',
+      description: 'Andre gave me excellent service right from the start. I highly recommend him and King Cars.',
     },
     {
+      id: 2,
       name: 'Tamaryne',
-      location: 'Bellville',
-      rating: 5,
-      text: 'Excellent Service. Thank you King Cars Bellville for the excellent service received.',
-      date: '1 month ago'
+      avatar: 'https://randomuser.me/api/portraits/women/1.jpg',
+      description: 'Excellent Service. Thank you King Cars Bellville for the excellent service received.',
     },
     {
+      id: 3,
       name: 'Ollie',
-      location: 'Cape Town',
-      rating: 5,
-      text: "GREAT WORK & SERVICE. Just a word thanks to you and Nigel for the great work and the service you gave me and Barbara at your dealership last Friday.",
-      date: '3 weeks ago'
+      avatar: 'https://randomuser.me/api/portraits/men/2.jpg',
+      description: "GREAT WORK & SERVICE. Just a word thanks to you and Nigel for the great work and service.",
     },
     {
+      id: 4,
       name: 'Teresa Booysen',
-      location: 'Bellville',
-      rating: 5,
-      text: 'Customer service is nie meer soos dit vroeer jare was nie maar Justin het my gewys dat daar nog mense is wat belangstel in hulle kliente. Dankie weereens.',
-      date: '2 months ago'
+      avatar: 'https://randomuser.me/api/portraits/women/2.jpg',
+      description: 'Customer service is nie meer soos dit vroeer jare was nie maar Justin het my gewys dat daar nog mense is.',
     },
     {
+      id: 5,
       name: 'Michael',
-      location: 'Cape Town',
-      rating: 5,
-      text: 'Thank you for keeping on trying. The effort you put into finding the right car for my budget was exceptional.',
-      date: '4 days ago'
+      avatar: 'https://randomuser.me/api/portraits/men/3.jpg',
+      description: 'Thank you for keeping on trying. The effort you put into finding the right car was exceptional.',
     }
   ];
 
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    align: 'start',
-    loop: true,
-    skipSnaps: false,
-    dragFree: true
-  });
-
-  const scrollPrev = useCallback(() => {
-    if (emblaApi) emblaApi.scrollPrev();
-  }, [emblaApi]);
-
-  const scrollNext = useCallback(() => {
-    if (emblaApi) emblaApi.scrollNext();
-  }, [emblaApi]);
 
   return (
     <div className="min-h-screen">
@@ -314,60 +295,11 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
             </h2>
           </AnimatedSection>
 
-          <div className="relative group">
-            <div className="overflow-hidden cursor-grab active:cursor-grabbing" ref={emblaRef}>
-              <div className="flex">
-                {testimonials.map((testimonial, index) => (
-                  <div key={index} className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] min-w-0 pl-6">
-                    <div className="bg-white rounded-2xl p-8 shadow-card h-full border border-gray-100 flex flex-col">
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="flex gap-1">
-                          {[...Array(testimonial.rating)].map((_, i) => (
-                            <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                          ))}
-                        </div>
-                        <div className="flex items-center gap-1.5 grayscale opacity-60">
-                          <img src="https://www.google.com/favicon.ico" alt="Google" className="w-4 h-4" />
-                          <span className="text-[10px] uppercase tracking-tighter font-bold">Review</span>
-                        </div>
-                      </div>
-                      <p className="text-gray-700 mb-6 leading-relaxed flex-grow italic">
-                        "{testimonial.text}"
-                      </p>
-                      <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 bg-king-blue/10 rounded-full flex items-center justify-center flex-shrink-0">
-                          <span className="font-display font-bold text-king-blue">
-                            {testimonial.name.charAt(0)}
-                          </span>
-                        </div>
-                        <div>
-                          <p className="font-bold text-gray-900 leading-none mb-1">{testimonial.name}</p>
-                          <div className="flex items-center gap-2 text-xs text-gray-400">
-                            <span>{testimonial.location}</span>
-                            <span className="w-1 h-1 bg-gray-300 rounded-full" />
-                            <span>{testimonial.date}</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Carousel Controls */}
-            <button
-              onClick={scrollPrev}
-              className="absolute -left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full shadow-lg border border-gray-100 flex items-center justify-center text-king-blue hover:bg-king-blue hover:text-white transition-all z-10 opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0"
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </button>
-            <button
-              onClick={scrollNext}
-              className="absolute -right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full shadow-lg border border-gray-100 flex items-center justify-center text-king-blue hover:bg-king-blue hover:text-white transition-all z-10 opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0"
-            >
-              <ChevronRight className="w-6 h-6" />
-            </button>
+          <div className="flex justify-center">
+            <TestimonialCarousel 
+              testimonials={testimonials}
+              className="max-w-4xl"
+            />
           </div>
 
           <div className="mt-12 text-center">

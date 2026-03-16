@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ArrowRight, Shield, Clock, Award, Car as CarIcon, Coins, HandCoins } from 'lucide-react';
+import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button';
 import { useNavigate } from 'react-router-dom';
 import { SearchBar } from '@/components/SearchBar';
 import { CarCard } from '@/components/CarCard';
@@ -254,17 +255,14 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
                   />
                 </h2>
                 <p className="text-white/80 text-lg mb-10 max-w-2xl mx-auto">
-                  Get a fair market value for your vehicle. We buy cars in any condition
-                  and offer instant payment.
+                  Get a fair market offer for your vehicle, easy and hassle-free!
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <button
+                  <InteractiveHoverButton
+                    text="Sell Your Car"
                     onClick={() => navigate('/sell-your-car')}
-                    className="btn-accent flex items-center justify-center gap-2 text-lg px-8 py-4 bg-king-cyan hover:bg-king-cyan/90 text-white rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all"
-                  >
-                    Sell Your Car
-                    <ArrowRight className="w-5 h-5" />
-                  </button>
+                    className="w-48 border-white/30 bg-white/10 text-white text-lg py-4 hover:border-white"
+                  />
                 </div>
               </AnimatedSection>
             </div>

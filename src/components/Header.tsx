@@ -105,7 +105,7 @@ export function Header({ favouritesCount = 0 }: HeaderProps) {
           >
             <MenuToggleIcon 
               open={isMobileMenuOpen} 
-              className="w-6 h-6" 
+              className="w-8 h-8" 
               duration={400}
             />
           </button>

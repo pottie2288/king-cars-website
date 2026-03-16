@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { ArrowRight, Shield, Clock, Award, Car as CarIcon, Coins, HandCoins } from 'lucide-react';
+import { ArrowRight, Car as CarIcon, Coins, HandCoins } from 'lucide-react';
 import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button';
+import { CssCarAnimation } from '@/components/ui/css-car-animation';
 import { useNavigate } from 'react-router-dom';
 import { SearchBar } from '@/components/SearchBar';
 import { CarCard } from '@/components/CarCard';
@@ -38,23 +39,6 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
 
   const makes = getUniqueMakes();
 
-  const benefits = [
-    {
-      icon: Shield,
-      title: 'Quality Guaranteed',
-      description: 'Every vehicle undergoes a comprehensive 100-point inspection before sale.',
-    },
-    {
-      icon: Clock,
-      title: 'Fast Approval',
-      description: 'Get finance approval within 24 hours with our trusted partners.',
-    },
-    {
-      icon: Award,
-      title: 'Best Prices',
-      description: 'Competitive pricing with transparent, no-hidden-fee policy.',
-    },
-  ];
 
   const testimonials = [
     {
@@ -189,10 +173,10 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
         </div>
       </section>
 
-      {/* Benefits Section */}
+      {/* Car Animation Section */}
       <section className="py-20 bg-white">
         <div className="section-padding">
-          <AnimatedSection className="text-center max-w-2xl mx-auto mb-16">
+          <AnimatedSection className="text-center max-w-2xl mx-auto mb-8">
             <span className="text-king-cyan font-medium text-sm uppercase tracking-wider">
               Why Choose Us
             </span>
@@ -204,22 +188,8 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
             </p>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {benefits.map((benefit, index) => (
-              <AnimatedSection key={index}>
-                <div className="text-center p-8 rounded-2xl bg-gray-50 hover:bg-white hover:shadow-card transition-all duration-300 group">
-                  <div className="w-16 h-16 bg-king-blue/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-king-blue group-hover:scale-110 transition-all duration-300">
-                    <benefit.icon className="w-8 h-8 text-king-blue group-hover:text-white transition-colors" />
-                  </div>
-                  <h3 className="font-display font-semibold text-xl text-gray-900 mb-3">
-                    {benefit.title}
-                  </h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    {benefit.description}
-                  </p>
-                </div>
-              </AnimatedSection>
-            ))}
+          <div className="flex items-center justify-center">
+            <CssCarAnimation />
           </div>
         </div>
       </section>

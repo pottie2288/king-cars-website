@@ -261,7 +261,7 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
                   <InteractiveHoverButton
                     text="Sell Your Car"
                     onClick={() => navigate('/sell-your-car')}
-                    className="w-48 border-white/30 bg-white/10 text-white text-lg py-4 hover:border-white"
+                    className="w-48 bg-white text-king-blue text-lg py-4 border-transparent hover:border-white"
                   />
                 </div>
               </AnimatedSection>

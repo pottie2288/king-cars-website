@@ -227,7 +227,7 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
                 <p className="text-white/80 text-lg mb-10 max-w-2xl mx-auto">
                   Get a fair market offer for your vehicle, easy and hassle-free!
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <div className="flex justify-center">
                   <InteractiveHoverButton
                     text="Sell Your Car"
                     onClick={() => navigate('/sell-your-car')}

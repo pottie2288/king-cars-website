@@ -2,6 +2,7 @@ import "./css-car-animation.css";
 
 export function CssCarAnimation() {
   return (
+    <div className="css-car__wrapper">
     <div className="css-car__container">
       <div className="css-car__car-container">
         <div className="css-car__car" />
@@ -61,6 +62,7 @@ export function CssCarAnimation() {
         <div className="css-car__line" />
         <div className="css-car__obstacles" />
       </div>
+    </div>
     </div>
   );
 }

@@ -1,27 +1,38 @@
 /* CSS Car Animation - From Uiverse.io by yeisonordonez */
 /* All classes prefixed with css-car__ to avoid global conflicts */
 
+.css-car__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  overflow: hidden;
+}
+
 .css-car__container {
   position: relative;
   width: 380px;
   height: 380px;
-  margin: auto;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   transform: scale(1);
+  transform-origin: center center;
 }
 
 /* Responsive scaling */
 @media (max-width: 640px) {
   .css-car__container {
     transform: scale(0.65);
+    margin: -66px auto;
   }
 }
 
 @media (min-width: 641px) and (max-width: 1024px) {
   .css-car__container {
     transform: scale(0.85);
+    margin: -28px auto;
   }
 }
 
@@ -937,5 +948,32 @@
   }
   100% {
     left: -40%;
+  }
+}
+
+/* Reduce animation intensity on mobile for better wheel alignment */
+@media (max-width: 640px) {
+  .css-car__car-container {
+    animation: css-car__lift-mobile 3s infinite cubic-bezier(0.96, 0.5, 0.27, 0.55);
+  }
+}
+
+@keyframes css-car__lift-mobile {
+  0%,
+  30% {
+    transform: rotate(0deg) translateY(0px);
+  }
+  32% {
+    transform: rotate(-0.8deg) translateY(-1px);
+  }
+  48%,
+  50% {
+    transform: rotate(0deg) translateY(0px);
+  }
+  56.5% {
+    transform: rotate(0.5deg) translateY(-0.5px);
+  }
+  68% {
+    transform: rotate(0deg) translateY(0px);
   }
 }

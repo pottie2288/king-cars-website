@@ -1,3 +1,5 @@
+'use client'
+
 
 export function StickyContactBar() {
   const whatsappNumber = '+27215551234';

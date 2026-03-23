@@ -1,6 +1,7 @@
+'use client'
+
 import { useState } from 'react';
 import { Check, ChevronRight, Send, Shield, Clock, Banknote, UploadCloud } from 'lucide-react';
-import { SEO } from '@/components/SEO';
 import { BranchSection } from '@/components/BranchSection';
 
 
@@ -98,11 +99,6 @@ export function SellYourCarPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <SEO
-        title="Sell Your Car for Cash in Cape Town & Port Elizabeth"
-        description="Get a fair cash offer for your vehicle within 24 hours. Hassle-free process, instant payment. We buy all makes and models. Trade-in or sell outright."
-        canonical="/sell-your-car"
-      />
       {/* Hero Section with Valuation Card */}
       <div className="relative bg-gradient-to-b from-king-blue to-blue-900 pt-36 pb-32 lg:pt-48 lg:pb-48">
         {/* Background Pattern/Image Overlay */}

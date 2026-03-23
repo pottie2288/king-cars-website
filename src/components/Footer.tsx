@@ -1,5 +1,7 @@
+'use client'
+
 import { MapPin, Mail, Clock, Facebook, Instagram, Linkedin } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 export function Footer() {
   const scrollToTop = () => {
@@ -60,7 +62,7 @@ export function Footer() {
               ].map((item) => (
                 <li key={item.path}>
                   <Link
-                    to={item.path}
+                    href={item.path}
                     onClick={scrollToTop}
                     className="text-gray-400 hover:text-king-cyan transition-colors text-sm"
                   >

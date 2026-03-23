@@ -1,3 +1,5 @@
+'use client'
+
 import { useState, useEffect } from 'react';
 import { Search } from 'lucide-react';
 import type { FilterState } from '@/types';

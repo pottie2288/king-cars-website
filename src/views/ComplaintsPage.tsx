@@ -1,7 +1,8 @@
+'use client'
+
 import { useState } from 'react';
 import { MessageSquareHeart, ThumbsUp, ThumbsDown, Upload, Send, CheckCircle } from 'lucide-react';
 import { AnimatedSection } from '@/components/AnimatedSection';
-import { SEO } from '@/components/SEO';
 
 export function ComplaintsPage() {
   const [submitted, setSubmitted] = useState(false);
@@ -25,7 +26,6 @@ export function ComplaintsPage() {
   if (submitted) {
     return (
       <div className="min-h-screen bg-gray-50 pt-24 pb-16 flex items-center justify-center px-4">
-        <SEO title="Compliments & Complaints" description="Share your experience with King Cars." />
         <AnimatedSection>
           <div className="bg-white rounded-3xl p-12 shadow-card border border-gray-100 text-center max-w-lg w-full">
             <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -49,12 +49,6 @@ export function ComplaintsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 pb-16">
-      <SEO
-        title="Compliments & Complaints"
-        description="Share your experience with King Cars. We value your feedback and use it to continuously improve our service."
-        canonical="/compliments-complaints"
-      />
-
       {/* Hero Banner */}
       <div className="bg-king-blue pt-32 pb-14 px-4 mb-12">
         <div className="max-w-3xl mx-auto text-center">

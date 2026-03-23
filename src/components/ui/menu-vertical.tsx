@@ -1,6 +1,8 @@
+'use client'
+
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 type MenuItem = {
   label: string;
@@ -41,7 +43,7 @@ export const MenuVertical = ({
           </motion.div>
 
           <MotionLink
-            to={item.href}
+            href={item.href}
             variants={{
               initial: { x: -30, color: "inherit" },
               hover: { x: 0, color, skewX: skew },

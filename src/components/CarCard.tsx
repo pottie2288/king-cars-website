@@ -1,5 +1,7 @@
+'use client'
+
 import { MapPin, Fuel, Settings, Gauge, Heart } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import type { Car } from '@/types';
 
 interface CarCardProps {
@@ -12,13 +14,13 @@ interface CarCardProps {
 }
 
 export function CarCard({ car, onClick, isFavourite = false, onToggleFavourite, viewMode = 'grid' }: CarCardProps) {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleCardClick = () => {
     if (onClick) {
       onClick(car);
     } else {
-      navigate(`/showroom/${car.id}`);
+      router.push(`/showroom/${car.id}`);
     }
   };
 

@@ -1,27 +1,25 @@
+'use client'
+
 import { useEffect, useState } from 'react';
 import { ArrowRight, Car as CarIcon, Coins, HandCoins } from 'lucide-react';
 import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button';
 import { CssCarAnimation } from '@/components/ui/css-car-animation';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { SearchBar } from '@/components/SearchBar';
 import { CarCard } from '@/components/CarCard';
 import { useInventory } from '@/hooks/useInventory';
-import { SEO } from '@/components/SEO';
 import { AnimatedSection } from '@/components/AnimatedSection';
 import { BodyTypeFilter } from '@/components/BodyTypeFilter';
 import { BranchSection } from '@/components/BranchSection';
 import { TestimonialCarousel } from '@/components/ui/testimonial';
 import { Typewriter } from '@/components/ui/typewriter';
+import { useFavourites } from '@/context/FavouritesContext';
 import type { FilterState, Car } from '@/types';
 
-interface HomePageProps {
-  favourites: string[];
-  onToggleFavourite: (carId: string) => void;
-}
 
-
-export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
-  const navigate = useNavigate();
+export function HomePage() {
+  const router = useRouter();
+  const { favourites, toggleFavourite } = useFavourites();
   const { getFeaturedCars, getUniqueMakes, getUniqueModels, loading } = useInventory();
   const [featuredCars, setFeaturedCars] = useState<Car[]>([]);
 
@@ -34,7 +32,7 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
   const handleSearch = (filters: FilterState) => {
     // Store filters in sessionStorage for showroom page
     sessionStorage.setItem('homeSearchFilters', JSON.stringify(filters));
-    navigate('/showroom');
+    router.push('/showroom');
   };
 
   const makes = getUniqueMakes();
@@ -76,23 +74,6 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
 
   return (
     <div className="min-h-screen">
-      <SEO
-        title="Quality Pre-Owned Cars in Cape Town & Port Elizabeth"
-        description="Browse 28+ brands of affordable, reliable pre-owned cars. Every vehicle includes a 2-year unlimited km warranty. Finance available. Branches in Bellville, Brackenfell & PE."
-        canonical="/"
-        schema={{
-          "@context": "https://schema.org",
-          "@type": "WebPage",
-          "name": "King Cars - Quality Pre-Owned Cars",
-          "description": "Multi-branch pre-owned car dealership in Cape Town and Port Elizabeth",
-          "provider": {
-            "@type": "AutoDealer",
-            "name": "King Cars",
-            "priceRange": "R150000 - R350000"
-          }
-        }}
-      />
-
       {/* Hero Section - Blue Gradient Background */}
       <section className="relative flex flex-col justify-center">
         {/* Background Image */}
@@ -150,7 +131,7 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
                 </h2>
               </div>
               <button
-                onClick={() => navigate('/showroom')}
+                onClick={() => router.push('/showroom')}
                 className="flex items-center gap-2 text-king-blue font-medium hover:text-king-cyan transition-colors"
               >
                 View All Cars
@@ -176,7 +157,7 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
                   <CarCard
                     car={car}
                     isFavourite={favourites.includes(car.id)}
-                    onToggleFavourite={() => onToggleFavourite(car.id)}
+                    onToggleFavourite={() => toggleFavourite(car.id)}
                   />
                 </div>
               ))}
@@ -242,7 +223,7 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
                 <div className="flex justify-center">
                   <InteractiveHoverButton
                     text="Sell Your Car"
-                    onClick={() => navigate('/sell-your-car')}
+                    onClick={() => router.push('/sell-your-car')}
                     className="w-48 bg-white text-king-blue text-lg py-4 border-transparent hover:border-white"
                   />
                 </div>
@@ -276,7 +257,7 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
           </AnimatedSection>
 
           <div className="flex justify-center">
-            <TestimonialCarousel 
+            <TestimonialCarousel
               testimonials={testimonials}
               className="max-w-4xl"
             />
@@ -311,4 +292,3 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
     </div>
   );
 }
-

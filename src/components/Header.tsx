@@ -1,11 +1,11 @@
+'use client'
+
 import { useState, useEffect } from 'react';
 import { Phone } from 'lucide-react';
-import { NavLink, Link, useLocation } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { MenuToggleIcon } from '@/components/ui/menu-toggle-icon';
-
-interface HeaderProps {
-  favouritesCount?: number;
-}
+import { useFavourites } from '@/context/FavouritesContext';
 
 const navItems = [
   { label: 'Sell Your Car', path: '/sell-your-car' },
@@ -16,10 +16,11 @@ const navItems = [
   { label: 'Favourites', path: '/favourites' },
 ];
 
-export function Header({ favouritesCount = 0 }: HeaderProps) {
+export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const location = useLocation();
+  const pathname = usePathname();
+  const { favouritesCount } = useFavourites();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,7 +34,7 @@ export function Header({ favouritesCount = 0 }: HeaderProps) {
   // Close mobile menu on route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
-  }, [location]);
+  }, [pathname]);
 
   return (
     <header
@@ -46,7 +47,7 @@ export function Header({ favouritesCount = 0 }: HeaderProps) {
         <div className="flex items-center justify-between">
           {/* Logo - Optimized Sizes */}
           <Link
-            to="/"
+            href="/"
             className="relative flex items-center gap-3 group"
           >
             {/* Ghost Image for Layout Spacing */}
@@ -65,20 +66,23 @@ export function Header({ favouritesCount = 0 }: HeaderProps) {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-8">
-            {navItems.map((item) => (
-              <NavLink
-                key={item.path}
-                to={item.path}
-                className={({ isActive }) => `nav-link lg:text-lg xl:text-xl text-gray-700 hover:text-king-blue after:bg-king-blue ${isActive ? 'nav-link-active' : ''} relative`}
-              >
-                {item.label}
-                {item.path === '/favourites' && (favouritesCount ?? 0) > 0 && (
-                  <span className="absolute -top-3 -right-3 bg-king-cyan text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center animate-bounce-short shadow-sm">
-                    {favouritesCount}
-                  </span>
-                )}
-              </NavLink>
-            ))}
+            {navItems.map((item) => {
+              const isActive = pathname === item.path;
+              return (
+                <Link
+                  key={item.path}
+                  href={item.path}
+                  className={`nav-link lg:text-lg xl:text-xl text-gray-700 hover:text-king-blue after:bg-king-blue ${isActive ? 'nav-link-active' : ''} relative`}
+                >
+                  {item.label}
+                  {item.path === '/favourites' && favouritesCount > 0 && (
+                    <span className="absolute -top-3 -right-3 bg-king-cyan text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center animate-bounce-short shadow-sm">
+                      {favouritesCount}
+                    </span>
+                  )}
+                </Link>
+              );
+            })}
           </nav>
 
           {/* CTA Button */}
@@ -103,9 +107,9 @@ export function Header({ favouritesCount = 0 }: HeaderProps) {
               : 'text-king-blue hover:bg-white/50'
               }`}
           >
-            <MenuToggleIcon 
-              open={isMobileMenuOpen} 
-              className="w-8 h-8" 
+            <MenuToggleIcon
+              open={isMobileMenuOpen}
+              className="w-8 h-8"
               duration={400}
             />
           </button>
@@ -120,22 +124,25 @@ export function Header({ favouritesCount = 0 }: HeaderProps) {
           }`}
       >
         <nav className="section-padding py-6 flex flex-col gap-2">
-          {navItems.map((item) => (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              className={({ isActive }) =>
-                item.path === '/sell-your-car'
-                  ? `text-left px-4 py-3 rounded-xl font-semibold transition-all bg-king-blue text-white shadow-md`
-                  : `text-left px-4 py-3 rounded-xl font-medium transition-all ${isActive
-                    ? 'bg-gray-100 text-king-blue font-semibold'
-                    : 'text-gray-700 hover:bg-gray-100'
-                  }`
-              }
-            >
-              {item.label}
-            </NavLink>
-          ))}
+          {navItems.map((item) => {
+            const isActive = pathname === item.path;
+            return (
+              <Link
+                key={item.path}
+                href={item.path}
+                className={
+                  item.path === '/sell-your-car'
+                    ? `text-left px-4 py-3 rounded-xl font-semibold transition-all bg-king-blue text-white shadow-md`
+                    : `text-left px-4 py-3 rounded-xl font-medium transition-all ${isActive
+                      ? 'bg-gray-100 text-king-blue font-semibold'
+                      : 'text-gray-700 hover:bg-gray-100'
+                    }`
+                }
+              >
+                {item.label}
+              </Link>
+            );
+          })}
           <a
             href="tel:+27215551234"
             className="flex items-center gap-2 px-4 py-3 mt-2 bg-king-cyan text-white rounded-xl font-medium click-press touch-manipulation"

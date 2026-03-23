@@ -1,18 +1,15 @@
+'use client'
+
 import { CarCard } from '@/components/CarCard';
 import { useInventory } from '@/hooks/useInventory';
 import { Heart, Search } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
+import { useFavourites } from '@/context/FavouritesContext';
 
-interface FavouritesPageProps {
-    favourites: string[];
-    onToggleFavourite: (carId: string) => void;
-}
-
-import { SEO } from '@/components/SEO';
-
-export function FavouritesPage({ favourites, onToggleFavourite }: FavouritesPageProps) {
-    const navigate = useNavigate();
-    const { loading, cars } = useInventory(); // We need the full inventory to match IDs
+export function FavouritesPage() {
+    const router = useRouter();
+    const { favourites, toggleFavourite } = useFavourites();
+    const { loading, cars } = useInventory();
 
     if (loading) {
         return (
@@ -26,11 +23,6 @@ export function FavouritesPage({ favourites, onToggleFavourite }: FavouritesPage
 
     return (
         <div className="min-h-screen bg-gray-50 pt-24 pb-12">
-            <SEO
-                title="My Favourites"
-                description="View your saved vehicles."
-                noIndex={true}
-            />
             <div className="section-padding">
                 <div className="flex items-center gap-4 mb-8">
                     <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center text-red-500">
@@ -49,7 +41,7 @@ export function FavouritesPage({ favourites, onToggleFavourite }: FavouritesPage
                                 key={car.id}
                                 car={car}
                                 isFavourite={true}
-                                onToggleFavourite={() => onToggleFavourite(car.id)}
+                                onToggleFavourite={() => toggleFavourite(car.id)}
                             />
                         ))}
                     </div>
@@ -63,7 +55,7 @@ export function FavouritesPage({ favourites, onToggleFavourite }: FavouritesPage
                             You haven't saved any vehicles yet. Browse our showroom and click the heart icon to save cars you're interested in.
                         </p>
                         <button
-                            onClick={() => navigate('/showroom')}
+                            onClick={() => router.push('/showroom')}
                             className="btn-primary inline-flex items-center gap-2"
                         >
                             <Search className="w-5 h-5" />

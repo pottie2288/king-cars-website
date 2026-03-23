@@ -1,9 +1,9 @@
+'use client'
+
 import { useState } from 'react';
 import { Clock, ChevronDown, Phone, Wallet, TrendingDown, ArrowRight, Building2 } from 'lucide-react';
 import { AnimatedSection } from '@/components/AnimatedSection';
 import { FinanceApplicationForm } from '@/components/FinanceApplicationForm';
-
-import { SEO } from '@/components/SEO';
 
 const SA_BANKS = [
   { name: 'ABSA',          logo: '/banks/absa.png' },
@@ -40,49 +40,6 @@ export function FinancePage() {
 
   return (
     <div className="min-h-screen bg-gray-50 pt-20">
-      <SEO
-        title="Car Finance Calculator & Application"
-        description="Calculate your monthly car repayments and apply for vehicle finance online. We work with ABSA, Standard Bank, FNB, Nedbank, Capitec & WesBank. Same-day approval available."
-        canonical="/finance"
-        schema={{
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          "mainEntity": [
-            {
-              "@type": "Question",
-              "name": "What is the minimum deposit required?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "We recommend a minimum deposit of 10% of the vehicle price, but we also offer no-deposit options for qualified buyers."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "How long does approval take?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Most applications are approved within 24-48 hours, provided all required documents are submitted."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "Can I finance a used car?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Yes, we offer financing for both new and quality used vehicles up to 10 years old."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "What if I have a poor credit score?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "We work with multiple lenders and may still be able to help. Contact us to discuss your options."
-              }
-            }
-          ]
-        }}
-      />
       {/* Hero Section */}
       <div className="relative bg-gradient-to-br from-gray-50 to-blue-50 pt-20 pb-20 lg:pt-32 lg:pb-32 overflow-hidden">
         <div className="absolute top-0 right-0 w-1/2 h-full bg-blue-100/50 skew-x-12 translate-x-1/4" />

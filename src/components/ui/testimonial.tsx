@@ -1,3 +1,5 @@
+'use client'
+
 import * as React from "react"
 import { motion, type PanInfo } from "framer-motion"
 import { cn } from "@/lib/utils"

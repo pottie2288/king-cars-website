@@ -1,12 +1,15 @@
+'use client'
+
 import { useState, useEffect } from 'react';
 import {
     ArrowLeft, MapPin, Calendar, Fuel, Settings,
     Share2, Heart, Phone, Mail, CheckCircle,
     ChevronLeft, ChevronRight
 } from 'lucide-react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useRouter } from 'next/navigation';
 import { FinanceCalculator } from '@/components/FinanceCalculator';
 import { useInventory } from '@/hooks/useInventory';
+import { useFavourites } from '@/context/FavouritesContext';
 import {
     Carousel,
     CarouselContent,
@@ -14,17 +17,11 @@ import {
     type CarouselApi,
 } from "@/components/ui/carousel";
 
-import { SEO } from '@/components/SEO';
-
-interface CarDetailsPageProps {
-    isFavourite: (id: string) => boolean;
-    onToggleFavourite: (carId: string) => void;
-}
-
-export function CarDetailsPage({ isFavourite, onToggleFavourite }: CarDetailsPageProps) {
+export function CarDetailsPage() {
     const { id } = useParams<{ id: string }>();
-    const navigate = useNavigate();
+    const router = useRouter();
     const { cars } = useInventory();
+    const { isFavourite, toggleFavourite } = useFavourites();
     const [api, setApi] = useState<CarouselApi>();
     const [current, setCurrent] = useState(0);
     const [count, setCount] = useState(0);
@@ -55,7 +52,7 @@ export function CarDetailsPage({ isFavourite, onToggleFavourite }: CarDetailsPag
             <div className="min-h-screen pt-20 flex items-center justify-center">
                 <div className="text-center">
                     <h2 className="text-2xl font-bold mb-4">Car not found</h2>
-                    <button onClick={() => navigate('/showroom')} className="btn-primary">
+                    <button onClick={() => router.push('/showroom')} className="btn-primary">
                         Back to Showroom
                     </button>
                 </div>
@@ -102,41 +99,11 @@ export function CarDetailsPage({ isFavourite, onToggleFavourite }: CarDetailsPag
 
     return (
         <div className="min-h-screen bg-white pt-20">
-            <SEO
-                title={`${car.year} ${car.make} ${car.model} - ${formatPrice(car.price)}`}
-                description={`Buy this ${car.year} ${car.make} ${car.model} for ${formatPrice(car.price)}. ${formatMileage(car.mileage)}km, ${car.transmission}, ${car.fuelType}. 2-year unlimited km warranty included. Finance available at King Cars.`}
-                canonical={`/showroom/${car.id}`}
-                image={car.image}
-                schema={{
-                  "@context": "https://schema.org",
-                  "@type": "Vehicle",
-                  "name": `${car.year} ${car.make} ${car.model}`,
-                  "brand": { "@type": "Brand", "name": car.make },
-                  "model": car.model,
-                  "vehicleModelDate": String(car.year),
-                  "mileageFromOdometer": {
-                    "@type": "QuantitativeValue",
-                    "value": car.mileage,
-                    "unitCode": "KMT"
-                  },
-                  "fuelType": car.fuelType,
-                  "vehicleTransmission": car.transmission,
-                  "offers": {
-                    "@type": "Offer",
-                    "price": car.price,
-                    "priceCurrency": "ZAR",
-                    "availability": "https://schema.org/InStock",
-                    "seller": { "@type": "AutoDealer", "name": "King Cars" },
-                    "warranty": "2-year unlimited kilometre mechanical warranty"
-                  }
-                }}
-            />
-
             {/* Breadcrumb & Navigation */}
             <div className="bg-white border-b border-gray-200 sticky top-16 z-30">
                 <div className="section-padding py-4">
                     <button
-                        onClick={() => navigate('/showroom')}
+                        onClick={() => router.push('/showroom')}
                         className="flex items-center gap-2 text-gray-600 hover:text-king-blue transition-colors font-medium group"
                     >
                         <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
@@ -208,7 +175,7 @@ export function CarDetailsPage({ isFavourite, onToggleFavourite }: CarDetailsPag
                                 formatPrice={formatPrice}
                                 formatMileage={formatMileage}
                                 isFavourite={isFavourite}
-                                onToggleFavourite={onToggleFavourite}
+                                onToggleFavourite={toggleFavourite}
                                 setShowEnquiryForm={setShowEnquiryForm}
                                 showEnquiryForm={showEnquiryForm}
                                 handleShare={handleShare}
@@ -267,7 +234,7 @@ export function CarDetailsPage({ isFavourite, onToggleFavourite }: CarDetailsPag
                                     formatPrice={formatPrice}
                                     formatMileage={formatMileage}
                                     isFavourite={isFavourite}
-                                    onToggleFavourite={onToggleFavourite}
+                                    onToggleFavourite={toggleFavourite}
                                     setShowEnquiryForm={setShowEnquiryForm}
                                     showEnquiryForm={showEnquiryForm}
                                     handleShare={handleShare}

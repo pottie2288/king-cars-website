@@ -1,17 +1,15 @@
+'use client'
+
 import { useState, useEffect, useMemo } from 'react';
 import { Search, SlidersHorizontal, MapPin, Grid, List as ListIcon, X, ChevronDown, Car as CarIcon, Shapes } from 'lucide-react';
 import { CarCard } from '@/components/CarCard';
 import { useInventory } from '@/hooks/useInventory';
+import { useFavourites } from '@/context/FavouritesContext';
 import type { FilterState } from '@/types';
-import { SEO } from '@/components/SEO';
 
-interface ShowroomPageProps {
-  favourites: string[];
-  onToggleFavourite: (carId: string) => void;
-}
-
-export function ShowroomPage({ favourites, onToggleFavourite }: ShowroomPageProps) {
+export function ShowroomPage() {
   const { inventory, loading, getUniqueMakes, getUniqueCategories, getUniqueLocations } = useInventory();
+  const { favourites, toggleFavourite } = useFavourites();
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
@@ -89,21 +87,6 @@ export function ShowroomPage({ favourites, onToggleFavourite }: ShowroomPageProp
 
   return (
     <div className="min-h-screen bg-gray-50 pt-20">
-      <SEO
-        title="Used Cars for Sale in Cape Town & Port Elizabeth"
-        description="Browse our full inventory of quality pre-owned cars. 28+ brands from R150k. Every vehicle includes a 2-year unlimited km warranty. Filter by make, price, and location."
-        canonical="/showroom"
-        schema={{
-          "@context": "https://schema.org",
-          "@type": "CollectionPage",
-          "name": "King Cars Showroom",
-          "description": "Browse pre-owned vehicles for sale at King Cars",
-          "provider": {
-            "@type": "AutoDealer",
-            "name": "King Cars"
-          }
-        }}
-      />
       {/* Header Section */}
       <div className="bg-king-blue text-white py-12">
         <div className="section-padding">
@@ -345,7 +328,7 @@ export function ShowroomPage({ favourites, onToggleFavourite }: ShowroomPageProp
                     <CarCard
                       car={car}
                       isFavourite={favourites.includes(car.id)}
-                      onToggleFavourite={() => onToggleFavourite(car.id)}
+                      onToggleFavourite={() => toggleFavourite(car.id)}
                       viewMode={viewMode}
                     />
                   </div>

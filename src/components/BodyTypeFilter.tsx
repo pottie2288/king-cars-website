@@ -1,4 +1,6 @@
-import { useNavigate } from 'react-router-dom';
+'use client'
+
+import { useRouter } from 'next/navigation';
 import { AnimatedSection } from './AnimatedSection';
 
 const bodyTypes = [
@@ -35,7 +37,7 @@ const bodyTypes = [
 ];
 
 export function BodyTypeFilter() {
-    const navigate = useNavigate();
+    const router = useRouter();
 
     const handleTypeClick = (category: string) => {
         sessionStorage.setItem('homeSearchFilters', JSON.stringify({
@@ -50,7 +52,7 @@ export function BodyTypeFilter() {
             maxMileage: null,
             searchQuery: ''
         }));
-        navigate('/showroom');
+        router.push('/showroom');
     };
 
     return (

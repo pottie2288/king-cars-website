@@ -99,8 +99,9 @@ export function SellYourCarPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <SEO
-        title="Sell Your Car"
-        description="Get an instant, obligation-free valuation for your vehicle. We buy cars for cash in Western Cape and Eastern Cape."
+        title="Sell Your Car for Cash in Cape Town & Port Elizabeth"
+        description="Get a fair cash offer for your vehicle within 24 hours. Hassle-free process, instant payment. We buy all makes and models. Trade-in or sell outright."
+        canonical="/sell-your-car"
       />
       {/* Hero Section with Valuation Card */}
       <div className="relative bg-gradient-to-b from-king-blue to-blue-900 pt-36 pb-32 lg:pt-48 lg:pb-48">

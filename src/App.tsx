@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { StickyContactBar } from '@/components/StickyContactBar';
@@ -12,6 +12,7 @@ import { AboutPage } from '@/pages/AboutPage';
 import { CarDetailsPage } from '@/pages/CarDetailsPage';
 import { FavouritesPage } from '@/pages/FavouritesPage';
 import { ComplaintsPage } from '@/pages/ComplaintsPage';
+import { NotFoundPage } from '@/pages/NotFoundPage';
 import './App.css';
 
 function App() {
@@ -61,8 +62,9 @@ function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/favourites" element={<FavouritesPage favourites={favourites} onToggleFavourite={toggleFavourite} />} />
           <Route path="/compliments-complaints" element={<ComplaintsPage />} />
-          {/* Fallback */}
-          <Route path="*" element={<Navigate to="/" replace />} />
+          {/* 404 */}
+          <Route path="/404" element={<NotFoundPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
 

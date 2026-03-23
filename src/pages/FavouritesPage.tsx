@@ -29,7 +29,7 @@ export function FavouritesPage({ favourites, onToggleFavourite }: FavouritesPage
             <SEO
                 title="My Favourites"
                 description="View your saved vehicles."
-            // No index needed for favourites
+                noIndex={true}
             />
             <div className="section-padding">
                 <div className="flex items-center gap-4 mb-8">

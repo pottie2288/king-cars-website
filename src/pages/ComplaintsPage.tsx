@@ -52,6 +52,7 @@ export function ComplaintsPage() {
       <SEO
         title="Compliments & Complaints"
         description="Share your experience with King Cars. We value your feedback and use it to continuously improve our service."
+        canonical="/compliments-complaints"
       />
 
       {/* Hero Banner */}

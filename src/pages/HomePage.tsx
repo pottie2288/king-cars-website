@@ -77,8 +77,20 @@ export function HomePage({ favourites, onToggleFavourite }: HomePageProps) {
   return (
     <div className="min-h-screen">
       <SEO
-        title="Home"
-        description="King Cars - Premium used cars in Western Cape and Eastern Cape. Quality guaranteed with transparent pricing and exceptional service."
+        title="Quality Pre-Owned Cars in Cape Town & Port Elizabeth"
+        description="Browse 28+ brands of affordable, reliable pre-owned cars. Every vehicle includes a 2-year unlimited km warranty. Finance available. Branches in Bellville, Brackenfell & PE."
+        canonical="/"
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "King Cars - Quality Pre-Owned Cars",
+          "description": "Multi-branch pre-owned car dealership in Cape Town and Port Elizabeth",
+          "provider": {
+            "@type": "AutoDealer",
+            "name": "King Cars",
+            "priceRange": "R150000 - R350000"
+          }
+        }}
       />
 
       {/* Hero Section - Blue Gradient Background */}

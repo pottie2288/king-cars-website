@@ -90,8 +90,19 @@ export function ShowroomPage({ favourites, onToggleFavourite }: ShowroomPageProp
   return (
     <div className="min-h-screen bg-gray-50 pt-20">
       <SEO
-        title="Showroom"
-        description="Browse our extensive collection of premium quality used vehicles. Each car is thoroughly inspected and comes with our quality guarantee."
+        title="Used Cars for Sale in Cape Town & Port Elizabeth"
+        description="Browse our full inventory of quality pre-owned cars. 28+ brands from R150k. Every vehicle includes a 2-year unlimited km warranty. Filter by make, price, and location."
+        canonical="/showroom"
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": "King Cars Showroom",
+          "description": "Browse pre-owned vehicles for sale at King Cars",
+          "provider": {
+            "@type": "AutoDealer",
+            "name": "King Cars"
+          }
+        }}
       />
       {/* Header Section */}
       <div className="bg-king-blue text-white py-12">

@@ -103,9 +103,33 @@ export function CarDetailsPage({ isFavourite, onToggleFavourite }: CarDetailsPag
     return (
         <div className="min-h-screen bg-white pt-20">
             <SEO
-                title={`${car.year} ${car.make} ${car.model}`}
-                description={`Buy this ${car.year} ${car.make} ${car.model} for ${formatPrice(car.price)}. ${car.mileage.toLocaleString()}km, ${car.transmission}, ${car.fuelType}. Available now at King Cars.`}
+                title={`${car.year} ${car.make} ${car.model} - ${formatPrice(car.price)}`}
+                description={`Buy this ${car.year} ${car.make} ${car.model} for ${formatPrice(car.price)}. ${formatMileage(car.mileage)}km, ${car.transmission}, ${car.fuelType}. 2-year unlimited km warranty included. Finance available at King Cars.`}
+                canonical={`/showroom/${car.id}`}
                 image={car.image}
+                schema={{
+                  "@context": "https://schema.org",
+                  "@type": "Vehicle",
+                  "name": `${car.year} ${car.make} ${car.model}`,
+                  "brand": { "@type": "Brand", "name": car.make },
+                  "model": car.model,
+                  "vehicleModelDate": String(car.year),
+                  "mileageFromOdometer": {
+                    "@type": "QuantitativeValue",
+                    "value": car.mileage,
+                    "unitCode": "KMT"
+                  },
+                  "fuelType": car.fuelType,
+                  "vehicleTransmission": car.transmission,
+                  "offers": {
+                    "@type": "Offer",
+                    "price": car.price,
+                    "priceCurrency": "ZAR",
+                    "availability": "https://schema.org/InStock",
+                    "seller": { "@type": "AutoDealer", "name": "King Cars" },
+                    "warranty": "2-year unlimited kilometre mechanical warranty"
+                  }
+                }}
             />
 
             {/* Breadcrumb & Navigation */}

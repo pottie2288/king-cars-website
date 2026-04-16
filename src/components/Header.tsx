@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { MenuToggleIcon } from '@/components/ui/menu-toggle-icon';
 import { useFavourites } from '@/context/FavouritesContext';
+import { MenuVertical } from '@/components/ui/menu-vertical';
 
 const navItems = [
   { label: 'Sell Your Car', path: '/sell-your-car' },
@@ -123,26 +124,14 @@ export function Header() {
           : 'opacity-0 -translate-y-4 pointer-events-none'
           }`}
       >
-        <nav className="section-padding py-6 flex flex-col gap-2">
-          {navItems.map((item) => {
-            const isActive = pathname === item.path;
-            return (
-              <Link
-                key={item.path}
-                href={item.path}
-                className={
-                  item.path === '/sell-your-car'
-                    ? `text-left px-4 py-3 rounded-xl font-semibold transition-all bg-king-blue text-white shadow-md`
-                    : `text-left px-4 py-3 rounded-xl font-medium transition-all ${isActive
-                      ? 'bg-gray-100 text-king-blue font-semibold'
-                      : 'text-gray-700 hover:bg-gray-100'
-                    }`
-                }
-              >
-                {item.label}
-              </Link>
-            );
-          })}
+        <nav className="section-padding py-6 flex flex-col gap-6">
+          <MenuVertical
+            menuItems={navItems.map(item => ({
+              label: item.label,
+              href: item.path
+            }))}
+            color="#1d4ed8"
+          />
           <a
             href="tel:+27215551234"
             className="flex items-center gap-2 px-4 py-3 mt-2 bg-king-cyan text-white rounded-xl font-medium click-press touch-manipulation"

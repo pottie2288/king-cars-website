@@ -8,7 +8,7 @@ import { useFavourites } from '@/context/FavouritesContext';
 import type { FilterState } from '@/types';
 
 export function ShowroomPage() {
-  const { inventory, loading, getUniqueMakes, getUniqueCategories, getUniqueLocations } = useInventory();
+  const { inventory, loading, getUniqueMakes, getUniqueModels, getUniqueCategories, getUniqueLocations } = useInventory();
   const { favourites, toggleFavourite } = useFavourites();
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
@@ -29,35 +29,51 @@ export function ShowroomPage() {
 
   // Filter Options
   const makes = getUniqueMakes();
+  const models = filters.make ? getUniqueModels(filters.make) : [];
   const categories = getUniqueCategories();
   const locations = getUniqueLocations();
 
-  // Load filters from sessionStorage on mount
+  // Load filters from sessionStorage on mount — home search takes priority over persisted showroom filters
   useEffect(() => {
-    const savedFilters = sessionStorage.getItem('homeSearchFilters');
-    if (savedFilters) {
-      setFilters(JSON.parse(savedFilters));
-      sessionStorage.removeItem('homeSearchFilters'); // Clear after using
+    const homeFilters = sessionStorage.getItem('homeSearchFilters');
+    if (homeFilters) {
+      setFilters(JSON.parse(homeFilters));
+      sessionStorage.removeItem('homeSearchFilters');
+    } else {
+      const showroomFilters = sessionStorage.getItem('showroomFilters');
+      if (showroomFilters) {
+        setFilters(JSON.parse(showroomFilters));
+      }
     }
   }, []);
 
   const handleFilterChange = (key: keyof FilterState, value: any) => {
-    setFilters(prev => ({ ...prev, [key]: value }));
+    setFilters(prev => {
+      const next = { ...prev, [key]: value };
+      if (key === 'make') {
+        next.model = null;
+      }
+      sessionStorage.setItem('showroomFilters', JSON.stringify(next));
+      return next;
+    });
+  };
+
+  const defaultFilters: FilterState = {
+    searchQuery: '',
+    make: null,
+    model: null,
+    minPrice: null,
+    maxPrice: null,
+    minYear: null,
+    maxYear: null,
+    maxMileage: null,
+    category: null,
+    location: null,
   };
 
   const clearFilters = () => {
-    setFilters({
-      searchQuery: '',
-      make: null,
-      model: null,
-      minPrice: null,
-      maxPrice: null,
-      minYear: null,
-      maxYear: null,
-      maxMileage: null,
-      category: null,
-      location: null,
-    });
+    setFilters(defaultFilters);
+    sessionStorage.removeItem('showroomFilters');
   };
 
   // Filter Logic
@@ -74,6 +90,7 @@ export function ShowroomPage() {
       }
 
       if (filters.make && car.make !== filters.make) return false;
+      if (filters.model && car.model !== filters.model) return false;
       if (filters.category && car.category !== filters.category) return false;
       if (filters.location && car.location !== filters.location) return false;
       if (filters.minPrice && car.price < filters.minPrice) return false;
@@ -167,6 +184,29 @@ export function ShowroomPage() {
                       <option value="">All Makes</option>
                       {makes.map(make => (
                         <option key={make} value={make} className="py-2">{make}</option>
+                      ))}
+                    </select>
+                    <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-400 group-hover:text-king-blue transition-colors">
+                      <ChevronDown className="h-4 w-4" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-white ml-1">Model</label>
+                  <div className="relative group">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 group-hover:text-king-blue transition-colors">
+                      <CarIcon className="h-4 w-4" />
+                    </div>
+                    <select
+                      value={filters.model || ''}
+                      onChange={(e) => handleFilterChange('model', e.target.value || null)}
+                      disabled={!filters.make}
+                      className={`w-full pl-10 pr-10 py-3 rounded-xl border border-gray-200 focus:border-king-cyan focus:ring-4 focus:ring-king-cyan/10 outline-none text-sm bg-white hover:border-king-cyan/50 transition-all cursor-pointer appearance-none shadow-sm ${!filters.make ? 'text-gray-400' : 'text-gray-700'}`}
+                    >
+                      <option value="">All Models</option>
+                      {models.map(model => (
+                        <option key={model} value={model} className="py-2">{model}</option>
                       ))}
                     </select>
                     <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-400 group-hover:text-king-blue transition-colors">

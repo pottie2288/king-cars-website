@@ -94,17 +94,15 @@ export function CarDetailsPage() {
 
     return (
         <div className="min-h-screen bg-white pt-20">
-            {/* Breadcrumb & Navigation */}
-            <div className="bg-white border-b border-gray-200 sticky top-16 z-30">
-                <div className="section-padding py-4">
-                    <button
-                        onClick={() => router.push('/showroom')}
-                        className="flex items-center gap-2 text-gray-600 hover:text-king-blue transition-colors font-medium group"
-                    >
-                        <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-                        Back to Showroom
-                    </button>
-                </div>
+            {/* Back Navigation */}
+            <div className="section-padding pt-6 pb-4">
+                <button
+                    onClick={() => router.back()}
+                    className="flex items-center gap-2 text-gray-600 hover:text-king-blue transition-colors font-medium group"
+                >
+                    <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+                    Back to Showroom
+                </button>
             </div>
 
             <div className="section-padding py-8">

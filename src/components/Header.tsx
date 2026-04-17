@@ -61,7 +61,7 @@ export function Header() {
             <img
               src="/king-cars-logo.png"
               alt="King Cars"
-              className="absolute top-1/2 left-0 -translate-y-1/2 h-44 sm:h-52 lg:h-80 w-auto object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-xl z-50"
+              className="absolute top-1/2 left-0 -translate-y-1/2 h-44 sm:h-52 lg:h-80 w-auto object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-xl z-50 pointer-events-none"
             />
           </Link>
 

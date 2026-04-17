@@ -7,10 +7,11 @@ import type { FilterState } from '@/types';
 interface SearchBarProps {
   onSearch: (filters: FilterState) => void;
   makes?: string[];
+  locations?: string[];
   getUniqueModels: (make: string) => string[];
 }
 
-export function SearchBar({ onSearch, makes = [], getUniqueModels }: SearchBarProps) {
+export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModels }: SearchBarProps) {
   const [selectedMake, setSelectedMake] = useState<string>('');
   const [selectedModel, setSelectedModel] = useState<string>('');
   const [variant, setVariant] = useState<string>('');
@@ -45,7 +46,6 @@ export function SearchBar({ onSearch, makes = [], getUniqueModels }: SearchBarPr
   };
 
   const priceRanges = [100000, 200000, 300000, 400000, 500000, 750000, 1000000];
-  const locations = ['Western Cape', 'Eastern Cape'];
 
   return (
     <div className="w-full max-w-7xl mx-auto relative z-20">

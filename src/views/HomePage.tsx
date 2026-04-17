@@ -20,7 +20,7 @@ import type { FilterState, Car } from '@/types';
 export function HomePage() {
   const router = useRouter();
   const { favourites, toggleFavourite } = useFavourites();
-  const { getFeaturedCars, getUniqueMakes, getUniqueModels, loading } = useInventory();
+  const { getFeaturedCars, getUniqueMakes, getUniqueModels, getUniqueLocations, loading } = useInventory();
   const [featuredCars, setFeaturedCars] = useState<Car[]>([]);
 
   useEffect(() => {
@@ -36,6 +36,7 @@ export function HomePage() {
   };
 
   const makes = getUniqueMakes();
+  const locations = getUniqueLocations();
 
 
   const testimonials = [
@@ -103,6 +104,7 @@ export function HomePage() {
               <SearchBar
                 onSearch={handleSearch}
                 makes={makes}
+                locations={locations}
                 getUniqueModels={getUniqueModels}
               />
             </div>

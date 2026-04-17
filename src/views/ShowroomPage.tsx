@@ -68,6 +68,7 @@ export function ShowroomPage() {
         const match =
           car.make.toLowerCase().includes(query) ||
           car.model.toLowerCase().includes(query) ||
+          car.variant.toLowerCase().includes(query) ||
           car.category.toLowerCase().includes(query);
         if (!match) return false;
       }

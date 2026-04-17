@@ -4,12 +4,14 @@ import { useState, useEffect } from 'react';
 import {
     ArrowLeft, MapPin, Calendar, Fuel, Settings,
     Share2, Heart, Phone, Mail, CheckCircle,
-    ChevronLeft, ChevronRight
+    ChevronLeft, ChevronRight, Gauge, Car as CarIcon,
+    Users, DoorOpen, Zap, Droplets
 } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
 import { FinanceCalculator } from '@/components/FinanceCalculator';
 import { useInventory } from '@/hooks/useInventory';
 import { useFavourites } from '@/context/FavouritesContext';
+import type { Car } from '@/types';
 import {
     Carousel,
     CarouselContent,
@@ -29,15 +31,12 @@ export function CarDetailsPage() {
 
     const car = cars.find(c => c.id === id);
 
-    // Scroll to top on mount
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [id]);
 
     useEffect(() => {
-        if (!api) {
-            return;
-        }
+        if (!api) return;
 
         setCount(api.scrollSnapList().length);
         setCurrent(api.selectedScrollSnap() + 1);
@@ -60,8 +59,7 @@ export function CarDetailsPage() {
         );
     }
 
-    // Generate placeholder images if car only has one
-    const images = [car.image, car.image, car.image, car.image];
+    const images = car.images.length > 0 ? car.images : [car.image];
 
     const formatMileage = (mileage: number) => {
         return new Intl.NumberFormat('en-ZA').format(mileage);
@@ -84,12 +82,9 @@ export function CarDetailsPage() {
                     text: `Check out this ${car.make} ${car.model} at King Cars!`,
                     url: window.location.href,
                 });
-            } catch (err) {
-                console.error('Error sharing:', err);
+            } catch {
+                // User cancelled share
             }
-        } else {
-            // Fallback or toast
-            alert('Sharing is not supported on this browser/device.');
         }
     };
 
@@ -155,8 +150,8 @@ export function CarDetailsPage() {
                         </div>
 
                         {/* Thumbnails */}
-                        <div className="grid grid-cols-4 gap-4">
-                            {images.map((img, idx) => (
+                        <div className="grid grid-cols-4 sm:grid-cols-6 gap-3">
+                            {images.slice(0, 12).map((img, idx) => (
                                 <button
                                     key={idx}
                                     onClick={() => handleThumbnailClick(idx)}
@@ -184,50 +179,128 @@ export function CarDetailsPage() {
 
                         {/* Vehicle Overview */}
                         <div className="bg-white rounded-2xl shadow-sm p-8 border border-gray-100">
-                            <h2 className="font-display font-bold text-2xl mb-6">Vehicle Overview</h2>
+                            <h2 className="font-display font-bold text-2xl mb-2">Vehicle Overview</h2>
+                            <p className="text-sm text-gray-400 mb-6">{car.variant}</p>
                             <div className="prose max-w-none text-gray-600">
                                 <p className="leading-relaxed">
-                                    This stunning {car.year} {car.make} {car.model} represents exceptional value.
-                                    Finished in a beautiful {car.color}, it comes equipped with all standard features
-                                    and has been meticulously maintained. The vehicle has passed our comprehensive
-                                    101-point quality check and is ready for immediately delivery.
+                                    This {car.condition ? car.condition.toLowerCase() + ' condition' : 'quality'} {car.year} {car.make} {car.model} represents exceptional value.
+                                    Finished in {car.color}, this {car.category} comes with {car.features.length} extras
+                                    and has covered {formatMileage(car.mileage)} km.
+                                    {car.serviceHistory && ` It comes with ${car.serviceHistory}.`}
                                 </p>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                                    {[
-                                        'Full Service History',
-                                        'Spare Keys',
-                                        'Accident Free',
-                                        'Roadworthy Certificate',
-                                        'Finance Available',
-                                        'Trade-ins Welcome'
-                                    ].map((feature) => (
-                                        <div key={feature} className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                                            <CheckCircle className="w-4 h-4 text-green-500" />
-                                            {feature}
-                                        </div>
-                                    ))}
-                                </div>
                             </div>
-                        </div>
 
-                        {/* Features */}
-                        <div className="bg-white rounded-2xl shadow-sm p-8 border border-gray-100">
-                            <h2 className="font-display font-bold text-2xl mb-6">Features & Specifications</h2>
-                            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-                                {(car.features || []).map((feature, idx) => (
-                                    <div key={idx} className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
-                                        <span className="w-2 h-2 rounded-full bg-king-blue" />
-                                        <span className="text-sm font-medium text-gray-700">{feature}</span>
+                            {/* Specifications Grid */}
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+                                {car.seats > 0 && (
+                                    <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+                                        <Users className="w-5 h-5 text-king-cyan shrink-0" />
+                                        <div>
+                                            <p className="text-xs text-gray-400">Seats</p>
+                                            <p className="font-semibold text-gray-900">{car.seats}</p>
+                                        </div>
+                                    </div>
+                                )}
+                                {car.doors > 0 && (
+                                    <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+                                        <DoorOpen className="w-5 h-5 text-king-cyan shrink-0" />
+                                        <div>
+                                            <p className="text-xs text-gray-400">Doors</p>
+                                            <p className="font-semibold text-gray-900">{car.doors}</p>
+                                        </div>
+                                    </div>
+                                )}
+                                {car.kilowatts > 0 && (
+                                    <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+                                        <Zap className="w-5 h-5 text-king-cyan shrink-0" />
+                                        <div>
+                                            <p className="text-xs text-gray-400">Power</p>
+                                            <p className="font-semibold text-gray-900">{car.kilowatts} kW</p>
+                                        </div>
+                                    </div>
+                                )}
+                                {car.cubicCapacity > 0 && (
+                                    <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+                                        <CarIcon className="w-5 h-5 text-king-cyan shrink-0" />
+                                        <div>
+                                            <p className="text-xs text-gray-400">Engine</p>
+                                            <p className="font-semibold text-gray-900">{(car.cubicCapacity / 1000).toFixed(1)}L</p>
+                                        </div>
+                                    </div>
+                                )}
+                                {car.gears > 0 && (
+                                    <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+                                        <Settings className="w-5 h-5 text-king-cyan shrink-0" />
+                                        <div>
+                                            <p className="text-xs text-gray-400">Gears</p>
+                                            <p className="font-semibold text-gray-900">{car.gears}-speed {car.transmission}</p>
+                                        </div>
+                                    </div>
+                                )}
+                                {car.fuelTankSize > 0 && (
+                                    <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+                                        <Droplets className="w-5 h-5 text-king-cyan shrink-0" />
+                                        <div>
+                                            <p className="text-xs text-gray-400">Fuel Tank</p>
+                                            <p className="font-semibold text-gray-900">{car.fuelTankSize}L</p>
+                                        </div>
+                                    </div>
+                                )}
+                                {car.axleConfig && (
+                                    <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+                                        <Gauge className="w-5 h-5 text-king-cyan shrink-0" />
+                                        <div>
+                                            <p className="text-xs text-gray-400">Drivetrain</p>
+                                            <p className="font-semibold text-gray-900">{car.axleConfig}</p>
+                                        </div>
+                                    </div>
+                                )}
+                                {car.co2 > 0 && (
+                                    <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+                                        <Fuel className="w-5 h-5 text-king-cyan shrink-0" />
+                                        <div>
+                                            <p className="text-xs text-gray-400">CO2</p>
+                                            <p className="font-semibold text-gray-900">{car.co2} g/km</p>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Highlights */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+                                {[
+                                    car.serviceHistory || 'Service History Available',
+                                    'Roadworthy Certificate',
+                                    'Finance Available',
+                                    'Trade-ins Welcome'
+                                ].map((feature) => (
+                                    <div key={feature} className="flex items-center gap-2 text-sm font-medium text-gray-700">
+                                        <CheckCircle className="w-4 h-4 text-green-500" />
+                                        {feature}
                                     </div>
                                 ))}
                             </div>
                         </div>
+
+                        {/* Features / Extras */}
+                        {car.features.length > 0 && (
+                            <div className="bg-white rounded-2xl shadow-sm p-8 border border-gray-100">
+                                <h2 className="font-display font-bold text-2xl mb-6">Features & Extras</h2>
+                                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                    {car.features.map((feature, idx) => (
+                                        <div key={idx} className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+                                            <span className="w-2 h-2 rounded-full bg-king-blue shrink-0" />
+                                            <span className="text-sm font-medium text-gray-700">{feature}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
                     </div>
 
                     {/* Sidebar (Right Column) */}
                     <div className="lg:col-span-4">
                         <div className="lg:sticky lg:top-24 space-y-6">
-                            {/* Price & Actions (Desktop Only) */}
                             <div className="hidden lg:block">
                                 <PriceActionsCard
                                     car={car}
@@ -251,7 +324,7 @@ export function CarDetailsPage() {
 }
 
 interface PriceActionsCardProps {
-    car: any;
+    car: Car;
     formatPrice: (price: number) => string;
     formatMileage: (mileage: number) => string;
     isFavourite: (id: string) => boolean;
@@ -269,11 +342,12 @@ function PriceActionsCard({
         <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
             <div className="flex items-start justify-between mb-4">
                 <div>
-                    <h1 className="font-display font-bold text-2xl md:text-3xl text-gray-900 mb-2">
+                    <h1 className="font-display font-bold text-2xl md:text-3xl text-gray-900 mb-1">
                         {car.make} {car.model}
                     </h1>
+                    <p className="text-gray-500 text-sm mb-1">{car.variant}</p>
                     <p className="text-gray-500 font-medium">
-                        {car.year} • {formatMileage(car.mileage)} km
+                        {car.year} &bull; {formatMileage(car.mileage)} km
                     </p>
                 </div>
                 <button

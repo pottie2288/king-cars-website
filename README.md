@@ -1,73 +1,88 @@
-# React + TypeScript + Vite
+# King Cars Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Marketing and inventory website for **King Cars** — a pre-owned car dealership with branches in Bellville, Brackenfell, and Port Elizabeth (South Africa).
 
-Currently, two official plugins are available:
+Live site: [king-cars-website.vercel.app](https://king-cars-website.vercel.app)
+Production domain: [www.kingcars.co.za](https://www.kingcars.co.za)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech Stack
 
-## React Compiler
+- **Framework:** [Next.js 15](https://nextjs.org/) (App Router) on React 19
+- **Language:** TypeScript 5.9
+- **Styling:** Tailwind CSS 3.4 + [shadcn/ui](https://ui.shadcn.com/) (Radix primitives + CVA)
+- **Animation:** framer-motion
+- **Icons:** lucide-react
+- **Forms:** react-hook-form + zod
+- **Charts:** recharts (finance calculator)
+- **Hosting:** Vercel
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+- **Live inventory** pulled from the VMG Software API and proxied through a Next.js route handler, with 5-minute server-side caching.
+- **Showroom** with search, body-type filter, make/model/price/year/mileage/location filters, and persistent filter state across navigation.
+- **Vehicle details** page with image gallery, spec sheet, and quick enquiry.
+- **Finance calculator** and multi-step finance application form.
+- **Favourites** — client-side shortlisting via React context.
+- **Sell your car** lead form.
+- **Compliments & complaints** form.
+- **About** page with branch info (Bellville, Brackenfell, Port Elizabeth) and bank partners (Absa, Capitec, FNB, Nedbank, Standard Bank, WesBank).
+- **SEO:** metadata, JSON-LD `AutoDealer` schema, OpenGraph, sitemap, and robots.
+- **Mobile:** animated mobile menu and sticky contact bar.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Project Structure
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+  app/                    Next.js App Router routes
+    api/inventory/        VMG proxy route (GET /api/inventory)
+    about/
+    compliments-complaints/
+    favourites/
+    finance/
+    sell-your-car/
+    showroom/
+    layout.tsx            Root layout, metadata, JSON-LD
+    page.tsx              Homepage
+  views/                  Page-level view components
+  components/             Shared UI (Header, Footer, CarCard, SearchBar, ...)
+    ui/                   shadcn/ui primitives
+  context/                React context providers (FavouritesContext)
+  hooks/                  useInventory, useScrollAnimation, use-mobile
+  lib/                    utils (cn, etc.)
+  types/                  Shared TypeScript types (Car, VmgVehicle, FilterState)
+public/                   Static assets (logo, hero images, body-types, banks, cars)
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Requires **Node.js 20+**.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+### Scripts
+
+| Script | Purpose |
+| --- | --- |
+| `npm run dev` | Start Next.js dev server |
+| `npm run build` | Production build |
+| `npm start` | Start production server |
+| `npm run lint` | Run ESLint |
+
+## Inventory Data
+
+Live stock comes from the VMG Software API. The browser calls our own proxy at `/api/inventory` ([src/app/api/inventory/route.ts](src/app/api/inventory/route.ts)), which fetches from VMG server-side and caches for 5 minutes. The client hook [useInventory](src/hooks/useInventory.ts) normalises VMG records into the internal `Car` shape (fuel/transmission code mapping, image URL collection, body-type normalisation) and marks the 6 most recently updated vehicles as featured.
+
+No environment variables are required — the VMG endpoint and company IDs are baked into the proxy route.
+
+## Deployment
+
+The site deploys to Vercel on push to `main`. `next.config.ts` disables image optimisation (plain `<img>` tags) and skips ESLint during build.
+
+## License
+
+Private — all rights reserved.

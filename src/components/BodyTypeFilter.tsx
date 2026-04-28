@@ -7,7 +7,7 @@ import { BODY_TYPES } from '@/data/body-types';
 export function BodyTypeFilter() {
     const router = useRouter();
 
-    const handleTypeClick = (category: string) => {
+    const handleTypeClick = (category: string, doors: number | null) => {
         sessionStorage.setItem('homeSearchFilters', JSON.stringify({
             category: category,
             location: null,
@@ -18,6 +18,7 @@ export function BodyTypeFilter() {
             minYear: null,
             maxYear: null,
             maxMileage: null,
+            doors: doors,
             searchQuery: ''
         }));
         router.push('/showroom');
@@ -40,7 +41,7 @@ export function BodyTypeFilter() {
                             className="group"
                         >
                             <button
-                                onClick={() => handleTypeClick(type.category)}
+                                onClick={() => handleTypeClick(type.category, type.doors ?? null)}
                                 className="w-full bg-transparent hover:bg-white/50 rounded-2xl p-4 transition-all duration-300 flex flex-col items-center"
                             >
                                 <div className="relative w-full aspect-[16/9] mb-4 overflow-hidden rounded-xl">

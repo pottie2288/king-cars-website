@@ -138,6 +138,7 @@ export function useInventory() {
     return cars.filter((car) => {
       if (filters.location && car.location !== filters.location) return false;
       if (filters.category && car.category !== filters.category) return false;
+      if (filters.doors != null && car.doors !== filters.doors) return false;
       if (filters.make && car.make !== filters.make) return false;
       if (filters.model && car.model !== filters.model) return false;
       if (filters.minPrice && car.price < filters.minPrice) return false;

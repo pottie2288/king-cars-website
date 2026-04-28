@@ -137,5 +137,7 @@ export interface FilterState {
   minYear: number | null;
   maxYear: number | null;
   maxMileage: number | null;
+  /** Exact door count match. Used to distinguish Single Cab (2) from Double Cab (4). */
+  doors: number | null;
   searchQuery: string;
 }

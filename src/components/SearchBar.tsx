@@ -42,6 +42,7 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
       maxYear: null,
       maxMileage: null,
       category: null,
+      doors: null,
     });
   };
 

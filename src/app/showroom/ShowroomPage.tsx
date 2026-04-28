@@ -25,6 +25,7 @@ export function ShowroomPage() {
     maxMileage: null,
     category: null,
     location: null,
+    doors: null,
   });
 
   // Filter Options
@@ -53,6 +54,11 @@ export function ShowroomPage() {
       if (key === 'make') {
         next.model = null;
       }
+      // Manually changing the body-type dropdown should clear any door
+      // restriction left over from a Single Cab / Double Cab card click.
+      if (key === 'category') {
+        next.doors = null;
+      }
       sessionStorage.setItem('showroomFilters', JSON.stringify(next));
       return next;
     });
@@ -69,6 +75,7 @@ export function ShowroomPage() {
     maxMileage: null,
     category: null,
     location: null,
+    doors: null,
   };
 
   const clearFilters = () => {
@@ -92,6 +99,7 @@ export function ShowroomPage() {
       if (filters.make && car.make !== filters.make) return false;
       if (filters.model && car.model !== filters.model) return false;
       if (filters.category && car.category !== filters.category) return false;
+      if (filters.doors != null && car.doors !== filters.doors) return false;
       if (filters.location && car.location !== filters.location) return false;
       if (filters.minPrice && car.price < filters.minPrice) return false;
       if (filters.maxPrice && car.price > filters.maxPrice) return false;

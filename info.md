@@ -56,7 +56,6 @@ Public assets:
   public/banks/                      absa, capitec, fnb, nedbank,
                                      standardbank, wesbank
   public/cars/                       Fallback car images
-  public/inventory.json              Legacy/static inventory (unused at runtime)
   public/sitemap.xml, robots.txt
 
 Config:

@@ -2,39 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { AnimatedSection } from './AnimatedSection';
-
-const bodyTypes = [
-    {
-        name: 'SUV',
-        image: '/body-types/suv.png',
-        category: 'SUV'
-    },
-    {
-        name: 'HATCHBACK',
-        image: '/body-types/hatchback.png',
-        category: 'Hatchback'
-    },
-    {
-        name: 'DOUBLE CAB',
-        image: '/body-types/doublecab.png',
-        category: 'Bakkie'
-    },
-    {
-        name: 'SEDAN',
-        image: '/body-types/sedan.png',
-        category: 'Sedan'
-    },
-    {
-        name: 'SINGLE CAB',
-        image: '/body-types/singlecab.png',
-        category: 'Bakkie'
-    },
-    {
-        name: 'PANEL VAN / MINI',
-        image: '/body-types/minivan.png',
-        category: 'Bakkie'
-    }
-];
+import { BODY_TYPES } from '@/data/body-types';
 
 export function BodyTypeFilter() {
     const router = useRouter();
@@ -65,7 +33,7 @@ export function BodyTypeFilter() {
                 </AnimatedSection>
 
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-8">
-                    {bodyTypes.map((type, index) => (
+                    {BODY_TYPES.map((type, index) => (
                         <AnimatedSection
                             key={index}
                             delay={index * 100}

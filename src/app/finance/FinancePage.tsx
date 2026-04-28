@@ -4,15 +4,7 @@ import { useState } from 'react';
 import { Clock, ChevronDown, Phone, Wallet, TrendingDown, ArrowRight, Building2 } from 'lucide-react';
 import { AnimatedSection } from '@/components/AnimatedSection';
 import { FinanceApplicationForm } from '@/components/FinanceApplicationForm';
-
-const SA_BANKS = [
-  { name: 'ABSA',          logo: '/banks/absa.png' },
-  { name: 'Standard Bank', logo: '/banks/standardbank.png' },
-  { name: 'FNB',           logo: '/banks/fnb.png' },
-  { name: 'Nedbank',       logo: '/banks/nedbank.png' },
-  { name: 'Capitec',       logo: '/banks/capitec.png' },
-  { name: 'WesBank',       logo: '/banks/wesbank.png' },
-];
+import { BANKS } from '@/data/banks';
 
 
 export function FinancePage() {
@@ -139,7 +131,7 @@ export function FinancePage() {
                   </h3>
                   <p className="text-sm text-gray-500 mb-6">We submit your application to all major South African banks to get you the best rate.</p>
                   <div className="grid grid-cols-3 gap-5">
-                    {SA_BANKS.map((bank) => (
+                    {BANKS.map((bank) => (
                       <img
                         key={bank.name}
                         src={bank.logo}

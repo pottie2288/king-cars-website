@@ -19,6 +19,7 @@ import {
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Checkbox } from './ui/checkbox';
+import { PERSONAL_BANKS } from '@/data/banks';
 import {
     Select,
     SelectContent,
@@ -271,13 +272,11 @@ export function FinanceApplicationForm() {
                                         <SelectValue placeholder="Select Bank" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem value="absa">ABSA</SelectItem>
-                                        <SelectItem value="fnb">FNB</SelectItem>
-                                        <SelectItem value="standard_bank">Standard Bank</SelectItem>
-                                        <SelectItem value="nedbank">Nedbank</SelectItem>
-                                        <SelectItem value="capitec">Capitec</SelectItem>
-                                        <SelectItem value="discovery">Discovery Bank</SelectItem>
-                                        <SelectItem value="other">Other</SelectItem>
+                                        {PERSONAL_BANKS.map((bank) => (
+                                            <SelectItem key={bank.id} value={bank.id}>
+                                                {bank.name}
+                                            </SelectItem>
+                                        ))}
                                     </SelectContent>
                                 </Select>
                                 {errors.bankName && <p className="text-red-500 text-xs mt-1">{errors.bankName.message}</p>}

@@ -18,5 +18,5 @@ export const BODY_TYPES: BodyType[] = [
   { name: 'DOUBLE CAB', image: '/body-types/doublecab.png', category: 'Bakkie', doors: 4 },
   { name: 'SEDAN', image: '/body-types/sedan.png', category: 'Sedan' },
   { name: 'SINGLE CAB', image: '/body-types/singlecab.png', category: 'Bakkie', doors: 2 },
-  { name: 'PANEL VAN / MINI', image: '/body-types/minivan.png', category: 'Bakkie' },
+  { name: 'PANEL VAN / MINI', image: '/body-types/minivan.png', category: 'Panel Van / Mini' },
 ]

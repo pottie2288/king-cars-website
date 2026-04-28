@@ -49,6 +49,16 @@ function normaliseBodyType(raw: string): string {
   const upper = raw.toUpperCase();
   if (upper === 'SUV') return 'SUV';
   if (upper === 'MPV') return 'MPV';
+  // Match panel vans, minibuses and kombis BEFORE the bakkie check so a
+  // VMG value like "PANEL VAN BAKKIE" doesn't get swept into "Bakkie".
+  if (
+    upper.includes('PANEL VAN') ||
+    upper.includes('MINIBUS') ||
+    upper.includes('MINI BUS') ||
+    upper.includes('KOMBI')
+  ) {
+    return 'Panel Van / Mini';
+  }
   if (upper.includes('BAKKIE') || upper.includes('SINGLE CAB')) return 'Bakkie';
   if (upper === 'COMMERCIAL') return 'Commercial';
   return titleCase(raw); // Sedan, Hatchback, etc.

@@ -6,13 +6,13 @@ Runtime:
 
 Entry points:
   src/app/layout.tsx   Root layout, metadata, JSON-LD AutoDealer schema
-  src/app/page.tsx     Homepage
+  src/app/page.tsx     Homepage (content inlined, no metadata)
   src/app/globals.css  Global styles
 
 Routes (src/app):
-  /                         Home
+  /                         Home (app/page.tsx)
   /showroom                 Inventory listing with filters
-  /showroom/[id]            Vehicle details (via views/CarDetailsPage)
+  /showroom/[id]            Vehicle details (content inlined)
   /finance                  Finance calculator + application form
   /sell-your-car            Sell-your-car lead form
   /favourites               Shortlisted vehicles
@@ -20,16 +20,24 @@ Routes (src/app):
   /compliments-complaints   Feedback form
   /api/inventory            VMG proxy (5-min revalidate)
 
-Views (page-level components):
-  src/views/HomePage.tsx, ShowroomPage.tsx, CarDetailsPage.tsx,
-  FinancePage.tsx, SellYourCarPage.tsx, FavouritesPage.tsx,
-  AboutPage.tsx, ComplaintsPage.tsx
+Page content:
+  Routes with metadata keep their client component colocated next to
+  page.tsx, e.g. src/app/about/AboutPage.tsx alongside app/about/page.tsx.
+  Routes without metadata (home, car details) inline the client UI
+  directly into page.tsx as a single file.
 
 Shared components (src/components):
   Header, Footer, CarCard, SearchBar, BodyTypeFilter, BranchSection,
   FinanceCalculator, FinanceApplicationForm, StickyContactBar,
   ScrollToTop, AnimatedSection
   ui/  shadcn/ui primitives (button, card, dialog, form, input, ...)
+
+Static content (src/data):
+  branches.ts     6 King Cars branches with addresses, phones, hours
+  banks.ts        BANKS (lenders shown on Finance page) +
+                  PERSONAL_BANKS (customer's-own-bank dropdown in the
+                  application form)
+  body-types.ts   6 body-type cards on the home page
 
 State & data:
   src/context/FavouritesContext.tsx  Client-side favourites

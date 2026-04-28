@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { FavouritesPage } from '@/views/FavouritesPage'
+import { FavouritesPage } from './FavouritesPage'
 
 export const metadata: Metadata = {
   title: 'My Favourites',

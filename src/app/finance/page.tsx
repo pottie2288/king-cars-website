@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { FinancePage } from '@/views/FinancePage'
+import { FinancePage } from './FinancePage'
 
 export const metadata: Metadata = {
   title: 'Car Finance Calculator & Application',

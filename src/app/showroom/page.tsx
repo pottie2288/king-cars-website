@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { ShowroomPage } from '@/views/ShowroomPage'
+import { ShowroomPage } from './ShowroomPage'
 
 export const metadata: Metadata = {
   title: 'Used Cars for Sale in Cape Town & Port Elizabeth',

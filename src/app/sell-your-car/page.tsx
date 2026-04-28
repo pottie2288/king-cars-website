@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { SellYourCarPage } from '@/views/SellYourCarPage'
+import { SellYourCarPage } from './SellYourCarPage'
 
 export const metadata: Metadata = {
   title: 'Sell Your Car for Cash in Cape Town & Port Elizabeth',

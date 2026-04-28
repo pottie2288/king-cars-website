@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { AboutPage } from '@/views/AboutPage'
+import { AboutPage } from './AboutPage'
 
 export const metadata: Metadata = {
   title: 'About King Cars | 30+ Years Selling Quality Pre-Owned Cars',

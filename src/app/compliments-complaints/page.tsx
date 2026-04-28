@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { ComplaintsPage } from '@/views/ComplaintsPage'
+import { ComplaintsPage } from './ComplaintsPage'
 
 export const metadata: Metadata = {
   title: 'Compliments & Complaints',

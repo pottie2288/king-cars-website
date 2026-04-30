@@ -1,6 +1,6 @@
 'use client'
 
-import { MapPin, Mail, Clock, Facebook, Instagram, Linkedin } from 'lucide-react';
+import { MapPin, Mail, Clock, Facebook, Instagram } from 'lucide-react';
 import Link from 'next/link';
 
 export function Footer() {
@@ -28,22 +28,20 @@ export function Footer() {
             </p>
             <div className="flex gap-3">
               <a
-                href="#"
+                href="https://www.facebook.com/kingcars.co.za/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-king-cyan transition-colors"
               >
                 <Facebook className="w-5 h-5" />
               </a>
               <a
-                href="#"
+                href="https://www.instagram.com/kingcars.co.za/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-king-cyan transition-colors"
               >
                 <Instagram className="w-5 h-5" />
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-king-cyan transition-colors"
-              >
-                <Linkedin className="w-5 h-5" />
               </a>
             </div>
           </div>

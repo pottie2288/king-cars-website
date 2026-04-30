@@ -22,7 +22,7 @@ import {
 export default function Page() {
     const { id } = useParams<{ id: string }>();
     const router = useRouter();
-    const { cars } = useInventory();
+    const { cars, loading } = useInventory();
     const { isFavourite, toggleFavourite } = useFavourites();
     const [api, setApi] = useState<CarouselApi>();
     const [current, setCurrent] = useState(0);
@@ -45,6 +45,18 @@ export default function Page() {
             setCurrent(api.selectedScrollSnap() + 1);
         });
     }, [api]);
+
+    if (loading) {
+        return (
+            <div className="min-h-screen pt-20 flex items-center justify-center">
+                <div className="flex gap-2">
+                    <span className="w-3 h-3 rounded-full bg-king-blue animate-bounce [animation-delay:-0.3s]" />
+                    <span className="w-3 h-3 rounded-full bg-king-blue animate-bounce [animation-delay:-0.15s]" />
+                    <span className="w-3 h-3 rounded-full bg-king-blue animate-bounce" />
+                </div>
+            </div>
+        );
+    }
 
     if (!car) {
         return (

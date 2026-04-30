@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { Search, SlidersHorizontal, MapPin, Grid, List as ListIcon, X, ChevronDown, Car as CarIcon, Shapes } from 'lucide-react';
+
+const PAGE_SIZE = 12;
 import { CarCard } from '@/components/CarCard';
 import { useInventory } from '@/hooks/useInventory';
 import { useFavourites } from '@/context/FavouritesContext';
@@ -12,6 +14,7 @@ export function ShowroomPage() {
   const { favourites, toggleFavourite } = useFavourites();
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
   // Filters
   const [filters, setFilters] = useState<FilterState>({
@@ -81,6 +84,7 @@ export function ShowroomPage() {
   const clearFilters = () => {
     setFilters(defaultFilters);
     sessionStorage.removeItem('showroomFilters');
+    setVisibleCount(PAGE_SIZE);
   };
 
   // Filter Logic
@@ -110,6 +114,21 @@ export function ShowroomPage() {
       return true;
     });
   }, [inventory, filters]);
+
+  const hasActiveFilters =
+    !!filters.searchQuery ||
+    filters.make !== null ||
+    filters.model !== null ||
+    filters.category !== null ||
+    filters.location !== null ||
+    filters.doors !== null ||
+    filters.minPrice !== null ||
+    filters.maxPrice !== null ||
+    filters.minYear !== null ||
+    filters.maxYear !== null ||
+    filters.maxMileage !== null;
+
+  const carsToShow = hasActiveFilters ? filteredCars : filteredCars.slice(0, visibleCount);
 
   return (
     <div className="min-h-screen bg-gray-50 pt-20">
@@ -143,7 +162,7 @@ export function ShowroomPage() {
           {/* Filters Sidebar */}
           <aside className={`
             fixed inset-0 z-50 lg:z-10 bg-king-blue lg:bg-transparent lg:static lg:w-1/4 lg:block
-            overflow-y-auto lg:overflow-visible lg:sticky lg:top-24 lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto lg:scrollbar-hide
+            overflow-y-auto lg:overflow-visible lg:sticky lg:top-24
             transition-transform duration-300
             ${showMobileFilters ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
           `}>
@@ -363,26 +382,43 @@ export function ShowroomPage() {
                 ))}
               </div>
             ) : filteredCars.length > 0 ? (
-              <div className={`
-                ${viewMode === 'grid'
-                  ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'
-                  : 'flex flex-col gap-6'}
-              `}>
-                {filteredCars.map((car, index) => (
-                  <div
-                    key={car.id}
-                    className="animate-fade-in"
-                    style={{ animationDelay: `${index * 50}ms` }}
-                  >
-                    <CarCard
-                      car={car}
-                      isFavourite={favourites.includes(car.id)}
-                      onToggleFavourite={() => toggleFavourite(car.id)}
-                      viewMode={viewMode}
-                    />
+              <>
+                <div className={`
+                  ${viewMode === 'grid'
+                    ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'
+                    : 'flex flex-col gap-6'}
+                `}>
+                  {carsToShow.map((car, index) => (
+                    <div
+                      key={car.id}
+                      className="animate-fade-in"
+                      style={{ animationDelay: `${(index % PAGE_SIZE) * 50}ms` }}
+                    >
+                      <CarCard
+                        car={car}
+                        isFavourite={favourites.includes(car.id)}
+                        onToggleFavourite={() => toggleFavourite(car.id)}
+                        viewMode={viewMode}
+                      />
+                    </div>
+                  ))}
+                </div>
+
+                {!hasActiveFilters && visibleCount < filteredCars.length && (
+                  <div className="flex flex-col items-center gap-3 mt-10">
+                    <p className="text-sm text-gray-400">
+                      Showing {visibleCount} of {filteredCars.length} vehicles
+                    </p>
+                    <button
+                      onClick={() => setVisibleCount(v => v + PAGE_SIZE)}
+                      className="flex items-center gap-2 px-8 py-3 rounded-xl border-2 border-king-blue text-king-blue font-semibold hover:bg-king-blue hover:text-white transition-all duration-200 shadow-sm"
+                    >
+                      Load More
+                      <ChevronDown className="w-4 h-4" />
+                    </button>
                   </div>
-                ))}
-              </div>
+                )}
+              </>
             ) : (
               <div className="text-center py-20 bg-white rounded-2xl border border-gray-200 border-dashed">
                 <Search className="w-12 h-12 text-gray-300 mx-auto mb-4" />

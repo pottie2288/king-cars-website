@@ -37,6 +37,7 @@ function BrandLogo({ make, size = 24 }: { make: string; size?: number }) {
     <img
       src={src}
       alt={make}
+      decoding="async"
       onError={() => setFailed(true)}
       className="object-contain flex-shrink-0"
       style={{ width: size, height: size }}
@@ -105,7 +106,7 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
       {selectedMake && (
         <button
           onClick={() => { setSelectedMake(''); onPick(); }}
-          className="flex items-center gap-4 w-full px-4 py-3.5 rounded-xl mb-0.5 transition-colors hover:bg-king-blue/5 text-gray-700"
+          className="flex items-center gap-4 w-full px-4 py-3.5 rounded-xl mb-0.5 active:bg-king-blue/5 text-gray-700"
         >
           <span className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
             <Car className="w-4 h-4 text-gray-400" />
@@ -118,10 +119,10 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
           <button
             key={make}
             onClick={() => { setSelectedMake(make); onPick(); }}
-            className={`flex items-center gap-4 w-full px-4 py-3.5 rounded-xl transition-colors text-left ${
+            className={`flex items-center gap-4 w-full px-4 py-3.5 rounded-xl text-left ${
               selectedMake === make
                 ? 'bg-king-blue/10 text-king-blue'
-                : 'hover:bg-king-blue/5 text-gray-700'
+                : 'text-gray-700 active:bg-king-blue/5'
             }`}
           >
             <BrandLogo make={make} size={32} />
@@ -239,16 +240,16 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
     <div ref={containerRef} className="w-full max-w-7xl mx-auto relative z-20">
 
       {/* ════════════════════════════════
-          MOBILE  –  pill + accordion (same pattern as showroom filter)
+          MOBILE  –  pill + absolute dropdowns
           ════════════════════════════════ */}
       <div className="md:hidden bg-white rounded-[1.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.12)] p-4 flex flex-col gap-3">
 
         {/* Make */}
-        <div>
+        <div className="relative w-full">
           <button
             onClick={() => toggle('make')}
-            className={`w-full h-[56px] px-5 border border-gray-200 rounded-full flex items-center gap-2.5 text-left transition-colors ${
-              openField === 'make' ? 'bg-black/[0.02] border-king-blue/30' : 'hover:bg-black/[0.01]'
+            className={`w-full h-[56px] px-5 border border-gray-200 rounded-full flex items-center gap-2.5 text-left ${
+              openField === 'make' ? 'bg-black/[0.02] border-king-blue/30' : ''
             }`}
           >
             {selectedMake
@@ -260,28 +261,27 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
             {chevron('make')}
           </button>
           <div
-            className="grid transition-[grid-template-rows] duration-200 ease-out"
-            style={{ gridTemplateRows: openField === 'make' ? '1fr' : '0fr' }}
+            className={`absolute left-0 right-0 z-50 mt-2 bg-white rounded-2xl border border-gray-100
+              shadow-[0_8px_30px_rgba(0,0,0,0.14)]
+              ${openField === 'make' ? 'visible pointer-events-auto' : 'invisible pointer-events-none'}`}
           >
-            <div className="min-h-0 overflow-hidden">
-              <div className="max-h-[55vh] overflow-y-auto overscroll-contain pt-1">
-                {makesBody(close)}
-              </div>
+            <div className="overflow-y-auto overscroll-contain" style={{ maxHeight: '55vh' }}>
+              {makesBody(close)}
             </div>
           </div>
         </div>
 
         {/* Model */}
-        <div>
+        <div className="relative w-full">
           <button
             onClick={() => selectedMake && toggle('model')}
             disabled={!selectedMake}
-            className={`w-full h-[56px] px-5 border border-gray-200 rounded-full flex items-center gap-2.5 text-left transition-colors ${
+            className={`w-full h-[56px] px-5 border border-gray-200 rounded-full flex items-center gap-2.5 text-left ${
               !selectedMake
                 ? 'bg-gray-50 cursor-not-allowed'
                 : openField === 'model'
                   ? 'bg-black/[0.02] border-king-blue/30 cursor-pointer'
-                  : 'hover:bg-black/[0.01] cursor-pointer'
+                  : 'cursor-pointer'
             }`}
           >
             <span className={`flex-1 font-bold text-sm truncate ${
@@ -292,23 +292,22 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
             {chevron('model', !selectedMake ? 'text-gray-400 opacity-60' : 'text-gray-700')}
           </button>
           <div
-            className="grid transition-[grid-template-rows] duration-200 ease-out"
-            style={{ gridTemplateRows: openField === 'model' && selectedMake ? '1fr' : '0fr' }}
+            className={`absolute left-0 right-0 z-50 mt-2 bg-white rounded-2xl border border-gray-100
+              shadow-[0_8px_30px_rgba(0,0,0,0.14)]
+              ${openField === 'model' && selectedMake ? 'visible pointer-events-auto' : 'invisible pointer-events-none'}`}
           >
-            <div className="min-h-0 overflow-hidden">
-              <div className="max-h-[45vh] overflow-y-auto overscroll-contain pt-1">
-                {modelsBody(close)}
-              </div>
+            <div className="overflow-y-auto overscroll-contain" style={{ maxHeight: '45vh' }}>
+              {modelsBody(close)}
             </div>
           </div>
         </div>
 
         {/* Price */}
-        <div>
+        <div className="relative w-full">
           <button
             onClick={() => toggle('price')}
-            className={`w-full h-[56px] px-5 border border-gray-200 rounded-full flex items-center gap-2.5 text-left transition-colors ${
-              openField === 'price' ? 'bg-black/[0.02] border-king-blue/30' : 'hover:bg-black/[0.01]'
+            className={`w-full h-[56px] px-5 border border-gray-200 rounded-full flex items-center gap-2.5 text-left ${
+              openField === 'price' ? 'bg-black/[0.02] border-king-blue/30' : ''
             }`}
           >
             <span className={`flex-1 font-bold text-sm truncate ${maxPriceValue < MAX_PRICE ? 'text-king-blue' : 'text-gray-600'}`}>
@@ -317,21 +316,20 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
             {chevron('price')}
           </button>
           <div
-            className="grid transition-[grid-template-rows] duration-200 ease-out"
-            style={{ gridTemplateRows: openField === 'price' ? '1fr' : '0fr' }}
+            className={`absolute left-0 right-0 z-50 mt-2 bg-white rounded-2xl border border-gray-100
+              shadow-[0_8px_30px_rgba(0,0,0,0.14)]
+              ${openField === 'price' ? 'visible pointer-events-auto' : 'invisible pointer-events-none'}`}
           >
-            <div className="min-h-0 overflow-hidden">
-              {priceBody()}
-            </div>
+            {priceBody()}
           </div>
         </div>
 
         {/* Location */}
-        <div>
+        <div className="relative w-full">
           <button
             onClick={() => toggle('location')}
-            className={`w-full h-[56px] px-5 border border-gray-200 rounded-full flex items-center gap-2.5 text-left transition-colors ${
-              openField === 'location' ? 'bg-black/[0.02] border-king-blue/30' : 'hover:bg-black/[0.01]'
+            className={`w-full h-[56px] px-5 border border-gray-200 rounded-full flex items-center gap-2.5 text-left ${
+              openField === 'location' ? 'bg-black/[0.02] border-king-blue/30' : ''
             }`}
           >
             <MapPin className={`w-4 h-4 flex-shrink-0 ${selectedLocation ? 'text-king-blue' : 'text-gray-400'}`} />
@@ -341,13 +339,12 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
             {chevron('location')}
           </button>
           <div
-            className="grid transition-[grid-template-rows] duration-200 ease-out"
-            style={{ gridTemplateRows: openField === 'location' ? '1fr' : '0fr' }}
+            className={`absolute left-0 right-0 z-50 mt-2 bg-white rounded-2xl border border-gray-100
+              shadow-[0_8px_30px_rgba(0,0,0,0.14)]
+              ${openField === 'location' ? 'visible pointer-events-auto' : 'invisible pointer-events-none'}`}
           >
-            <div className="min-h-0 overflow-hidden">
-              <div className="max-h-[45vh] overflow-y-auto overscroll-contain pt-1">
-                {locationsBody(close)}
-              </div>
+            <div className="overflow-y-auto overscroll-contain" style={{ maxHeight: '45vh' }}>
+              {locationsBody(close)}
             </div>
           </div>
         </div>

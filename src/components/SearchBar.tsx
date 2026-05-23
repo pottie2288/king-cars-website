@@ -260,15 +260,13 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
             </span>
             {chevron('make')}
           </button>
-          <div
-            className={`absolute left-0 right-0 z-50 mt-2 bg-white rounded-2xl border border-gray-100
-              shadow-[0_8px_30px_rgba(0,0,0,0.14)]
-              ${openField === 'make' ? 'visible pointer-events-auto' : 'invisible pointer-events-none'}`}
-          >
-            <div className="overflow-y-auto overscroll-contain" style={{ maxHeight: '55vh' }}>
-              {makesBody(close)}
+          {openField === 'make' && (
+            <div className="absolute left-0 right-0 z-50 mt-2 bg-white rounded-2xl border border-gray-100 shadow-[0_8px_30px_rgba(0,0,0,0.14)]">
+              <div className="overflow-y-auto overscroll-contain" style={{ maxHeight: '55vh' }}>
+                {makesBody(close)}
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Model */}
@@ -291,15 +289,13 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
             </span>
             {chevron('model', !selectedMake ? 'text-gray-400 opacity-60' : 'text-gray-700')}
           </button>
-          <div
-            className={`absolute left-0 right-0 z-50 mt-2 bg-white rounded-2xl border border-gray-100
-              shadow-[0_8px_30px_rgba(0,0,0,0.14)]
-              ${openField === 'model' && selectedMake ? 'visible pointer-events-auto' : 'invisible pointer-events-none'}`}
-          >
-            <div className="overflow-y-auto overscroll-contain" style={{ maxHeight: '45vh' }}>
-              {modelsBody(close)}
+          {openField === 'model' && selectedMake && (
+            <div className="absolute left-0 right-0 z-50 mt-2 bg-white rounded-2xl border border-gray-100 shadow-[0_8px_30px_rgba(0,0,0,0.14)]">
+              <div className="overflow-y-auto overscroll-contain" style={{ maxHeight: '45vh' }}>
+                {modelsBody(close)}
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Price */}
@@ -315,13 +311,11 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
             </span>
             {chevron('price')}
           </button>
-          <div
-            className={`absolute left-0 right-0 z-50 mt-2 bg-white rounded-2xl border border-gray-100
-              shadow-[0_8px_30px_rgba(0,0,0,0.14)]
-              ${openField === 'price' ? 'visible pointer-events-auto' : 'invisible pointer-events-none'}`}
-          >
-            {priceBody()}
-          </div>
+          {openField === 'price' && (
+            <div className="absolute left-0 right-0 z-50 mt-2 bg-white rounded-2xl border border-gray-100 shadow-[0_8px_30px_rgba(0,0,0,0.14)]">
+              {priceBody()}
+            </div>
+          )}
         </div>
 
         {/* Location */}
@@ -338,15 +332,13 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
             </span>
             {chevron('location')}
           </button>
-          <div
-            className={`absolute left-0 right-0 z-50 mt-2 bg-white rounded-2xl border border-gray-100
-              shadow-[0_8px_30px_rgba(0,0,0,0.14)]
-              ${openField === 'location' ? 'visible pointer-events-auto' : 'invisible pointer-events-none'}`}
-          >
-            <div className="overflow-y-auto overscroll-contain" style={{ maxHeight: '45vh' }}>
-              {locationsBody(close)}
+          {openField === 'location' && (
+            <div className="absolute left-0 right-0 z-50 mt-2 bg-white rounded-2xl border border-gray-100 shadow-[0_8px_30px_rgba(0,0,0,0.14)]">
+              <div className="overflow-y-auto overscroll-contain" style={{ maxHeight: '45vh' }}>
+                {locationsBody(close)}
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Search */}

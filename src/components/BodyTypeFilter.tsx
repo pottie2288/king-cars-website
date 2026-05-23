@@ -8,20 +8,10 @@ export function BodyTypeFilter() {
     const router = useRouter();
 
     const handleTypeClick = (category: string, doors: number | null) => {
-        sessionStorage.setItem('homeSearchFilters', JSON.stringify({
-            category: category,
-            location: null,
-            make: null,
-            model: null,
-            minPrice: null,
-            maxPrice: null,
-            minYear: null,
-            maxYear: null,
-            maxMileage: null,
-            doors: doors,
-            searchQuery: ''
-        }));
-        router.push('/showroom');
+        const params = new URLSearchParams();
+        params.set('category', category);
+        if (doors !== null) params.set('doors', String(doors));
+        router.push(`/showroom?${params.toString()}`);
     };
 
     return (

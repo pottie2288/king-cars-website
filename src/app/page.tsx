@@ -30,9 +30,12 @@ export default function Page() {
   }, [loading, getFeaturedCars]);
 
   const handleSearch = (filters: FilterState) => {
-    // Store filters in sessionStorage for showroom page
-    sessionStorage.setItem('homeSearchFilters', JSON.stringify(filters));
-    router.push('/showroom');
+    const params = new URLSearchParams();
+    if (filters.make) params.set('make', filters.make);
+    if (filters.model) params.set('model', filters.model);
+    if (filters.location) params.set('location', filters.location);
+    if (filters.maxPrice !== null) params.set('maxPrice', String(filters.maxPrice));
+    router.push(`/showroom?${params.toString()}`);
   };
 
   const makes = getUniqueMakes();

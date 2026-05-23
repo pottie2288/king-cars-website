@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import type { Metadata } from 'next'
 import { ShowroomPage } from './ShowroomPage'
 
@@ -7,5 +8,9 @@ export const metadata: Metadata = {
 }
 
 export default function Page() {
-  return <ShowroomPage />
+  return (
+    <Suspense>
+      <ShowroomPage />
+    </Suspense>
+  )
 }

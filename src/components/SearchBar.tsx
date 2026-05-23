@@ -261,8 +261,7 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
           <div
             className={`absolute left-0 right-0 z-50 mt-2 bg-white rounded-2xl border border-gray-100
               shadow-[0_8px_30px_rgba(0,0,0,0.14)]
-              transition-[opacity,transform] duration-200 ease-out
-              ${openField === 'make' ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-2 pointer-events-none'}`}
+              ${openField === 'make' ? 'visible pointer-events-auto' : 'invisible pointer-events-none'}`}
           >
             <div
               className="overflow-y-scroll overscroll-contain touch-pan-y"
@@ -296,8 +295,7 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
           <div
             className={`absolute left-0 right-0 z-50 mt-2 bg-white rounded-2xl border border-gray-100
               shadow-[0_8px_30px_rgba(0,0,0,0.14)]
-              transition-[opacity,transform] duration-200 ease-out
-              ${openField === 'model' && selectedMake ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-2 pointer-events-none'}`}
+              ${openField === 'model' && selectedMake ? 'visible pointer-events-auto' : 'invisible pointer-events-none'}`}
           >
             <div
               className="overflow-y-scroll overscroll-contain touch-pan-y"
@@ -324,8 +322,7 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
           <div
             className={`absolute left-0 right-0 z-50 mt-2 bg-white rounded-2xl border border-gray-100
               shadow-[0_8px_30px_rgba(0,0,0,0.14)]
-              transition-[opacity,transform] duration-200 ease-out
-              ${openField === 'price' ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-2 pointer-events-none'}`}
+              ${openField === 'price' ? 'visible pointer-events-auto' : 'invisible pointer-events-none'}`}
           >
             {priceBody()}
           </div>
@@ -348,8 +345,7 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
           <div
             className={`absolute left-0 right-0 z-50 mt-2 bg-white rounded-2xl border border-gray-100
               shadow-[0_8px_30px_rgba(0,0,0,0.14)]
-              transition-[opacity,transform] duration-200 ease-out
-              ${openField === 'location' ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-2 pointer-events-none'}`}
+              ${openField === 'location' ? 'visible pointer-events-auto' : 'invisible pointer-events-none'}`}
           >
             <div
               className="overflow-y-scroll overscroll-contain touch-pan-y"

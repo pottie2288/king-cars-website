@@ -1,7 +1,6 @@
 'use client'
 
 import * as React from "react"
-import { motion, type PanInfo } from "framer-motion"
 import { cn } from "@/lib/utils"
 
 interface Testimonial {
@@ -11,127 +10,113 @@ interface Testimonial {
   description: string
 }
 
-interface TestimonialCarouselProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+interface TestimonialCarouselProps extends React.HTMLAttributes<HTMLDivElement> {
   testimonials: Testimonial[]
   showArrows?: boolean
   showDots?: boolean
 }
 
-const TestimonialCarousel = React.forwardRef<
-  HTMLDivElement,
-  TestimonialCarouselProps
->(
-  (
-    { className, testimonials, showArrows = true, showDots = true, ...props },
-    ref,
-  ) => {
+const TestimonialCarousel = React.forwardRef<HTMLDivElement, TestimonialCarouselProps>(
+  ({ className, testimonials, showArrows = true, showDots = true, ...props }, ref) => {
     const [currentIndex, setCurrentIndex] = React.useState(0)
-    const [exitX, setExitX] = React.useState<number>(0)
 
-    const handleDragEnd = (
-      _event: MouseEvent | TouchEvent | PointerEvent,
-      info: PanInfo,
-    ) => {
-      if (Math.abs(info.offset.x) > 100) {
-        setExitX(info.offset.x)
-        setTimeout(() => {
-          setCurrentIndex((prev) => (prev + 1) % testimonials.length)
-          setExitX(0)
-        }, 200)
-      }
+    // Touch swipe tracking — fully passive, no document listeners
+    const touchStartX = React.useRef<number | null>(null)
+
+    const prev = () => setCurrentIndex(i => (i - 1 + testimonials.length) % testimonials.length)
+    const next = () => setCurrentIndex(i => (i + 1) % testimonials.length)
+
+    const onTouchStart = (e: React.TouchEvent) => {
+      touchStartX.current = e.touches[0].clientX
+    }
+
+    const onTouchEnd = (e: React.TouchEvent) => {
+      if (touchStartX.current === null) return
+      const delta = touchStartX.current - e.changedTouches[0].clientX
+      if (Math.abs(delta) > 60) delta > 0 ? next() : prev()
+      touchStartX.current = null
     }
 
     return (
       <div
         ref={ref}
-        className={cn(
-          "h-72 w-full flex items-center justify-center",
-          className
-        )}
+        className={cn("h-72 w-full flex items-center justify-center", className)}
         {...props}
       >
-        <div className="relative w-80 h-64">
+        <div
+          className="relative w-80 h-64"
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
+        >
           {testimonials.map((testimonial, index) => {
-            const isCurrentCard = index === currentIndex
-            const isPrevCard =
-              index === (currentIndex + 1) % testimonials.length
-            const isNextCard =
-              index === (currentIndex + 2) % testimonials.length
+            const offset = (index - currentIndex + testimonials.length) % testimonials.length
+            const isCurrent = offset === 0
+            const isPrev = offset === 1
+            const isNext = offset === 2
 
-            if (!isCurrentCard && !isPrevCard && !isNextCard) return null
+            if (!isCurrent && !isPrev && !isNext) return null
 
             return (
-              <motion.div
+              <div
                 key={testimonial.id}
                 className={cn(
-                  "absolute w-full h-full rounded-2xl cursor-grab active:cursor-grabbing",
-                  "bg-white shadow-xl",
-                  "dark:bg-card dark:shadow-[2px_2px_4px_rgba(0,0,0,0.4),-1px_-1px_3px_rgba(255,255,255,0.1)]",
+                  "absolute w-full h-full rounded-2xl bg-white shadow-xl",
+                  "transition-all duration-300 ease-out",
+                  isCurrent ? "cursor-grab" : "pointer-events-none",
                 )}
                 style={{
-                  zIndex: isCurrentCard ? 3 : isPrevCard ? 2 : 1,
-                }}
-                drag={isCurrentCard ? "x" : false}
-                dragConstraints={{ left: 0, right: 0 }}
-                dragElastic={0.7}
-                onDragEnd={isCurrentCard ? handleDragEnd : undefined}
-                initial={{
-                  scale: 0.95,
-                  opacity: 0,
-                  y: isCurrentCard ? 0 : isPrevCard ? 8 : 16,
-                  rotate: isCurrentCard ? 0 : isPrevCard ? -2 : -4,
-                }}
-                animate={{
-                  scale: isCurrentCard ? 1 : 0.95,
-                  opacity: isCurrentCard ? 1 : isPrevCard ? 0.6 : 0.3,
-                  x: isCurrentCard ? exitX : 0,
-                  y: isCurrentCard ? 0 : isPrevCard ? 8 : 16,
-                  rotate: isCurrentCard ? exitX / 20 : isPrevCard ? -2 : -4,
-                }}
-                transition={{
-                  type: "spring",
-                  stiffness: 300,
-                  damping: 20,
+                  zIndex: isCurrent ? 3 : isPrev ? 2 : 1,
+                  transform: isCurrent
+                    ? "scale(1) rotate(0deg) translateY(0)"
+                    : isPrev
+                    ? "scale(0.95) rotate(-2deg) translateY(8px)"
+                    : "scale(0.90) rotate(-4deg) translateY(16px)",
+                  opacity: isCurrent ? 1 : isPrev ? 0.6 : 0.3,
                 }}
               >
-                {showArrows && isCurrentCard && (
+                {showArrows && isCurrent && (
                   <div className="absolute inset-x-0 top-2 flex justify-between px-4">
-                    <span className="text-2xl select-none cursor-pointer text-gray-300 hover:text-gray-400 dark:text-muted-foreground dark:hover:text-primary">
-                      &larr;
-                    </span>
-                    <span className="text-2xl select-none cursor-pointer text-gray-300 hover:text-gray-400 dark:text-muted-foreground dark:hover:text-primary">
-                      &rarr;
-                    </span>
+                    <button
+                      onClick={prev}
+                      className="text-2xl select-none text-gray-300 hover:text-gray-400 p-1"
+                      aria-label="Previous"
+                    >
+                      ←
+                    </button>
+                    <button
+                      onClick={next}
+                      className="text-2xl select-none text-gray-300 hover:text-gray-400 p-1"
+                      aria-label="Next"
+                    >
+                      →
+                    </button>
                   </div>
                 )}
 
                 <div className="p-6 flex flex-col items-center gap-4">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={testimonial.avatar}
                     alt={testimonial.name}
                     className="w-16 h-16 rounded-full object-cover"
                   />
-                  <h3 className="text-lg font-semibold text-gray-800 dark:text-foreground">
-                    {testimonial.name}
-                  </h3>
-                  <p className="text-center text-sm text-gray-600 dark:text-muted-foreground">
-                    {testimonial.description}
-                  </p>
+                  <h3 className="text-lg font-semibold text-gray-800">{testimonial.name}</h3>
+                  <p className="text-center text-sm text-gray-600">{testimonial.description}</p>
                 </div>
-              </motion.div>
+              </div>
             )
           })}
+
           {showDots && (
             <div className="absolute -bottom-8 left-0 right-0 flex justify-center gap-2">
               {testimonials.map((_, index) => (
-                <div
+                <button
                   key={index}
+                  onClick={() => setCurrentIndex(index)}
+                  aria-label={`Go to testimonial ${index + 1}`}
                   className={cn(
                     "w-2 h-2 rounded-full transition-colors",
-                    index === currentIndex
-                      ? "bg-blue-500 dark:bg-primary"
-                      : "bg-gray-300 dark:bg-muted-foreground/30",
+                    index === currentIndex ? "bg-king-blue" : "bg-gray-300",
                   )}
                 />
               ))}

@@ -54,11 +54,6 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
   const [selectedLocation, setSelectedLocation] = useState('');
   const [availableModels, setAvailableModels] = useState<string[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
-  const makeRef = useRef<HTMLButtonElement>(null);
-  const modelRef = useRef<HTMLButtonElement>(null);
-  const priceRef = useRef<HTMLButtonElement>(null);
-  const locationRef = useRef<HTMLButtonElement>(null);
-  const [dropPos, setDropPos] = useState({ top: 0, left: 0, right: 0 });
 
   useEffect(() => {
     if (selectedMake) {
@@ -79,35 +74,6 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
     document.addEventListener('mousedown', onOut);
     return () => document.removeEventListener('mousedown', onOut);
   }, []);
-
-  // Lock page scroll while a mobile dropdown is open — prevents iOS treating
-  // finger swipes on the list as page scroll attempts
-  useEffect(() => {
-    const isTouch = window.matchMedia('(hover: none)').matches;
-    if (!isTouch) return;
-    if (openField) {
-      document.documentElement.style.overflow = 'hidden';
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.documentElement.style.overflow = '';
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.documentElement.style.overflow = '';
-      document.body.style.overflow = '';
-    };
-  }, [openField]);
-
-  // Opens a mobile dropdown and captures the trigger button's viewport position
-  // so the fixed dropdown can be placed exactly below it
-  const openMobile = (field: OpenField, ref: React.RefObject<HTMLButtonElement | null>) => {
-    if (openField === field) { setOpenField(null); return; }
-    if (ref.current) {
-      const r = ref.current.getBoundingClientRect();
-      setDropPos({ top: r.bottom + 8, left: r.left, right: window.innerWidth - r.right });
-    }
-    setOpenField(field);
-  };
 
   const toggle = (f: OpenField) => setOpenField(p => (p === f ? null : f));
   const close = () => setOpenField(null);
@@ -135,34 +101,24 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
   // ── shared content blocks (JSX factories, not components) ──────────
 
   const makesBody = (onPick: () => void) => (
-    <div className="p-3 pb-3">
-      {selectedMake && (
-        <button
-          onClick={() => { setSelectedMake(''); onPick(); }}
-          className="flex items-center gap-4 w-full px-4 py-3.5 rounded-xl mb-0.5 active:bg-king-blue/5 text-gray-700"
-        >
-          <span className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
-            <Car className="w-4 h-4 text-gray-400" />
-          </span>
-          <span className="text-[15px] font-semibold flex-1 text-left">All Makes</span>
-        </button>
-      )}
-      <div className="flex flex-col">
-        {makes.map((make) => (
-          <button
-            key={make}
-            onClick={() => { setSelectedMake(make); onPick(); }}
-            className={`flex items-center gap-4 w-full px-4 py-3.5 rounded-xl text-left ${
-              selectedMake === make
-                ? 'bg-king-blue/10 text-king-blue'
-                : 'text-gray-700 active:bg-king-blue/5'
-            }`}
-          >
-            <BrandLogo make={make} size={32} />
-            <span className="text-[15px] font-semibold flex-1">{make}</span>
-            {selectedMake === make && <Check className="w-4 h-4 flex-shrink-0" />}
-          </button>
-        ))}
+    <div className="p-3">
+      <div className="flex flex-wrap gap-1.5">
+        {[...(selectedMake ? [{ label: 'All Makes', value: '' }] : []), ...makes.map(m => ({ label: m, value: m }))].map(
+          ({ label, value }) => (
+            <button
+              key={label}
+              onClick={() => { setSelectedMake(value); onPick(); }}
+              className={`flex items-center gap-1.5 px-3.5 py-2 rounded-full text-sm font-semibold transition-colors ${
+                selectedMake === value
+                  ? 'bg-king-blue/10 text-king-blue ring-1 ring-king-blue/20'
+                  : 'text-gray-700 hover:bg-king-blue/5'
+              }`}
+            >
+              {label}
+              {selectedMake === value && <Check className="w-3 h-3" />}
+            </button>
+          )
+        )}
       </div>
     </div>
   );
@@ -278,10 +234,9 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
       <div className="md:hidden bg-white rounded-[1.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.12)] p-4 flex flex-col gap-3">
 
         {/* Make */}
-        <div className="w-full">
+        <div className="relative w-full">
           <button
-            ref={makeRef}
-            onClick={() => openMobile('make', makeRef)}
+            onClick={() => toggle('make')}
             className={`w-full h-[56px] px-5 border border-gray-200 rounded-full flex items-center gap-2.5 text-left ${
               openField === 'make' ? 'bg-black/[0.02] border-king-blue/30' : ''
             }`}
@@ -294,13 +249,19 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
             </span>
             {chevron('make')}
           </button>
+          {openField === 'make' && (
+            <div className="absolute left-0 right-0 z-50 mt-2 bg-white rounded-2xl border border-gray-100 shadow-[0_8px_30px_rgba(0,0,0,0.14)]">
+              <div className="overflow-y-auto overscroll-contain" style={{ maxHeight: '55vh' }}>
+                {makesBody(close)}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Model */}
-        <div className="w-full">
+        <div className="relative w-full">
           <button
-            ref={modelRef}
-            onClick={() => selectedMake && openMobile('model', modelRef)}
+            onClick={() => selectedMake && toggle('model')}
             disabled={!selectedMake}
             className={`w-full h-[56px] px-5 border border-gray-200 rounded-full flex items-center gap-2.5 text-left ${
               !selectedMake
@@ -317,13 +278,19 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
             </span>
             {chevron('model', !selectedMake ? 'text-gray-400 opacity-60' : 'text-gray-700')}
           </button>
+          {openField === 'model' && selectedMake && (
+            <div className="absolute left-0 right-0 z-50 mt-2 bg-white rounded-2xl border border-gray-100 shadow-[0_8px_30px_rgba(0,0,0,0.14)]">
+              <div className="overflow-y-auto overscroll-contain" style={{ maxHeight: '45vh' }}>
+                {modelsBody(close)}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Price */}
-        <div className="w-full">
+        <div className="relative w-full">
           <button
-            ref={priceRef}
-            onClick={() => openMobile('price', priceRef)}
+            onClick={() => toggle('price')}
             className={`w-full h-[56px] px-5 border border-gray-200 rounded-full flex items-center gap-2.5 text-left ${
               openField === 'price' ? 'bg-black/[0.02] border-king-blue/30' : ''
             }`}
@@ -333,13 +300,17 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
             </span>
             {chevron('price')}
           </button>
+          {openField === 'price' && (
+            <div className="absolute left-0 right-0 z-50 mt-2 bg-white rounded-2xl border border-gray-100 shadow-[0_8px_30px_rgba(0,0,0,0.14)]">
+              {priceBody()}
+            </div>
+          )}
         </div>
 
         {/* Location */}
-        <div className="w-full">
+        <div className="relative w-full">
           <button
-            ref={locationRef}
-            onClick={() => openMobile('location', locationRef)}
+            onClick={() => toggle('location')}
             className={`w-full h-[56px] px-5 border border-gray-200 rounded-full flex items-center gap-2.5 text-left ${
               openField === 'location' ? 'bg-black/[0.02] border-king-blue/30' : ''
             }`}
@@ -350,6 +321,13 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
             </span>
             {chevron('location')}
           </button>
+          {openField === 'location' && (
+            <div className="absolute left-0 right-0 z-50 mt-2 bg-white rounded-2xl border border-gray-100 shadow-[0_8px_30px_rgba(0,0,0,0.14)]">
+              <div className="overflow-y-auto overscroll-contain" style={{ maxHeight: '45vh' }}>
+                {locationsBody(close)}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Search */}
@@ -360,49 +338,6 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
           Search <Search className="w-5 h-5" strokeWidth={3} />
         </button>
       </div>
-
-      {/* ── Mobile fixed dropdowns (position:fixed = outside page scroll context) ── */}
-      {openField && (
-        <div className="fixed inset-0 z-[998] md:hidden" onClick={close} />
-      )}
-      {openField === 'make' && (
-        <div
-          className="fixed z-[999] bg-white rounded-2xl border border-gray-100 shadow-[0_8px_30px_rgba(0,0,0,0.14)] md:hidden"
-          style={{ top: dropPos.top, left: dropPos.left, right: dropPos.right }}
-        >
-          <div className="overflow-y-auto overscroll-contain" style={{ maxHeight: '55vh' }}>
-            {makesBody(close)}
-          </div>
-        </div>
-      )}
-      {openField === 'model' && selectedMake && (
-        <div
-          className="fixed z-[999] bg-white rounded-2xl border border-gray-100 shadow-[0_8px_30px_rgba(0,0,0,0.14)] md:hidden"
-          style={{ top: dropPos.top, left: dropPos.left, right: dropPos.right }}
-        >
-          <div className="overflow-y-auto overscroll-contain" style={{ maxHeight: '45vh' }}>
-            {modelsBody(close)}
-          </div>
-        </div>
-      )}
-      {openField === 'price' && (
-        <div
-          className="fixed z-[999] bg-white rounded-2xl border border-gray-100 shadow-[0_8px_30px_rgba(0,0,0,0.14)] md:hidden"
-          style={{ top: dropPos.top, left: dropPos.left, right: dropPos.right }}
-        >
-          {priceBody()}
-        </div>
-      )}
-      {openField === 'location' && (
-        <div
-          className="fixed z-[999] bg-white rounded-2xl border border-gray-100 shadow-[0_8px_30px_rgba(0,0,0,0.14)] md:hidden"
-          style={{ top: dropPos.top, left: dropPos.left, right: dropPos.right }}
-        >
-          <div className="overflow-y-auto overscroll-contain" style={{ maxHeight: '45vh' }}>
-            {locationsBody(close)}
-          </div>
-        </div>
-      )}
 
       {/* ════════════════════════════════
           DESKTOP  –  pill + absolute dropdowns

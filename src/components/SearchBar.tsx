@@ -74,15 +74,6 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
     return () => document.removeEventListener('mousedown', onOut);
   }, []);
 
-  // Lock page scroll while any mobile dropdown is open to prevent scroll chaining on iOS
-  useEffect(() => {
-    if (openField) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => { document.body.style.overflow = ''; };
-  }, [openField]);
 
   const toggle = (f: OpenField) => setOpenField(p => (p === f ? null : f));
   const close = () => setOpenField(null);
@@ -248,12 +239,12 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
     <div ref={containerRef} className="w-full max-w-7xl mx-auto relative z-20">
 
       {/* ════════════════════════════════
-          MOBILE  –  pill + absolute dropdowns
+          MOBILE  –  pill + accordion (same pattern as showroom filter)
           ════════════════════════════════ */}
       <div className="md:hidden bg-white rounded-[1.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.12)] p-4 flex flex-col gap-3">
 
         {/* Make */}
-        <div className="relative w-full">
+        <div>
           <button
             onClick={() => toggle('make')}
             className={`w-full h-[56px] px-5 border border-gray-200 rounded-full flex items-center gap-2.5 text-left transition-colors ${
@@ -269,21 +260,19 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
             {chevron('make')}
           </button>
           <div
-            className={`absolute left-0 right-0 z-50 mt-2 bg-white rounded-2xl border border-gray-100
-              shadow-[0_8px_30px_rgba(0,0,0,0.14)]
-              ${openField === 'make' ? 'visible pointer-events-auto' : 'invisible pointer-events-none'}`}
+            className="grid transition-[grid-template-rows] duration-200 ease-out"
+            style={{ gridTemplateRows: openField === 'make' ? '1fr' : '0fr' }}
           >
-            <div
-              className="overflow-y-scroll overscroll-contain touch-pan-y"
-              style={{ maxHeight: '55vh', WebkitOverflowScrolling: 'touch' }}
-            >
-              {makesBody(close)}
+            <div className="min-h-0 overflow-hidden">
+              <div className="max-h-[55vh] overflow-y-auto overscroll-contain pt-1">
+                {makesBody(close)}
+              </div>
             </div>
           </div>
         </div>
 
         {/* Model */}
-        <div className="relative w-full">
+        <div>
           <button
             onClick={() => selectedMake && toggle('model')}
             disabled={!selectedMake}
@@ -303,21 +292,19 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
             {chevron('model', !selectedMake ? 'text-gray-400 opacity-60' : 'text-gray-700')}
           </button>
           <div
-            className={`absolute left-0 right-0 z-50 mt-2 bg-white rounded-2xl border border-gray-100
-              shadow-[0_8px_30px_rgba(0,0,0,0.14)]
-              ${openField === 'model' && selectedMake ? 'visible pointer-events-auto' : 'invisible pointer-events-none'}`}
+            className="grid transition-[grid-template-rows] duration-200 ease-out"
+            style={{ gridTemplateRows: openField === 'model' && selectedMake ? '1fr' : '0fr' }}
           >
-            <div
-              className="overflow-y-scroll overscroll-contain touch-pan-y"
-              style={{ maxHeight: '45vh', WebkitOverflowScrolling: 'touch' }}
-            >
-              {modelsBody(close)}
+            <div className="min-h-0 overflow-hidden">
+              <div className="max-h-[45vh] overflow-y-auto overscroll-contain pt-1">
+                {modelsBody(close)}
+              </div>
             </div>
           </div>
         </div>
 
         {/* Price */}
-        <div className="relative w-full">
+        <div>
           <button
             onClick={() => toggle('price')}
             className={`w-full h-[56px] px-5 border border-gray-200 rounded-full flex items-center gap-2.5 text-left transition-colors ${
@@ -330,16 +317,17 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
             {chevron('price')}
           </button>
           <div
-            className={`absolute left-0 right-0 z-50 mt-2 bg-white rounded-2xl border border-gray-100
-              shadow-[0_8px_30px_rgba(0,0,0,0.14)]
-              ${openField === 'price' ? 'visible pointer-events-auto' : 'invisible pointer-events-none'}`}
+            className="grid transition-[grid-template-rows] duration-200 ease-out"
+            style={{ gridTemplateRows: openField === 'price' ? '1fr' : '0fr' }}
           >
-            {priceBody()}
+            <div className="min-h-0 overflow-hidden">
+              {priceBody()}
+            </div>
           </div>
         </div>
 
         {/* Location */}
-        <div className="relative w-full">
+        <div>
           <button
             onClick={() => toggle('location')}
             className={`w-full h-[56px] px-5 border border-gray-200 rounded-full flex items-center gap-2.5 text-left transition-colors ${
@@ -353,15 +341,13 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
             {chevron('location')}
           </button>
           <div
-            className={`absolute left-0 right-0 z-50 mt-2 bg-white rounded-2xl border border-gray-100
-              shadow-[0_8px_30px_rgba(0,0,0,0.14)]
-              ${openField === 'location' ? 'visible pointer-events-auto' : 'invisible pointer-events-none'}`}
+            className="grid transition-[grid-template-rows] duration-200 ease-out"
+            style={{ gridTemplateRows: openField === 'location' ? '1fr' : '0fr' }}
           >
-            <div
-              className="overflow-y-scroll overscroll-contain touch-pan-y"
-              style={{ maxHeight: '45vh', WebkitOverflowScrolling: 'touch' }}
-            >
-              {locationsBody(close)}
+            <div className="min-h-0 overflow-hidden">
+              <div className="max-h-[45vh] overflow-y-auto overscroll-contain pt-1">
+                {locationsBody(close)}
+              </div>
             </div>
           </div>
         </div>

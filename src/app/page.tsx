@@ -103,7 +103,7 @@ export default function Page() {
             </h1>
 
             {/* Search Bar */}
-            <div className="animate-fade-in animate-delay-300">
+            <div className="animate-fade-opacity animate-delay-300">
               <SearchBar
                 onSearch={handleSearch}
                 makes={makes}

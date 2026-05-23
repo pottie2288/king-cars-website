@@ -74,6 +74,16 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
     return () => document.removeEventListener('mousedown', onOut);
   }, []);
 
+  // Lock page scroll while any mobile dropdown is open to prevent scroll chaining on iOS
+  useEffect(() => {
+    if (openField) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [openField]);
+
   const toggle = (f: OpenField) => setOpenField(p => (p === f ? null : f));
   const close = () => setOpenField(null);
 

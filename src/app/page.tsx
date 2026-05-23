@@ -20,7 +20,7 @@ import type { FilterState, Car } from '@/types';
 export default function Page() {
   const router = useRouter();
   const { favourites, toggleFavourite } = useFavourites();
-  const { getFeaturedCars, getUniqueMakes, getUniqueModels, getUniqueLocations, loading } = useInventory();
+  const { getFeaturedCars, loading } = useInventory();
   const [featuredCars, setFeaturedCars] = useState<Car[]>([]);
 
   useEffect(() => {
@@ -31,15 +31,9 @@ export default function Page() {
 
   const handleSearch = (filters: FilterState) => {
     const params = new URLSearchParams();
-    if (filters.make) params.set('make', filters.make);
-    if (filters.model) params.set('model', filters.model);
-    if (filters.location) params.set('location', filters.location);
-    if (filters.maxPrice !== null) params.set('maxPrice', String(filters.maxPrice));
+    if (filters.searchQuery) params.set('q', filters.searchQuery);
     router.push(`/showroom?${params.toString()}`);
   };
-
-  const makes = getUniqueMakes();
-  const locations = getUniqueLocations();
 
 
   const testimonials = [
@@ -104,12 +98,7 @@ export default function Page() {
 
             {/* Search Bar */}
             <div className="animate-fade-opacity animate-delay-300">
-              <SearchBar
-                onSearch={handleSearch}
-                makes={makes}
-                locations={locations}
-                getUniqueModels={getUniqueModels}
-              />
+              <SearchBar onSearch={handleSearch} />
             </div>
           </div>
         </div>

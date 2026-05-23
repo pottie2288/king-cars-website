@@ -81,12 +81,13 @@ export function ShowroomPage() {
     const category = searchParams.get('category');
     const doors = searchParams.get('doors');
     const maxPrice = searchParams.get('maxPrice');
+    const q = searchParams.get('q');
 
-    const hasUrlFilters = make || model || location || category || doors || maxPrice;
+    const hasUrlFilters = make || model || location || category || doors || maxPrice || q;
 
     if (hasUrlFilters) {
       const urlFilters: FilterState = {
-        searchQuery: '',
+        searchQuery: q || '',
         make: make || null,
         model: model || null,
         location: location || null,

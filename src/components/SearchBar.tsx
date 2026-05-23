@@ -238,7 +238,7 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
     <div ref={containerRef} className="w-full max-w-7xl mx-auto relative z-20">
 
       {/* ════════════════════════════════
-          MOBILE  –  pill + absolute dropdowns (same GPU animation as desktop)
+          MOBILE  –  pill + absolute dropdowns
           ════════════════════════════════ */}
       <div className="md:hidden bg-white rounded-[1.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.12)] p-4 flex flex-col gap-3">
 
@@ -264,7 +264,10 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
               transition-[opacity,transform] duration-200 ease-out
               ${openField === 'make' ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-2 pointer-events-none'}`}
           >
-            <div className="max-h-[55vh] overflow-y-auto overscroll-contain">
+            <div
+              className="overflow-y-scroll overscroll-contain touch-pan-y"
+              style={{ maxHeight: '55vh', WebkitOverflowScrolling: 'touch' }}
+            >
               {makesBody(close)}
             </div>
           </div>
@@ -296,7 +299,10 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
               transition-[opacity,transform] duration-200 ease-out
               ${openField === 'model' && selectedMake ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-2 pointer-events-none'}`}
           >
-            <div className="max-h-[45vh] overflow-y-auto overscroll-contain">
+            <div
+              className="overflow-y-scroll overscroll-contain touch-pan-y"
+              style={{ maxHeight: '45vh', WebkitOverflowScrolling: 'touch' }}
+            >
               {modelsBody(close)}
             </div>
           </div>
@@ -345,7 +351,10 @@ export function SearchBar({ onSearch, makes = [], locations = [], getUniqueModel
               transition-[opacity,transform] duration-200 ease-out
               ${openField === 'location' ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-2 pointer-events-none'}`}
           >
-            <div className="max-h-[45vh] overflow-y-auto overscroll-contain">
+            <div
+              className="overflow-y-scroll overscroll-contain touch-pan-y"
+              style={{ maxHeight: '45vh', WebkitOverflowScrolling: 'touch' }}
+            >
               {locationsBody(close)}
             </div>
           </div>

@@ -7,7 +7,7 @@ export async function POST(request: Request) {
   try {
     const data = await request.json();
 
-    await resend.emails.send({
+    const result = await resend.emails.send({
       from: 'onboarding@resend.dev',
       to: 'pottie2288@gmail.com',
       subject: `New Sell Request — ${data.year} ${data.make} ${data.model}`,
@@ -30,9 +30,9 @@ export async function POST(request: Request) {
       `,
     });
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, debug: result });
   } catch (error) {
     console.error('sell-car email error:', error);
-    return NextResponse.json({ success: false }, { status: 500 });
+    return NextResponse.json({ success: false, error: String(error) }, { status: 500 });
   }
 }

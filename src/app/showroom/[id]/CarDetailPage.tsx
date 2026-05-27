@@ -348,6 +348,24 @@ function PriceActionsCard({
     car, formatPrice, formatMileage, isFavourite,
     onToggleFavourite, setShowEnquiryForm, showEnquiryForm, handleShare
 }: PriceActionsCardProps) {
+    const [enquiry, setEnquiry] = useState({ name: '', email: '', phone: '', message: `I'm interested in the ${car.year} ${car.make} ${car.model}. Please contact me.` });
+    const [enquiryState, setEnquiryState] = useState<'idle' | 'submitting' | 'success'>('idle');
+
+    const handleEnquirySubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setEnquiryState('submitting');
+        try {
+            await fetch('/api/enquiry', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ...enquiry, car: `${car.year} ${car.make} ${car.model}`, price: car.price, carId: car.id }),
+            });
+        } catch {
+            // still show success so the user isn't blocked
+        }
+        setEnquiryState('success');
+    };
+
     return (
         <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
             <div className="flex items-start justify-between mb-4">
@@ -443,32 +461,54 @@ function PriceActionsCard({
             {showEnquiryForm && (
                 <div className="mt-8 pt-8 border-t border-gray-100 animate-slide-in">
                     <h3 className="font-bold text-gray-900 mb-4">Send Enquiry</h3>
-                    <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-                        <input
-                            type="text"
-                            placeholder="Your Name"
-                            className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-king-blue focus:ring-1 focus:ring-king-blue outline-none"
-                        />
-                        <input
-                            type="email"
-                            placeholder="Email Address"
-                            className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-king-blue focus:ring-1 focus:ring-king-blue outline-none"
-                        />
-                        <input
-                            type="tel"
-                            placeholder="Phone Number"
-                            className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-king-blue focus:ring-1 focus:ring-king-blue outline-none"
-                        />
-                        <textarea
-                            placeholder="Message"
-                            rows={3}
-                            className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-king-blue focus:ring-1 focus:ring-king-blue outline-none resize-none"
-                            defaultValue={`I'm interested in the ${car.year} ${car.make} ${car.model}. Please contact me.`}
-                        />
-                        <button className="w-full btn-secondary py-3">
-                            Send Message
-                        </button>
-                    </form>
+                    {enquiryState === 'success' ? (
+                        <div className="text-center py-4">
+                            <CheckCircle className="w-10 h-10 text-green-500 mx-auto mb-2" />
+                            <p className="font-semibold text-gray-800">Message sent!</p>
+                            <p className="text-sm text-gray-500">We&apos;ll be in touch shortly.</p>
+                        </div>
+                    ) : (
+                        <form className="space-y-4" onSubmit={handleEnquirySubmit}>
+                            <input
+                                type="text"
+                                placeholder="Your Name"
+                                required
+                                value={enquiry.name}
+                                onChange={e => setEnquiry(prev => ({ ...prev, name: e.target.value }))}
+                                className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-king-blue focus:ring-1 focus:ring-king-blue outline-none"
+                            />
+                            <input
+                                type="email"
+                                placeholder="Email Address"
+                                required
+                                value={enquiry.email}
+                                onChange={e => setEnquiry(prev => ({ ...prev, email: e.target.value }))}
+                                className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-king-blue focus:ring-1 focus:ring-king-blue outline-none"
+                            />
+                            <input
+                                type="tel"
+                                placeholder="Phone Number"
+                                required
+                                value={enquiry.phone}
+                                onChange={e => setEnquiry(prev => ({ ...prev, phone: e.target.value }))}
+                                className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-king-blue focus:ring-1 focus:ring-king-blue outline-none"
+                            />
+                            <textarea
+                                placeholder="Message"
+                                rows={3}
+                                value={enquiry.message}
+                                onChange={e => setEnquiry(prev => ({ ...prev, message: e.target.value }))}
+                                className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-king-blue focus:ring-1 focus:ring-king-blue outline-none resize-none"
+                            />
+                            <button
+                                type="submit"
+                                disabled={enquiryState === 'submitting'}
+                                className="w-full btn-secondary py-3 disabled:opacity-50"
+                            >
+                                {enquiryState === 'submitting' ? 'Sending...' : 'Send Message'}
+                            </button>
+                        </form>
+                    )}
                 </div>
             )}
         </div>

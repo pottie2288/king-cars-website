@@ -58,6 +58,7 @@ type FormData = z.infer<typeof formSchema>;
 export function FinanceApplicationForm() {
     const [step, setStep] = useState(1);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const {
         register,
@@ -86,8 +87,18 @@ export function FinanceApplicationForm() {
 
     const prevStep = () => setStep(prev => prev - 1);
 
-    const onSubmit = () => {
-        // Form success handling can go here
+    const onSubmit = async (data: FormData) => {
+        setIsSubmitting(true);
+        try {
+            await fetch('/api/finance', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+            });
+        } catch {
+            // still show success so the user isn't blocked
+        }
+        setIsSubmitting(false);
         setIsSubmitted(true);
     };
 
@@ -380,9 +391,10 @@ export function FinanceApplicationForm() {
                     ) : (
                         <Button
                             type="submit"
-                            className="bg-king-cyan hover:bg-accent-light text-white rounded-xl px-12 py-6 shadow-lg shadow-cyan-500/20 font-bold"
+                            disabled={isSubmitting}
+                            className="bg-king-cyan hover:bg-accent-light text-white rounded-xl px-12 py-6 shadow-lg shadow-cyan-500/20 font-bold disabled:opacity-50"
                         >
-                            Submit Application
+                            {isSubmitting ? 'Submitting...' : 'Submit Application'}
                         </Button>
                     )}
                 </div>

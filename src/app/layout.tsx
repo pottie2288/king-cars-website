@@ -1,10 +1,13 @@
 import type { Metadata } from 'next'
+import Script from 'next/script'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { StickyContactBar } from '@/components/StickyContactBar'
 import { ScrollToTop } from '@/components/ScrollToTop'
 import { FavouritesProvider } from '@/context/FavouritesContext'
 import './globals.css'
+
+const GA_ID = 'G-P7Q2FW89KW'
 
 export const metadata: Metadata = {
   title: {
@@ -88,6 +91,18 @@ export default function RootLayout({
           }}
         />
       </head>
+      <Script
+        src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${GA_ID}');
+        `}
+      </Script>
       <body>
         <FavouritesProvider>
           <div className="min-h-screen bg-white overflow-x-hidden relative">

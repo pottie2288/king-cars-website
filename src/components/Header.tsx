@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react';
-import { Phone } from 'lucide-react';
+import { MessageSquare } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { MenuToggleIcon } from '@/components/ui/menu-toggle-icon';
@@ -88,16 +88,16 @@ export function Header() {
 
           {/* CTA Button */}
           <div className="hidden lg:flex items-center gap-4">
-            <a
-              href="tel:+27215551234"
+            <Link
+              href="/contact"
               className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium transition-all duration-300 hover-lift click-press ${isScrolled
                 ? 'bg-king-blue text-white hover:bg-primary-light shadow-lg'
                 : 'bg-king-blue text-white hover:bg-primary-light shadow-lg'
                 }`}
             >
-              <Phone className="w-4 h-4" />
-              <span>Call Us</span>
-            </a>
+              <MessageSquare className="w-4 h-4" />
+              <span>Contact Us</span>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -132,13 +132,13 @@ export function Header() {
             }))}
             color="#1d4ed8"
           />
-          <a
-            href="tel:+27215551234"
+          <Link
+            href="/contact"
             className="flex items-center gap-2 px-4 py-3 mt-2 bg-king-cyan text-white rounded-xl font-medium click-press touch-manipulation"
           >
-            <Phone className="w-5 h-5" />
-            <span>Call Us Now</span>
-          </a>
+            <MessageSquare className="w-5 h-5" />
+            <span>Contact Us</span>
+          </Link>
         </nav>
       </div>
     </header >

@@ -56,6 +56,7 @@ export function Footer() {
                 { label: 'Sell Your Car', path: '/sell-your-car' },
                 { label: 'Finance', path: '/finance' },
                 { label: 'About Us', path: '/about' },
+                { label: 'Contact Us', path: '/contact' },
                 { label: 'Compliments & Complaints', path: '/compliments-complaints' },
               ].map((item) => (
                 <li key={item.path}>
@@ -168,12 +169,9 @@ export function Footer() {
               © {new Date().getFullYear()} King Cars South Africa. All rights reserved.
             </p>
             <div className="flex gap-6">
-              <button className="text-gray-500 hover:text-king-cyan text-sm transition-colors">
-                Privacy Policy
-              </button>
-              <button className="text-gray-500 hover:text-king-cyan text-sm transition-colors">
-                Terms of Service
-              </button>
+              <Link href="/popi-policy" className="text-gray-500 hover:text-king-cyan text-sm transition-colors">
+                POPI Policy
+              </Link>
             </div>
           </div>
         </div>

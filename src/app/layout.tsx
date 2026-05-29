@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import Script from 'next/script'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
-import { StickyContactBar } from '@/components/StickyContactBar'
 import { ScrollToTop } from '@/components/ScrollToTop'
 import { FavouritesProvider } from '@/context/FavouritesContext'
 import './globals.css'
@@ -112,8 +111,6 @@ export default function RootLayout({
               {children}
             </main>
             <Footer />
-            <StickyContactBar />
-            <div className="h-20 lg:hidden" />
           </div>
         </FavouritesProvider>
       </body>

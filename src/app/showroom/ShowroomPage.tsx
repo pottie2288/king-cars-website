@@ -113,6 +113,20 @@ export function ShowroomPage() {
     }
   }, [searchParams]);
 
+  // When inventory loads, check if the URL `q` param is a known make.
+  // If so, promote it to the make filter so the user lands with Make pre-selected.
+  useEffect(() => {
+    if (!makes.length) return;
+    const q = searchParams.get('q');
+    if (!q || searchParams.get('make')) return;
+    const matched = makes.find(m => m.toLowerCase() === q.trim().toLowerCase());
+    if (!matched) return;
+    setFilters(prev => {
+      if (prev.searchQuery.toLowerCase() !== q.trim().toLowerCase()) return prev;
+      return { ...prev, make: matched, searchQuery: '' };
+    });
+  }, [makes, searchParams]);
+
   const handleFilterChange = (key: keyof FilterState, value: FilterState[keyof FilterState]) => {
     setFilters(prev => {
       const next = { ...prev, [key]: value };

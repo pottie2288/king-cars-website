@@ -113,19 +113,45 @@ export function ShowroomPage() {
     }
   }, [searchParams]);
 
-  // When inventory loads, check if the URL `q` param is a known make.
-  // If so, promote it to the make filter so the user lands with Make pre-selected.
+  // When inventory loads, promote the URL ?q= param into make/model filters
+  // so the user lands with the dropdowns pre-selected instead of a plain text search.
   useEffect(() => {
     if (!makes.length) return;
     const q = searchParams.get('q');
     if (!q || searchParams.get('make')) return;
-    const matched = makes.find(m => m.toLowerCase() === q.trim().toLowerCase());
-    if (!matched) return;
-    setFilters(prev => {
-      if (prev.searchQuery.toLowerCase() !== q.trim().toLowerCase()) return prev;
-      return { ...prev, make: matched, searchQuery: '' };
-    });
-  }, [makes, searchParams]);
+
+    const normalized = q.trim().toLowerCase();
+
+    // Find a make whose name appears as a substring in the query (handles multi-word makes)
+    const matchedMake = makes.find(m => normalized.includes(m.toLowerCase()));
+
+    if (matchedMake) {
+      const modelsForMake = getUniqueModels(matchedMake);
+      const queryWithoutMake = normalized.replace(matchedMake.toLowerCase(), '').trim();
+      const matchedModel = queryWithoutMake
+        ? modelsForMake.find(mod => queryWithoutMake.includes(mod.toLowerCase()))
+        : undefined;
+
+      setFilters(prev => {
+        if (prev.searchQuery.toLowerCase() !== normalized) return prev;
+        return { ...prev, make: matchedMake, model: matchedModel ?? null, searchQuery: '' };
+      });
+      return;
+    }
+
+    // No make found in query — scan all models across every make
+    for (const make of makes) {
+      const modelsForMake = getUniqueModels(make);
+      const matchedModel = modelsForMake.find(mod => normalized.includes(mod.toLowerCase()));
+      if (matchedModel) {
+        setFilters(prev => {
+          if (prev.searchQuery.toLowerCase() !== normalized) return prev;
+          return { ...prev, make, model: matchedModel, searchQuery: '' };
+        });
+        return;
+      }
+    }
+  }, [makes, searchParams, getUniqueModels]);
 
   const handleFilterChange = (key: keyof FilterState, value: FilterState[keyof FilterState]) => {
     setFilters(prev => {

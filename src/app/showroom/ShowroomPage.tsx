@@ -194,13 +194,9 @@ export function ShowroomPage() {
   const filteredCars = useMemo(() => {
     return inventory.filter(car => {
       if (filters.searchQuery) {
-        const query = filters.searchQuery.toLowerCase();
-        const match =
-          car.make.toLowerCase().includes(query) ||
-          car.model.toLowerCase().includes(query) ||
-          car.variant.toLowerCase().includes(query) ||
-          car.category.toLowerCase().includes(query);
-        if (!match) return false;
+        const words = filters.searchQuery.toLowerCase().trim().split(/\s+/);
+        const haystack = `${car.make} ${car.model} ${car.variant} ${car.year} ${car.category}`.toLowerCase();
+        if (!words.every(word => haystack.includes(word))) return false;
       }
       if (filters.make && car.make !== filters.make) return false;
       if (filters.model && car.model !== filters.model) return false;

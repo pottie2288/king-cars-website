@@ -7,13 +7,15 @@ const VMG_API_URL =
 const BASE_URL = 'https://www.kingcars.co.za';
 
 const staticPages: MetadataRoute.Sitemap = [
-    { url: `${BASE_URL}`, lastModified: new Date(), changeFrequency: 'weekly', priority: 1 },
-    { url: `${BASE_URL}/showroom`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.9 },
-    { url: `${BASE_URL}/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE_URL}/contact`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE_URL}/finance`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${BASE_URL}/popi-policy`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
-    { url: `${BASE_URL}/favourites`, lastModified: new Date(), changeFrequency: 'never', priority: 0.1 },
+    { url: `${BASE_URL}`,                        lastModified: new Date(), changeFrequency: 'weekly',  priority: 1.0 },
+    { url: `${BASE_URL}/showroom`,               lastModified: new Date(), changeFrequency: 'daily',   priority: 0.9 },
+    { url: `${BASE_URL}/sell-your-car`,          lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${BASE_URL}/contact`,                lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${BASE_URL}/finance`,                lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE_URL}/about`,                  lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE_URL}/compliments-complaints`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${BASE_URL}/popi-policy`,            lastModified: new Date(), changeFrequency: 'yearly',  priority: 0.3 },
+    { url: `${BASE_URL}/favourites`,             lastModified: new Date(), changeFrequency: 'never',   priority: 0.1 },
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

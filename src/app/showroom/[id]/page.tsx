@@ -60,6 +60,47 @@ export async function generateMetadata(
     };
 }
 
-export default function Page() {
-    return <CarDetailPage />;
+export default async function Page({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
+    const v = await fetchVehicle(id);
+
+    const jsonLd = v ? {
+        '@context': 'https://schema.org',
+        '@type': 'Car',
+        name: `${v.year} ${v.make} ${v.series}`,
+        brand: { '@type': 'Brand', name: v.make },
+        model: v.series,
+        modelDate: String(v.year),
+        color: v.colour,
+        mileageFromOdometer: {
+            '@type': 'QuantitativeValue',
+            value: v.mileage,
+            unitCode: 'KMT',
+        },
+        vehicleTransmission: v.transmission,
+        fuelType: v.fuel_type,
+        bodyType: v.body_type,
+        numberOfDoors: v.doors,
+        image: [v.url1, v.url2, v.url3].filter(Boolean),
+        offers: {
+            '@type': 'Offer',
+            price: v.selling_price,
+            priceCurrency: 'ZAR',
+            availability: 'https://schema.org/InStock',
+            seller: { '@type': 'AutoDealer', name: 'King Cars', url: 'https://www.kingcars.co.za' },
+        },
+        description: `${v.year} ${v.make} ${v.series} for sale at King Cars ${v.province}. ${new Intl.NumberFormat('en-ZA').format(v.mileage)} km. Finance available.`,
+    } : null;
+
+    return (
+        <>
+            {jsonLd && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+                />
+            )}
+            <CarDetailPage />
+        </>
+    );
 }

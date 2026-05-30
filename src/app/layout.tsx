@@ -29,8 +29,9 @@ export const metadata: Metadata = {
     follow: true,
   },
   other: {
-    'geo.region': 'ZA-WC',
-    'geo.placename': 'Cape Town',
+    'geo.region': 'ZA',
+    'geo.placename': 'Cape Town, Bellville, Brackenfell, Gqeberha',
+    'geo.position': '-33.9249;18.4241',
   },
 }
 

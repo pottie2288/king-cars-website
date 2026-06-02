@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Search, SlidersHorizontal, MapPin, Grid, List as ListIcon, X, ChevronDown, Car as CarIcon, Shapes } from 'lucide-react';
+import { Search, MapPin, Grid, List as ListIcon, ChevronDown, Car as CarIcon, Shapes } from 'lucide-react';
 import { MAKE_LOGOS } from '@/lib/car-logos';
 import { Slider } from '@/components/ui/slider';
 import { CarCard } from '@/components/CarCard';
@@ -16,6 +16,7 @@ const MIN_YEAR = 2005;
 const MAX_YEAR = new Date().getFullYear();
 
 type OpenFilter = 'make' | 'model' | 'category' | 'location' | null;
+type SortOption = '' | 'price-asc' | 'price-desc' | 'year-desc' | 'mileage-asc';
 
 function BrandLogo({ make, size = 28, inverted = false }: { make: string; size?: number; inverted?: boolean }) {
   const [failed, setFailed] = useState(false);
@@ -48,7 +49,8 @@ export function ShowroomPage() {
   const { inventory, loading, getUniqueMakes, getUniqueModels, getUniqueCategories, getUniqueLocations } = useInventory();
   const { favourites, toggleFavourite } = useFavourites();
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [showMobileFilters, setShowMobileFilters] = useState(false);
+  const [showMobileDropdown, setShowMobileDropdown] = useState(false);
+  const [sortBy, setSortBy] = useState<SortOption>('');
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [openFilter, setOpenFilter] = useState<OpenFilter>(null);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, MAX_PRICE]);
@@ -251,7 +253,16 @@ export function ShowroomPage() {
     filters.maxYear !== null ||
     filters.maxMileage !== null;
 
-  const carsToShow = hasActiveFilters ? filteredCars : filteredCars.slice(0, visibleCount);
+  const sortedCars = useMemo(() => {
+    const arr = [...filteredCars];
+    if (sortBy === 'price-asc') arr.sort((a, b) => a.price - b.price);
+    else if (sortBy === 'price-desc') arr.sort((a, b) => b.price - a.price);
+    else if (sortBy === 'year-desc') arr.sort((a, b) => b.year - a.year);
+    else if (sortBy === 'mileage-asc') arr.sort((a, b) => a.mileage - b.mileage);
+    return arr;
+  }, [filteredCars, sortBy]);
+
+  const carsToShow = hasActiveFilters ? sortedCars : sortedCars.slice(0, visibleCount);
 
   // ── shared item class helper ─────────────────────────────────────────
   const itemCls = (active: boolean) =>
@@ -551,39 +562,33 @@ export function ShowroomPage() {
 
       <div className="section-padding py-8">
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Mobile Filter Toggle */}
-          <button
-            onClick={() => setShowMobileFilters(true)}
-            className="lg:hidden flex items-center justify-between bg-white p-4 rounded-xl shadow-sm border border-gray-200"
-          >
-            <span className="font-semibold flex items-center gap-2">
-              <SlidersHorizontal className="w-5 h-5 text-king-blue" />
-              Filters
-            </span>
-            <span className="bg-king-blue text-white text-xs px-2 py-1 rounded-full">
-              {filteredCars.length} results
-            </span>
-          </button>
+          {/* Mobile: Refine Your Search accordion */}
+          <div className="lg:hidden rounded-xl overflow-hidden shadow-md">
+            <button
+              onClick={() => setShowMobileDropdown(v => !v)}
+              className="w-full flex items-center justify-between bg-king-blue text-white px-5 py-4 font-semibold text-base"
+            >
+              <span>Refine Your Search</span>
+              <ChevronDown
+                className={`w-5 h-5 flex-shrink-0 transition-transform duration-300 ${showMobileDropdown ? 'rotate-180' : ''}`}
+              />
+            </button>
 
-          {/* Filters Sidebar */}
-          <aside className={`
-            fixed inset-0 z-50 lg:z-10 bg-king-blue lg:bg-transparent lg:static lg:w-1/4 lg:block
-            overflow-y-auto lg:overflow-visible lg:sticky lg:top-24
-            transition-transform duration-300
-            ${showMobileFilters ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
-          `}>
-            {/* Mobile Header */}
-            <div className="lg:hidden flex items-center justify-between p-4 border-b border-white/10 sticky top-0 bg-king-blue z-10">
-              <h2 className="font-bold text-lg text-white">Filters</h2>
-              <button
-                onClick={() => { setShowMobileFilters(false); setOpenFilter(null); }}
-                className="p-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
-              >
-                <X className="w-6 h-6" />
-              </button>
+            <div
+              className="grid transition-[grid-template-rows] duration-300 ease-out"
+              style={{ gridTemplateRows: showMobileDropdown ? '1fr' : '0fr' }}
+            >
+              <div className="min-h-0 overflow-hidden">
+                <div className="bg-king-blue px-4 pb-5 pt-2">
+                  {filterPanel}
+                </div>
+              </div>
             </div>
+          </div>
 
-            <div className="p-4 lg:p-8 lg:bg-king-blue rounded-none lg:rounded-xl lg:shadow-xl border-none lg:border lg:border-white/10">
+          {/* Desktop sidebar — unchanged */}
+          <aside className="hidden lg:block lg:w-1/4 lg:sticky lg:top-24 lg:self-start">
+            <div className="p-8 bg-king-blue rounded-xl shadow-xl border border-white/10">
               {filterPanel}
             </div>
           </aside>
@@ -591,23 +596,42 @@ export function ShowroomPage() {
           {/* Main Content */}
           <main className="flex-1">
             {/* Toolbar */}
-            <div className="flex items-center justify-between mb-6">
-              <p className="text-gray-600">
+            <div className="flex items-center justify-between mb-6 gap-3">
+              <p className="text-gray-600 shrink-0">
                 Found <span className="font-bold text-gray-900">{filteredCars.length}</span> vehicles
               </p>
-              <div className="flex items-center gap-2 bg-white p-1 rounded-lg border border-gray-200">
-                <button
-                  onClick={() => setViewMode('grid')}
-                  className={`p-2 rounded-md transition-colors ${viewMode === 'grid' ? 'bg-king-blue text-white' : 'text-gray-500 hover:text-gray-900'}`}
-                >
-                  <Grid className="w-5 h-5" />
-                </button>
-                <button
-                  onClick={() => setViewMode('list')}
-                  className={`p-2 rounded-md transition-colors ${viewMode === 'list' ? 'bg-king-blue text-white' : 'text-gray-500 hover:text-gray-900'}`}
-                >
-                  <ListIcon className="w-5 h-5" />
-                </button>
+              <div className="flex items-center gap-2">
+                {/* Sort control — visible on all screen sizes */}
+                <div className="relative">
+                  <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value as SortOption)}
+                    className="appearance-none pl-3 pr-8 h-[38px] bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-king-blue/20 cursor-pointer"
+                  >
+                    <option value="">Sort: Default</option>
+                    <option value="price-asc">Price: Low to High</option>
+                    <option value="price-desc">Price: High to Low</option>
+                    <option value="year-desc">Year: Newest First</option>
+                    <option value="mileage-asc">Mileage: Lowest</option>
+                  </select>
+                  <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+                </div>
+
+                {/* Grid / List toggle — desktop only */}
+                <div className="hidden lg:flex items-center gap-1 bg-white p-1 rounded-lg border border-gray-200">
+                  <button
+                    onClick={() => setViewMode('grid')}
+                    className={`p-2 rounded-md transition-colors ${viewMode === 'grid' ? 'bg-king-blue text-white' : 'text-gray-500 hover:text-gray-900'}`}
+                  >
+                    <Grid className="w-5 h-5" />
+                  </button>
+                  <button
+                    onClick={() => setViewMode('list')}
+                    className={`p-2 rounded-md transition-colors ${viewMode === 'list' ? 'bg-king-blue text-white' : 'text-gray-500 hover:text-gray-900'}`}
+                  >
+                    <ListIcon className="w-5 h-5" />
+                  </button>
+                </div>
               </div>
             </div>
 

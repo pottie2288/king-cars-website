@@ -503,7 +503,7 @@ function PriceActionsCard({
                             <button
                                 type="submit"
                                 disabled={enquiryState === 'submitting'}
-                                className="w-full btn-secondary py-3 disabled:opacity-50"
+                                className="w-full py-3 rounded-lg border border-gray-300 text-gray-800 font-semibold hover:bg-gray-50 transition-colors disabled:opacity-50"
                             >
                                 {enquiryState === 'submitting' ? 'Sending...' : 'Send Message'}
                             </button>

@@ -33,6 +33,7 @@ export function SellYourCarPage() {
   const [currentStep, setCurrentStep] = useState<Step>(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [photos, setPhotos] = useState<File[]>([]);
   const [formData, setFormData] = useState<FormData>({
     year: '',
     make: '',
@@ -90,11 +91,10 @@ export function SellYourCarPage() {
   const handleSubmit = async () => {
     setIsSubmitting(true);
     try {
-      await fetch('/api/sell-car', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
+      const body = new FormData();
+      (Object.entries(formData) as [string, string][]).forEach(([k, v]) => body.append(k, v));
+      photos.forEach((photo, i) => body.append(`photo_${i}`, photo, photo.name));
+      await fetch('/api/sell-car', { method: 'POST', body });
     } catch {
       // still show success so the user isn't blocked
     }
@@ -220,11 +220,27 @@ export function SellYourCarPage() {
                         {/* File Upload Box */}
                         <div className="md:col-span-2">
                           <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">Upload Your Car Photos</label>
-                          <div className="w-full sm:w-1/2 border-2 border-dashed border-gray-300 rounded-xl p-8 hover:bg-gray-50 transition-colors cursor-pointer group flex flex-col items-center justify-center text-center">
+                          <label className="w-full sm:w-1/2 border-2 border-dashed border-gray-300 rounded-xl p-8 hover:bg-gray-50 transition-colors cursor-pointer group flex flex-col items-center justify-center text-center">
                             <UploadCloud className="w-6 h-6 text-gray-400 group-hover:text-king-blue mb-3 transition-colors" />
-                            <p className="text-gray-600 text-sm font-medium">Drop a file here or click to upload (Max. 5 images)</p>
-                            <p className="text-gray-400 text-xs mt-1">Maximum file size: 2MB</p>
-                          </div>
+                            {photos.length > 0 ? (
+                              <p className="text-king-blue text-sm font-semibold">
+                                {photos.length} photo{photos.length > 1 ? 's' : ''} selected
+                              </p>
+                            ) : (
+                              <p className="text-gray-600 text-sm font-medium">Click to upload photos (Max. 5 images)</p>
+                            )}
+                            <p className="text-gray-400 text-xs mt-1">Maximum file size: 2MB per photo</p>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              multiple
+                              className="hidden"
+                              onChange={(e) => {
+                                const files = Array.from(e.target.files ?? []).slice(0, 5);
+                                setPhotos(files.filter(f => f.size <= 2 * 1024 * 1024));
+                              }}
+                            />
+                          </label>
                         </div>
 
                         {/* Privacy Policy text */}

@@ -20,11 +20,12 @@ export function ComplaintsPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await fetch('/api/complaints', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, reason }),
-      });
+      const body = new FormData();
+      (Object.entries(form) as [string, string][]).forEach(([k, v]) => body.append(k, v));
+      body.append('reason', reason);
+      if (attachment1) body.append('attachment1', attachment1, attachment1.name);
+      if (attachment2) body.append('attachment2', attachment2, attachment2.name);
+      await fetch('/api/complaints', { method: 'POST', body });
     } catch {
       // still show success so the user isn't blocked
     }

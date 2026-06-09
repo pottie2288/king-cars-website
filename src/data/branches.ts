@@ -62,7 +62,7 @@ export const BRANCHES: Branch[] = [
     name: 'Sydenham',
     fullName: 'King Cars Sydenham',
     address: '19 - 21 Uitenhage Road, Sydenham, Gqeberha',
-    phones: ['083 302 4500'],
+    phones: ['083 314 9334'],
     email: 'divan@kingcars.co.za',
     mapUrl:
       'https://maps.google.com/maps?q=19%20-%2021%20Uitenhage%20Road%2C%20Sydenham%2C%20Gqeberha&t=&z=15&ie=UTF8&iwloc=&output=embed',

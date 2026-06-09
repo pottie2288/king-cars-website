@@ -20,6 +20,7 @@ const EC_MANAGERS = [
     { name: 'Shane Enstrom',     branch: 'Newton Park', role: 'Sales Manager', phone: '27680374018', photo: '/managers/Shane-Enstrom.png' },
 ];
 import Link from 'next/link';
+import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
 import { FinanceCalculator } from '@/components/FinanceCalculator';
 import { useInventory } from '@/hooks/useInventory';
@@ -493,7 +494,7 @@ function PriceActionsCard({
                                 >
                                     <div className="w-11 h-11 rounded-full overflow-hidden flex-shrink-0 bg-king-blue/10 flex items-center justify-center">
                                         {m.photo ? (
-                                            <img src={m.photo} alt={m.name} className="w-full h-full object-cover object-top" />
+                                            <Image src={m.photo} alt={m.name} width={44} height={44} className="w-full h-full object-cover object-top" />
                                         ) : (
                                             <span className="text-king-blue font-bold text-sm">{m.name.split(' ').map(n => n[0]).join('').slice(0, 2)}</span>
                                         )}

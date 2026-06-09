@@ -27,7 +27,8 @@ export async function POST(request: Request) {
 
     await resend.emails.send({
       from: 'onboarding@resend.dev',
-      to: 'pottie2288@gmail.com',
+      to: 'kruger@kingcars.co.za',
+      cc: ['vanzyl@kingcars.co.za', 'pottie2288@gmail.com'],
       subject: `New Sell Request — ${year} ${make} ${model}`,
       html: `
         <h2 style="color:#1a3a5c;">New Car Valuation Request</h2>

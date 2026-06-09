@@ -390,6 +390,9 @@ function PriceActionsCard({
                     <p className="text-gray-500 font-medium">
                         {car.year} &bull; {formatMileage(car.mileage)} km
                     </p>
+                    {car.stockCode && (
+                        <p className="text-gray-400 text-xs mt-1">Stock # {car.stockCode}</p>
+                    )}
                 </div>
                 <button
                     onClick={() => onToggleFavourite(car.id)}

@@ -151,11 +151,18 @@ export function FinancePage() {
                     Prefer to speak with an expert? Our finance team is standing by to help you.
                   </p>
                   <div className="space-y-4">
-                    <a href="tel:+27215551234" className="flex items-center gap-3 p-4 bg-white/10 rounded-xl hover:bg-white/20 transition-all">
+                    <a href="tel:0835008181" className="flex items-center gap-3 p-4 bg-white/10 rounded-xl hover:bg-white/20 transition-all">
                       <Phone className="w-5 h-5 text-king-cyan" />
                       <div>
-                        <p className="text-xs text-white/50">Call Finance Dept</p>
-                        <p className="font-medium text-sm">+27 21 555 1234</p>
+                        <p className="text-xs text-white/50">Western Cape</p>
+                        <p className="font-medium text-sm">083 500 8181</p>
+                      </div>
+                    </a>
+                    <a href="tel:0680374018" className="flex items-center gap-3 p-4 bg-white/10 rounded-xl hover:bg-white/20 transition-all">
+                      <Phone className="w-5 h-5 text-king-cyan" />
+                      <div>
+                        <p className="text-xs text-white/50">Eastern Cape</p>
+                        <p className="font-medium text-sm">068 037 4018</p>
                       </div>
                     </a>
                   </div>

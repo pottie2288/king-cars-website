@@ -9,8 +9,8 @@ import { useFavourites } from '@/context/FavouritesContext';
 import { MenuVertical } from '@/components/ui/menu-vertical';
 
 const navItems = [
-  { label: 'Sell Your Car', path: '/sell-your-car' },
   { label: 'Showroom', path: '/showroom' },
+  { label: 'Sell Your Car', path: '/sell-your-car' },
   { label: 'Finance', path: '/finance' },
   { label: 'About', path: '/about' },
   { label: 'Compliments & Complaints', path: '/compliments-complaints' },

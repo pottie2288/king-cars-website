@@ -39,7 +39,7 @@ export function POPIPage() {
             <div className="mt-4 bg-gray-50 rounded-xl p-4 text-sm space-y-1">
               <p><strong>Information Officer:</strong> Pierre Potgieter</p>
               <p><strong>Email:</strong> <a href="mailto:info@kingcars.co.za" className="text-king-blue hover:underline">info@kingcars.co.za</a></p>
-              <p><strong>Phone:</strong> <a href="tel:0219101343" className="text-king-blue hover:underline">021 910 1343</a></p>
+              <p><strong>Phone:</strong> <a href="tel:0835008181" className="text-king-blue hover:underline">083 500 8181</a></p>
               <p><strong>Address:</strong> 25 Strand Rd, Bellville, Cape Town, 7530</p>
             </div>
           </Section>

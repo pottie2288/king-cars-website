@@ -25,7 +25,8 @@ export async function POST(request: Request) {
 
     await resend.emails.send({
       from: 'onboarding@resend.dev',
-      to: 'pottie2288@gmail.com',
+      to: 'pierre@kingcars.co.za',
+      cc: 'pottie2288@gmail.com',
       subject: `${reason} from ${firstName} ${lastName}`,
       html: `
         <h2 style="color:#1a3a5c;">New ${reason}</h2>

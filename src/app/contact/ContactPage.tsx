@@ -194,17 +194,17 @@ export function ContactPage() {
 
                 <div>
                   <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Western Cape</p>
-                  <a href="tel:0219101343" className="flex items-center gap-2 text-sm text-gray-700 hover:text-king-blue transition-colors font-medium">
+                  <a href="tel:0835008181" className="flex items-center gap-2 text-sm text-gray-700 hover:text-king-blue transition-colors font-medium">
                     <Phone className="w-4 h-4 text-king-blue flex-shrink-0" />
-                    021 910 1343
+                    083 500 8181
                   </a>
                 </div>
 
                 <div>
                   <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Eastern Cape</p>
-                  <a href="tel:0413653900" className="flex items-center gap-2 text-sm text-gray-700 hover:text-king-blue transition-colors font-medium">
+                  <a href="tel:0680374018" className="flex items-center gap-2 text-sm text-gray-700 hover:text-king-blue transition-colors font-medium">
                     <Phone className="w-4 h-4 text-king-blue flex-shrink-0" />
-                    041 365 3900
+                    068 037 4018
                   </a>
                 </div>
               </div>

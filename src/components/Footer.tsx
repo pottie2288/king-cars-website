@@ -86,15 +86,15 @@ export function Footer() {
                   <ul className="space-y-2 text-sm text-gray-400 pl-6">
                     <li className="flex justify-between md:justify-start gap-4">
                       <span className="text-gray-300 w-24">Bellville:</span>
-                      <a href="tel:0219101343" className="hover:text-king-cyan transition-colors">021 910 1343</a>
+                      <a href="tel:0835008181" className="hover:text-king-cyan transition-colors">083 500 8181</a>
                     </li>
                     <li className="flex justify-between md:justify-start gap-4">
                       <span className="text-gray-300 w-24">Vredekloof:</span>
-                      <a href="tel:0219101343" className="hover:text-king-cyan transition-colors">021 910 1343</a>
+                      <a href="tel:0722939376" className="hover:text-king-cyan transition-colors">072 293 9376</a>
                     </li>
                     <li className="flex justify-between md:justify-start gap-4">
                       <span className="text-gray-300 w-24">Brackenfell:</span>
-                      <a href="tel:0219101343" className="hover:text-king-cyan transition-colors">021 910 1343</a>
+                      <a href="tel:0833024500" className="hover:text-king-cyan transition-colors">083 302 4500</a>
                     </li>
                   </ul>
                 </div>
@@ -108,15 +108,15 @@ export function Footer() {
                   <ul className="space-y-2 text-sm text-gray-400 pl-6">
                     <li className="flex justify-between md:justify-start gap-4">
                       <span className="text-gray-300 w-24">17th Ave:</span>
-                      <a href="tel:0413653900" className="hover:text-king-cyan transition-colors">041 365 3900</a>
+                      <a href="tel:0734314230" className="hover:text-king-cyan transition-colors">073 431 4230</a>
                     </li>
                     <li className="flex justify-between md:justify-start gap-4">
                       <span className="text-gray-300 w-24">Sydenham:</span>
-                      <a href="tel:0414871241" className="hover:text-king-cyan transition-colors">041 487 1241</a>
+                      <a href="tel:0833024500" className="hover:text-king-cyan transition-colors">083 302 4500</a>
                     </li>
                     <li className="flex justify-between md:justify-start gap-4">
                       <span className="text-gray-300 w-24">Newton Park:</span>
-                      <a href="tel:0413640167" className="hover:text-king-cyan transition-colors">041 364 0167</a>
+                      <a href="tel:0680374018" className="hover:text-king-cyan transition-colors">068 037 4018</a>
                     </li>
                   </ul>
                 </div>

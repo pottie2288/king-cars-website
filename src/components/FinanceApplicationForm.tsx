@@ -112,6 +112,21 @@ export function FinanceApplicationForm() {
                 <p className="text-gray-600 text-lg mb-8 max-w-md mx-auto">
                     Thank you for applying. One of our finance experts will review your application and contact you within 24-48 hours.
                 </p>
+                <div className="bg-blue-50 p-6 rounded-2xl border border-blue-100 mb-8 text-left max-w-md mx-auto">
+                    <h4 className="font-medium text-king-blue mb-3 flex items-center gap-2">
+                        <Upload className="w-4 h-4" />
+                        Documents to have ready
+                    </h4>
+                    <p className="text-sm text-gray-600 mb-4">Our consultant will request these when they contact you:</p>
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {['Copy of Green ID/Card', '3 Months Payslips', '3 Months Bank Statements', 'Proof of Residence', "Valid Driver's License"].map((doc, i) => (
+                            <li key={i} className="flex items-center gap-2 text-sm text-gray-700">
+                                <CheckCircle2 className="w-4 h-4 text-king-cyan flex-shrink-0" />
+                                {doc}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
                 <Button
                     onClick={() => {
                         setIsSubmitted(false);
@@ -302,24 +317,6 @@ export function FinanceApplicationForm() {
                         <div className="flex items-center gap-3 mb-6">
                             <ShieldCheck className="w-5 h-5 text-king-blue" />
                             <h3 className="font-display font-semibold text-xl text-gray-900">Get Pre-Approved</h3>
-                        </div>
-
-                        <div className="bg-blue-50 p-6 rounded-2xl border border-blue-100 mb-8">
-                            <h4 className="font-medium text-king-blue mb-4 flex items-center gap-2">
-                                <Upload className="w-4 h-4" />
-                                Required Documents for Processing
-                            </h4>
-                            <p className="text-sm text-gray-600 mb-4">
-                                Our consultants will request the following documents after submission:
-                            </p>
-                            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                {['Copy of Green ID/Card', '3 Months Payslips', '3 Months Bank Statements', 'Proof of Residence', 'Valid Driver\'s License'].map((doc, i) => (
-                                    <li key={i} className="flex items-center gap-2 text-sm text-gray-700">
-                                        <CheckCircle2 className="w-4 h-4 text-king-cyan" />
-                                        {doc}
-                                    </li>
-                                ))}
-                            </ul>
                         </div>
 
                         <div className="space-y-4">

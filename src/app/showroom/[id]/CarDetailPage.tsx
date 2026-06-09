@@ -9,15 +9,15 @@ import {
 } from 'lucide-react';
 
 const WC_MANAGERS = [
-    { name: 'Andre Sadie',   branch: 'Bellville',   role: 'Sales Manager', phone: '27835008181' },
-    { name: 'Louis Jacobs',  branch: 'Vredekloof',  role: 'Sales Manager', phone: '27722939376' },
-    { name: 'Andre Richard', branch: 'Brackenfell', role: 'Sales Manager', phone: '27833024500' },
+    { name: 'Andre Sadie',   branch: 'Bellville',   role: 'Sales Manager', phone: '27835008181', photo: '/managers/Andre-Sadie.png' },
+    { name: 'Louis Jacobs',  branch: 'Vredekloof',  role: 'Sales Manager', phone: '27722939376', photo: '/managers/Louis-Jacobs.png' },
+    { name: 'Andre Richard', branch: 'Brackenfell', role: 'Sales Manager', phone: '27833024500', photo: '/managers/Andre-Richard.png' },
 ];
 
 const EC_MANAGERS = [
-    { name: 'Simbo',         branch: '17th Ave',    role: 'Sales Manager', phone: '27734314230' },
-    { name: 'Divan Verwey',  branch: 'Sydenham',    role: 'Sales Manager', phone: '27833149334' },
-    { name: 'Shane',         branch: 'Newton Park', role: 'Sales Manager', phone: '27680374018' },
+    { name: 'Simbongile Gongqa', branch: '17th Ave',    role: 'Sales Manager', phone: '27734314230', photo: '/managers/Simbongile-Gongqa.png' },
+    { name: 'Divan Verwey',      branch: 'Sydenham',    role: 'Sales Manager', phone: '27833149334', photo: '/managers/Divan-Verwey.png' },
+    { name: 'Shane Enstrom',     branch: 'Newton Park', role: 'Sales Manager', phone: '27680374018', photo: '/managers/Shane-Enstrom.png' },
 ];
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
@@ -484,8 +484,12 @@ function PriceActionsCard({
                                     rel="noopener noreferrer"
                                     className="flex items-center gap-4 px-5 py-4 hover:bg-gray-50 transition-colors"
                                 >
-                                    <div className="w-11 h-11 rounded-full bg-king-blue/10 flex items-center justify-center flex-shrink-0">
-                                        <span className="text-king-blue font-bold text-sm">{m.name.split(' ').map(n => n[0]).join('').slice(0, 2)}</span>
+                                    <div className="w-11 h-11 rounded-full overflow-hidden flex-shrink-0 bg-king-blue/10 flex items-center justify-center">
+                                        {m.photo ? (
+                                            <img src={m.photo} alt={m.name} className="w-full h-full object-cover object-top" />
+                                        ) : (
+                                            <span className="text-king-blue font-bold text-sm">{m.name.split(' ').map(n => n[0]).join('').slice(0, 2)}</span>
+                                        )}
                                     </div>
                                     <div className="flex-1 min-w-0">
                                         <p className="font-semibold text-gray-900 text-sm">{m.name}</p>

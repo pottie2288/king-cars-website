@@ -380,6 +380,12 @@ function PriceActionsCard({
     const managers = car.location === 'Eastern Cape' ? EC_MANAGERS : WC_MANAGERS;
     const waMessage = encodeURIComponent(`Hi, I'm interested in the ${car.year} ${car.make} ${car.model} (${car.variant}) priced at R ${car.price.toLocaleString('en-ZA')}. Please can you assist?`);
 
+    const trackEvent = (eventName: string, params: Record<string, string>) => {
+        if (typeof window !== 'undefined' && (window as unknown as Record<string, unknown>).gtag) {
+            (window as unknown as Record<string, (...args: unknown[]) => void>).gtag('event', eventName, params);
+        }
+    };
+
     const handleEnquirySubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setEnquiryState('submitting');
@@ -482,6 +488,7 @@ function PriceActionsCard({
                                     href={`https://wa.me/${m.phone}?text=${waMessage}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
+                                    onClick={() => trackEvent('whatsapp_manager_tapped', { manager: m.name, branch: m.branch, car: `${car.year} ${car.make} ${car.model}`, car_id: car.id })}
                                     className="flex items-center gap-4 px-5 py-4 hover:bg-gray-50 transition-colors"
                                 >
                                     <div className="w-11 h-11 rounded-full overflow-hidden flex-shrink-0 bg-king-blue/10 flex items-center justify-center">
@@ -508,7 +515,7 @@ function PriceActionsCard({
             {/* Actions */}
             <div className="space-y-3">
                 <button
-                    onClick={() => setShowWaModal(true)}
+                    onClick={() => { setShowWaModal(true); trackEvent('whatsapp_modal_opened', { car: `${car.year} ${car.make} ${car.model}`, car_id: car.id }); }}
                     className="w-full py-4 text-lg shadow-lg flex items-center justify-center gap-2 bg-[#25D366] text-white font-bold rounded-xl hover:bg-[#1ebe5d] transition-colors"
                 >
                     <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">

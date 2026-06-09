@@ -20,7 +20,6 @@ const EC_MANAGERS = [
     { name: 'Shane Enstrom',     branch: 'Newton Park', role: 'Sales Manager', phone: '27680374018', photo: '/managers/Shane-Enstrom.png' },
 ];
 import Link from 'next/link';
-import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
 import { FinanceCalculator } from '@/components/FinanceCalculator';
 import { useInventory } from '@/hooks/useInventory';
@@ -492,12 +491,14 @@ function PriceActionsCard({
                                     onClick={() => trackEvent('whatsapp_manager_tapped', { manager: m.name, branch: m.branch, car: `${car.year} ${car.make} ${car.model}`, car_id: car.id })}
                                     className="flex items-center gap-4 px-5 py-4 hover:bg-gray-50 transition-colors"
                                 >
-                                    <div className="w-11 h-11 rounded-full overflow-hidden flex-shrink-0 bg-king-blue/10 flex items-center justify-center">
-                                        {m.photo ? (
-                                            <Image src={m.photo} alt={m.name} width={44} height={44} className="w-full h-full object-cover object-top" />
-                                        ) : (
-                                            <span className="text-king-blue font-bold text-sm">{m.name.split(' ').map(n => n[0]).join('').slice(0, 2)}</span>
-                                        )}
+                                    <div
+                                        className="w-11 h-11 rounded-full flex-shrink-0 flex items-center justify-center"
+                                        style={m.photo
+                                            ? { backgroundImage: `url(${m.photo})`, backgroundSize: 'cover', backgroundPosition: 'center top' }
+                                            : { backgroundColor: 'rgba(29,78,216,0.1)' }
+                                        }
+                                    >
+                                        {!m.photo && <span className="text-king-blue font-bold text-sm">{m.name.split(' ').map(n => n[0]).join('').slice(0, 2)}</span>}
                                     </div>
                                     <div className="flex-1 min-w-0">
                                         <p className="font-semibold text-gray-900 text-sm">{m.name}</p>

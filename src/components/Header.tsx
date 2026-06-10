@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react';
-import { MessageSquare } from 'lucide-react';
+import { MessageSquare, Facebook } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { MenuToggleIcon } from '@/components/ui/menu-toggle-icon';
@@ -86,8 +86,8 @@ export function Header() {
             })}
           </nav>
 
-          {/* CTA Button */}
-          <div className="hidden lg:flex items-center gap-4">
+          {/* CTA Buttons */}
+          <div className="hidden lg:flex items-center gap-2">
             <Link
               href="/contact"
               className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium transition-all duration-300 hover-lift click-press ${isScrolled
@@ -98,6 +98,14 @@ export function Header() {
               <MessageSquare className="w-4 h-4" />
               <span>Contact Us</span>
             </Link>
+            <a
+              href="https://www.facebook.com/kingcars.co.za/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center px-3.5 py-2.5 rounded-xl border-2 border-king-blue text-king-blue hover:bg-king-blue hover:text-white transition-all duration-300 hover-lift click-press"
+            >
+              <Facebook className="w-5 h-5" />
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -132,13 +140,23 @@ export function Header() {
             }))}
             color="#1d4ed8"
           />
-          <Link
-            href="/contact"
-            className="flex items-center gap-2 px-4 py-3 mt-2 bg-king-cyan text-white rounded-xl font-medium click-press touch-manipulation"
-          >
-            <MessageSquare className="w-5 h-5" />
-            <span>Contact Us</span>
-          </Link>
+          <div className="flex items-center gap-2 mt-2">
+            <Link
+              href="/contact"
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-king-cyan text-white rounded-xl font-medium click-press touch-manipulation"
+            >
+              <MessageSquare className="w-5 h-5" />
+              <span>Contact Us</span>
+            </Link>
+            <a
+              href="https://www.facebook.com/kingcars.co.za/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center px-4 py-3 rounded-xl border-2 border-king-cyan text-king-cyan hover:bg-king-cyan hover:text-white transition-colors click-press touch-manipulation"
+            >
+              <Facebook className="w-5 h-5" />
+            </a>
+          </div>
         </nav>
       </div>
     </header >

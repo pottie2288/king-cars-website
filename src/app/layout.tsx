@@ -63,26 +63,54 @@ export default function RootLayout({
               "paymentAccepted": "Cash, Finance, Trade-In",
               "areaServed": [
                 { "@type": "City", "name": "Cape Town" },
-                { "@type": "City", "name": "Port Elizabeth" },
                 { "@type": "City", "name": "Bellville" },
-                { "@type": "City", "name": "Brackenfell" }
+                { "@type": "City", "name": "Vredekloof" },
+                { "@type": "City", "name": "Brackenfell" },
+                { "@type": "City", "name": "Gqeberha" },
+                { "@type": "City", "name": "Port Elizabeth" }
               ],
               "address": [
                 {
                   "@type": "PostalAddress",
+                  "streetAddress": "25 Strand Rd",
                   "addressLocality": "Bellville",
                   "addressRegion": "Western Cape",
+                  "postalCode": "7530",
                   "addressCountry": "ZA"
                 },
                 {
                   "@type": "PostalAddress",
+                  "streetAddress": "2 Hillcrest Rd",
+                  "addressLocality": "Vredekloof",
+                  "addressRegion": "Western Cape",
+                  "postalCode": "7560",
+                  "addressCountry": "ZA"
+                },
+                {
+                  "@type": "PostalAddress",
+                  "streetAddress": "Corner of Old Paarl and Ferndale St",
                   "addressLocality": "Brackenfell",
                   "addressRegion": "Western Cape",
                   "addressCountry": "ZA"
                 },
                 {
                   "@type": "PostalAddress",
-                  "addressLocality": "Port Elizabeth",
+                  "streetAddress": "1 William Moffett Express Way",
+                  "addressLocality": "Walmer, Gqeberha",
+                  "addressRegion": "Eastern Cape",
+                  "addressCountry": "ZA"
+                },
+                {
+                  "@type": "PostalAddress",
+                  "streetAddress": "19-21 Uitenhage Road",
+                  "addressLocality": "Sydenham, Gqeberha",
+                  "addressRegion": "Eastern Cape",
+                  "addressCountry": "ZA"
+                },
+                {
+                  "@type": "PostalAddress",
+                  "streetAddress": "343 Cape Rd",
+                  "addressLocality": "Newton Park, Gqeberha",
                   "addressRegion": "Eastern Cape",
                   "addressCountry": "ZA"
                 }

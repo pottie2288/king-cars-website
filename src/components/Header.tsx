@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react';
-import { MessageSquare, Facebook } from 'lucide-react';
+import { MessageSquare, Facebook, Instagram } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { MenuToggleIcon } from '@/components/ui/menu-toggle-icon';
@@ -102,9 +102,19 @@ export function Header() {
               href="https://www.facebook.com/kingcars.co.za/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center px-3.5 py-2.5 rounded-xl border-2 border-king-blue text-king-blue hover:bg-king-blue hover:text-white transition-all duration-300 hover-lift click-press"
+              style={{ backgroundColor: '#1877F2' }}
+              className="flex items-center justify-center px-3.5 py-2.5 rounded-xl text-white transition-all duration-300 hover-lift click-press hover:opacity-90"
             >
               <Facebook className="w-5 h-5" />
+            </a>
+            <a
+              href="https://www.instagram.com/kingcars.co.za/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ background: 'linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)' }}
+              className="flex items-center justify-center px-3.5 py-2.5 rounded-xl text-white transition-all duration-300 hover-lift click-press hover:opacity-90"
+            >
+              <Instagram className="w-5 h-5" />
             </a>
           </div>
 
@@ -140,21 +150,31 @@ export function Header() {
             }))}
             color="#1d4ed8"
           />
-          <div className="flex items-center gap-2 mt-2">
+          <div className="flex items-stretch gap-2 mt-2">
             <Link
               href="/contact"
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-king-cyan text-white rounded-xl font-medium click-press touch-manipulation"
+              className="flex-1 min-w-0 flex items-center justify-center gap-2 px-3 py-3 bg-king-cyan text-white rounded-xl font-medium click-press touch-manipulation"
             >
-              <MessageSquare className="w-5 h-5" />
-              <span>Contact Us</span>
+              <MessageSquare className="w-4 h-4 flex-shrink-0" />
+              <span className="whitespace-nowrap text-sm">Contact Us</span>
             </Link>
             <a
               href="https://www.facebook.com/kingcars.co.za/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center px-4 py-3 rounded-xl border-2 border-king-cyan text-king-cyan hover:bg-king-cyan hover:text-white transition-colors click-press touch-manipulation"
+              style={{ backgroundColor: '#1877F2' }}
+              className="flex-shrink-0 flex items-center justify-center w-12 rounded-xl text-white click-press touch-manipulation hover:opacity-90 transition-opacity"
             >
               <Facebook className="w-5 h-5" />
+            </a>
+            <a
+              href="https://www.instagram.com/kingcars.co.za/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ background: 'linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)' }}
+              className="flex-shrink-0 flex items-center justify-center w-12 rounded-xl text-white click-press touch-manipulation hover:opacity-90 transition-opacity"
+            >
+              <Instagram className="w-5 h-5" />
             </a>
           </div>
         </nav>

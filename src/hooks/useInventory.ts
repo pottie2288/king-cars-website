@@ -108,9 +108,19 @@ function transformVehicle(v: VmgVehicle): Car {
   };
 }
 
-export function useInventory() {
-  const [cars, setCars] = useState<Car[]>([]);
-  const [loading, setLoading] = useState(true);
+function markFeatured(transformed: Car[]): Car[] {
+  const sorted = [...transformed].sort(
+    (a, b) => new Date(b.dateUpdated).getTime() - new Date(a.dateUpdated).getTime()
+  );
+  const featuredIds = new Set(sorted.slice(0, 6).map((c) => c.id));
+  return transformed.map((car) => ({ ...car, featured: featuredIds.has(car.id) }));
+}
+
+export function useInventory(initialVehicles?: VmgVehicle[]) {
+  const [cars, setCars] = useState<Car[]>(() =>
+    initialVehicles?.length ? markFeatured(initialVehicles.map(transformVehicle)) : []
+  );
+  const [loading, setLoading] = useState(!initialVehicles?.length);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -122,18 +132,7 @@ export function useInventory() {
         }
         const data: VmgVehicle[] = await response.json();
         const transformed = data.map(transformVehicle);
-
-        // Mark the 6 most recently updated vehicles as featured
-        const sorted = [...transformed].sort(
-          (a, b) => new Date(b.dateUpdated).getTime() - new Date(a.dateUpdated).getTime()
-        );
-        const featuredIds = new Set(sorted.slice(0, 6).map((c) => c.id));
-        const withFeatured = transformed.map((car) => ({
-          ...car,
-          featured: featuredIds.has(car.id),
-        }));
-
-        setCars(withFeatured);
+        setCars(markFeatured(transformed));
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error');
       } finally {

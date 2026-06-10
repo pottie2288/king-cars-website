@@ -8,7 +8,7 @@ import { Slider } from '@/components/ui/slider';
 import { CarCard } from '@/components/CarCard';
 import { useInventory } from '@/hooks/useInventory';
 import { useFavourites } from '@/context/FavouritesContext';
-import type { FilterState } from '@/types';
+import type { FilterState, VmgVehicle } from '@/types';
 
 const PAGE_SIZE = 12;
 const MAX_PRICE = 1_000_000;
@@ -45,8 +45,8 @@ function BrandLogo({ make, size = 28, inverted = false }: { make: string; size?:
   );
 }
 
-export function ShowroomPage() {
-  const { inventory, loading, getUniqueMakes, getUniqueModels, getUniqueCategories, getUniqueLocations } = useInventory();
+export function ShowroomPage({ initialVehicles }: { initialVehicles?: VmgVehicle[] }) {
+  const { inventory, loading, getUniqueMakes, getUniqueModels, getUniqueCategories, getUniqueLocations } = useInventory(initialVehicles);
   const { favourites, toggleFavourite } = useFavourites();
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [showMobileDropdown, setShowMobileDropdown] = useState(false);

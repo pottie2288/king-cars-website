@@ -15,7 +15,6 @@ const staticPages: MetadataRoute.Sitemap = [
     { url: `${BASE_URL}/about`,                  lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE_URL}/compliments-complaints`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
     { url: `${BASE_URL}/popi-policy`,            lastModified: new Date(), changeFrequency: 'yearly',  priority: 0.3 },
-    { url: `${BASE_URL}/favourites`,             lastModified: new Date(), changeFrequency: 'never',   priority: 0.1 },
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

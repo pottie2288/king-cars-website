@@ -1,14 +1,11 @@
 import { NextResponse } from 'next/server';
-import { Resend } from 'resend';
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+import { sendEmail } from '@/lib/brevo';
 
 export async function POST(request: Request) {
   try {
     const data = await request.json();
 
-    await resend.emails.send({
-      from: 'onboarding@resend.dev',
+    await sendEmail({
       to: 'pottie2288@gmail.com',
       subject: `Contact Enquiry — ${data.name}`,
       html: `

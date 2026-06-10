@@ -1,7 +1,5 @@
 import { NextResponse } from 'next/server';
-import { Resend } from 'resend';
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+import { sendEmail } from '@/lib/brevo';
 
 export async function POST(request: Request) {
   try {
@@ -23,8 +21,7 @@ export async function POST(request: Request) {
       }
     }
 
-    await resend.emails.send({
-      from: 'onboarding@resend.dev',
+    await sendEmail({
       to: 'pierre@kingcars.co.za',
       cc: 'pottie2288@gmail.com',
       subject: `${reason} from ${firstName} ${lastName}`,
@@ -39,7 +36,7 @@ export async function POST(request: Request) {
         <p>${description}</p>
         ${attachments.length > 0 ? `<p><em>${attachments.length} file(s) attached.</em></p>` : ''}
       `,
-      ...(attachments.length > 0 && { attachments }),
+      attachments,
     });
 
     return NextResponse.json({ success: true });

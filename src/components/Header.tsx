@@ -66,14 +66,14 @@ export function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav className="hidden xl:flex items-center gap-4 2xl:gap-6">
             {navItems.map((item) => {
               const isActive = pathname === item.path;
               return (
                 <Link
                   key={item.path}
                   href={item.path}
-                  className={`nav-link lg:text-lg xl:text-xl text-gray-700 hover:text-king-blue after:bg-king-blue ${isActive ? 'nav-link-active' : ''} relative`}
+                  className={`nav-link text-[17px] 2xl:text-lg whitespace-nowrap text-gray-700 hover:text-king-blue after:bg-king-blue ${isActive ? 'nav-link-active' : ''} relative`}
                 >
                   {item.label}
                   {item.path === '/favourites' && favouritesCount > 0 && (
@@ -87,7 +87,7 @@ export function Header() {
           </nav>
 
           {/* CTA Buttons */}
-          <div className="hidden lg:flex items-center gap-2">
+          <div className="hidden xl:flex items-center gap-2">
             <Link
               href="/contact"
               className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium transition-all duration-300 hover-lift click-press ${isScrolled
@@ -121,7 +121,7 @@ export function Header() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className={`lg:hidden p-2 rounded-xl transition-colors click-press ${isScrolled
+            className={`xl:hidden p-2 rounded-xl transition-colors click-press ${isScrolled
               ? 'text-king-blue hover:bg-gray-100'
               : 'text-king-blue hover:bg-white/50'
               }`}
@@ -137,7 +137,7 @@ export function Header() {
 
       {/* Mobile Menu */}
       <div
-        className={`lg:hidden absolute top-full left-0 right-0 bg-white shadow-xl transition-all duration-300 ${isMobileMenuOpen
+        className={`xl:hidden absolute top-full left-0 right-0 bg-white shadow-xl transition-all duration-300 ${isMobileMenuOpen
           ? 'opacity-100 translate-y-0'
           : 'opacity-0 -translate-y-4 pointer-events-none'
           }`}

@@ -13,7 +13,7 @@ export async function POST(request: Request) {
         <table cellpadding="6">
           <tr><td><strong>Vehicle</strong></td><td>${data.car}</td></tr>
           <tr><td><strong>Price</strong></td><td>R ${Number(data.price).toLocaleString('en-ZA')}</td></tr>
-          <tr><td><strong>Car ID</strong></td><td>${data.carId}</td></tr>
+          <tr><td><strong>Stock #</strong></td><td>${data.stockCode}</td></tr>
         </table>
         <h3>Customer</h3>
         <table cellpadding="6">

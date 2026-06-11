@@ -393,7 +393,7 @@ function PriceActionsCard({
             await fetch('/api/enquiry', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ...enquiry, car: `${car.year} ${car.make} ${car.model}`, price: car.price, carId: car.id }),
+                body: JSON.stringify({ ...enquiry, car: `${car.year} ${car.make} ${car.model}`, price: car.price, stockCode: car.stockCode }),
             });
         } catch {
             // still show success so the user isn't blocked

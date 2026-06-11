@@ -24,7 +24,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { FinanceCalculator } from '@/components/FinanceCalculator';
 import { useInventory } from '@/hooks/useInventory';
 import { useFavourites } from '@/context/FavouritesContext';
-import type { Car } from '@/types';
+import type { Car, VmgVehicle } from '@/types';
 import {
     Carousel,
     CarouselContent,
@@ -32,10 +32,10 @@ import {
     type CarouselApi,
 } from "@/components/ui/carousel";
 
-export function CarDetailPage() {
+export function CarDetailPage({ initialVehicle }: { initialVehicle?: VmgVehicle }) {
     const { id } = useParams<{ id: string }>();
     const router = useRouter();
-    const { cars, loading } = useInventory();
+    const { cars, loading } = useInventory(initialVehicle ? [initialVehicle] : undefined);
     const { isFavourite, toggleFavourite } = useFavourites();
     const [api, setApi] = useState<CarouselApi>();
     const [current, setCurrent] = useState(0);

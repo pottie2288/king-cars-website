@@ -8,6 +8,7 @@ const VMG_API_URL = 'https://vmgplay.co.za/api/v3/view_stock_complete_with_data?
 export const metadata: Metadata = {
   title: 'Used Cars for Sale in Cape Town & Gqeberha | King Cars',
   description: 'Browse our full inventory of quality pre-owned cars. 28+ brands from R150k. Every vehicle includes a 2-year unlimited km warranty. Filter by make, price, and location.',
+  alternates: { canonical: 'https://www.kingcars.co.za/showroom' },
 }
 
 export default async function Page() {

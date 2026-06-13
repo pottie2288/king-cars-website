@@ -6,7 +6,8 @@ export async function POST(request: Request) {
     const data = await request.json();
 
     await sendEmail({
-      to: 'pottie2288@gmail.com',
+      to: 'info@kingcars.co.za',
+      cc: 'pottie2288@gmail.com',
       subject: `Contact Enquiry — ${data.name}`,
       html: `
         <h2 style="color:#1a3a5c;">New Contact Enquiry</h2>

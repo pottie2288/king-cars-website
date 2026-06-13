@@ -40,33 +40,28 @@ export function HomePage() {
     {
       id: 1,
       name: 'Andre',
-      avatar: 'https://randomuser.me/api/portraits/men/1.jpg',
       description: 'Andre gave me excellent service right from the start. I highly recommend him and King Cars.',
     },
     {
       id: 2,
       name: 'Tamaryne',
-      avatar: 'https://randomuser.me/api/portraits/women/1.jpg',
       description: 'Excellent Service. Thank you King Cars Bellville for the excellent service received.',
     },
     {
       id: 3,
       name: 'Ollie',
-      avatar: 'https://randomuser.me/api/portraits/men/2.jpg',
       description: "GREAT WORK & SERVICE. Just a word thanks to you and Nigel for the great work and service.",
     },
     {
       id: 4,
       name: 'Teresa Booysen',
-      avatar: 'https://randomuser.me/api/portraits/women/2.jpg',
       description: 'Customer service is nie meer soos dit vroeer jare was nie maar Justin het my gewys dat daar nog mense is.',
     },
     {
       id: 5,
       name: 'Michael',
-      avatar: 'https://randomuser.me/api/portraits/men/3.jpg',
       description: 'Thank you for keeping on trying. The effort you put into finding the right car was exceptional.',
-    }
+    },
   ];
 
 

@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils"
 interface Testimonial {
   id: number | string
   name: string
-  avatar: string
+  avatar?: string
   description: string
 }
 
@@ -94,12 +94,14 @@ const TestimonialCarousel = React.forwardRef<HTMLDivElement, TestimonialCarousel
                 )}
 
                 <div className="p-6 flex flex-col items-center gap-4">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={testimonial.avatar}
-                    alt={testimonial.name}
-                    className="w-16 h-16 rounded-full object-cover"
-                  />
+                  {testimonial.avatar && (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={testimonial.avatar}
+                      alt={testimonial.name}
+                      className="w-16 h-16 rounded-full object-cover"
+                    />
+                  )}
                   <h3 className="text-lg font-semibold text-gray-800">{testimonial.name}</h3>
                   <p className="text-center text-sm text-gray-600">{testimonial.description}</p>
                 </div>

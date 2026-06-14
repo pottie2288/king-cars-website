@@ -15,6 +15,18 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Force www — fixes all "duplicate without canonical" in GSC
+      // Covers both http://kingcars.co.za and https://kingcars.co.za (non-www)
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'kingcars.co.za' }],
+        destination: 'https://www.kingcars.co.za/:path*',
+        permanent: true,
+      },
+      // Old VMG pages still being crawled by Google
+      { source: '/our-vision-and-mission{/}?', destination: '/about', permanent: true },
+      { source: '/social-media{/}?', destination: '/', permanent: true },
+      { source: '/private{/}?', destination: '/showroom', permanent: true },
       // Old news section (indexed on old site — send to home)
       { source: '/news', destination: '/', permanent: true },
       { source: '/news/:path*', destination: '/', permanent: true },

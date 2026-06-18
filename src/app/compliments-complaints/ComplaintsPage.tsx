@@ -1,11 +1,12 @@
 'use client'
 
 import { useState } from 'react';
-import { MessageSquareHeart, ThumbsUp, ThumbsDown, Upload, Send, CheckCircle } from 'lucide-react';
+import { MessageSquareHeart, ThumbsUp, ThumbsDown, Upload, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import { AnimatedSection } from '@/components/AnimatedSection';
 
 export function ComplaintsPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState(false);
   const [reason, setReason] = useState('Compliment');
   const [form, setForm] = useState({
     firstName: '',
@@ -17,21 +18,47 @@ export function ComplaintsPage() {
   const [attachment1, setAttachment1] = useState<File | null>(null);
   const [attachment2, setAttachment2] = useState<File | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (e?: React.FormEvent) => {
+    e?.preventDefault();
+    setError(false);
     try {
       const body = new FormData();
       (Object.entries(form) as [string, string][]).forEach(([k, v]) => body.append(k, v));
       body.append('reason', reason);
       if (attachment1) body.append('attachment1', attachment1, attachment1.name);
       if (attachment2) body.append('attachment2', attachment2, attachment2.name);
-      await fetch('/api/complaints', { method: 'POST', body });
+      const res = await fetch('/api/complaints', { method: 'POST', body });
+      if (!res.ok) throw new Error(`Complaints request failed: ${res.status}`);
+      setSubmitted(true);
     } catch {
-      // still show success so the user isn't blocked
+      // Don't fake success — surface an honest error so the message isn't lost silently.
+      setError(true);
     }
-    setSubmitted(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50 pt-24 pb-16 flex items-center justify-center px-4">
+        <AnimatedSection>
+          <div className="bg-white rounded-3xl p-12 shadow-card border border-gray-100 text-center max-w-lg w-full">
+            <div className="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6">
+              <AlertCircle className="w-10 h-10 text-red-500" />
+            </div>
+            <h2 className="font-display font-bold text-2xl text-gray-900 mb-3">Something went wrong</h2>
+            <p className="text-gray-500 mb-8">
+              We couldn&apos;t submit your message just now. Your details are still here — please try
+              again. If it keeps happening, call us on{' '}
+              <a href="tel:0835008181" className="text-king-blue font-semibold">083 500 8181</a>.
+            </p>
+            <button onClick={() => handleSubmit()} className="btn-primary">
+              Try Again
+            </button>
+          </div>
+        </AnimatedSection>
+      </div>
+    );
+  }
 
   if (submitted) {
     return (

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react';
-import { Check, ChevronRight, Send, Shield, Clock, Banknote, UploadCloud } from 'lucide-react';
+import { Check, ChevronRight, Send, Shield, Clock, Banknote, UploadCloud, AlertCircle } from 'lucide-react';
 import { BranchSection } from '@/components/BranchSection';
 
 
@@ -33,6 +33,7 @@ export function SellYourCarPage() {
   const [currentStep, setCurrentStep] = useState<Step>(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState(false);
   const [photos, setPhotos] = useState<File[]>([]);
   const [formData, setFormData] = useState<FormData>({
     year: '',
@@ -90,17 +91,21 @@ export function SellYourCarPage() {
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
+    setError(false);
     try {
       const body = new FormData();
       (Object.entries(formData) as [string, string][]).forEach(([k, v]) => body.append(k, v));
       photos.forEach((photo, i) => body.append(`photo_${i}`, photo, photo.name));
-      await fetch('/api/sell-car', { method: 'POST', body });
+      const res = await fetch('/api/sell-car', { method: 'POST', body });
+      if (!res.ok) throw new Error(`Sell-car request failed: ${res.status}`);
+      setIsSubmitted(true);
     } catch {
-      // still show success so the user isn't blocked
+      // Don't fake success — surface an honest error so the lead isn't lost silently.
+      setError(true);
+    } finally {
+      setIsSubmitting(false);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -143,6 +148,27 @@ export function SellYourCarPage() {
                   className="btn-primary"
                 >
                   Valuate Another Car
+                </button>
+              </div>
+            ) : error ? (
+              <div className="bg-white rounded-3xl p-8 sm:p-12 shadow-2xl text-center animate-fade-in">
+                <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <AlertCircle className="w-10 h-10 text-red-600" />
+                </div>
+                <h2 className="font-display font-bold text-3xl text-gray-900 mb-4">
+                  Something went wrong
+                </h2>
+                <p className="text-gray-600 mb-8 max-w-md mx-auto">
+                  We couldn&apos;t submit your valuation request just now. Your details are still
+                  here — please try again. If it keeps happening, call us on{' '}
+                  <a href="tel:0835008181" className="text-king-blue font-semibold">083 500 8181</a>.
+                </p>
+                <button
+                  onClick={handleSubmit}
+                  disabled={isSubmitting}
+                  className="btn-primary disabled:opacity-50"
+                >
+                  {isSubmitting ? 'Submitting…' : 'Try Again'}
                 </button>
               </div>
             ) : (

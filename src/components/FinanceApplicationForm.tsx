@@ -10,6 +10,7 @@ import {
     Building2,
     FileText,
     CheckCircle2,
+    AlertCircle,
     ArrowRight,
     ArrowLeft,
     Upload,
@@ -59,6 +60,8 @@ export function FinanceApplicationForm() {
     const [step, setStep] = useState(1);
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitError, setSubmitError] = useState(false);
+    const [lastData, setLastData] = useState<FormData | null>(null);
 
     const {
         register,
@@ -89,18 +92,48 @@ export function FinanceApplicationForm() {
 
     const onSubmit = async (data: FormData) => {
         setIsSubmitting(true);
+        setSubmitError(false);
+        setLastData(data);
         try {
-            await fetch('/api/finance', {
+            const res = await fetch('/api/finance', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data),
             });
+            if (!res.ok) throw new Error(`Finance application failed: ${res.status}`);
+            setIsSubmitted(true);
         } catch {
-            // still show success so the user isn't blocked
+            // Don't fake success — surface an honest error so the lead isn't lost silently.
+            setSubmitError(true);
+        } finally {
+            setIsSubmitting(false);
         }
-        setIsSubmitting(false);
-        setIsSubmitted(true);
     };
+
+    const retrySubmit = () => { if (lastData) onSubmit(lastData); };
+
+    if (submitError) {
+        return (
+            <div className="bg-white rounded-3xl p-8 sm:p-12 shadow-card text-center animate-fade-in">
+                <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <AlertCircle className="w-12 h-12 text-red-600" />
+                </div>
+                <h2 className="font-display font-bold text-3xl text-gray-900 mb-4">Something went wrong</h2>
+                <p className="text-gray-600 text-lg mb-8 max-w-md mx-auto">
+                    We couldn&apos;t submit your application just now. Your details are still here — please try
+                    again. If it keeps happening, call us on{' '}
+                    <a href="tel:0835008181" className="text-king-blue font-semibold">083 500 8181</a>.
+                </p>
+                <button
+                    onClick={retrySubmit}
+                    disabled={isSubmitting}
+                    className="btn-primary disabled:opacity-50"
+                >
+                    {isSubmitting ? 'Submitting…' : 'Try Again'}
+                </button>
+            </div>
+        );
+    }
 
     if (isSubmitted) {
         return (

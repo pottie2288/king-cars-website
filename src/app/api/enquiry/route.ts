@@ -7,7 +7,7 @@ export async function POST(request: Request) {
 
     const to = data.location === 'Eastern Cape'
       ? 'divan@kingcars.co.za'
-      : 'andresadie@kingcars.co.za';
+      : 'andre@kingcars.co.za';
 
     await sendEmail({
       to,

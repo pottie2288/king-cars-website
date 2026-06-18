@@ -27,6 +27,12 @@ const nextConfig: NextConfig = {
       { source: '/our-vision-and-mission{/}?', destination: '/about', permanent: true },
       { source: '/social-media{/}?', destination: '/', permanent: true },
       { source: '/private{/}?', destination: '/showroom', permanent: true },
+      // Old VMG per-branch showroom pages (e.g. /showroom-bellville, /showroom-newton)
+      { source: '/showroom-:branch', destination: '/showroom', permanent: true },
+      // Old VMG per-branch team pages (e.g. /team-capetown, /team-sydenham, /team-newton)
+      { source: '/team-:branch', destination: '/about', permanent: true },
+      // Old testimonials page
+      { source: '/testimonials{/}?', destination: '/about', permanent: true },
       // Old news section (indexed on old site — send to home)
       { source: '/news', destination: '/', permanent: true },
       { source: '/news/:path*', destination: '/', permanent: true },

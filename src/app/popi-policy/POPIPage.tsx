@@ -10,7 +10,7 @@ export function POPIPage() {
           Protection of Personal Information Act (POPIA) — how King Cars collects,
           uses, and protects your personal information.
         </p>
-        <p className="text-gray-500 text-sm mt-4">Last updated: January 2025</p>
+        <p className="text-gray-500 text-sm mt-4">Last updated: June 2026</p>
       </section>
 
       {/* Content */}
@@ -19,7 +19,7 @@ export function POPIPage() {
 
           <Section title="1. Introduction">
             <p>
-              King Cars (Pty) Ltd (&ldquo;King Cars&rdquo;, &ldquo;we&rdquo;, &ldquo;our&rdquo;, or &ldquo;us&rdquo;) is committed to protecting
+              King Cars (&ldquo;King Cars&rdquo;, &ldquo;we&rdquo;, &ldquo;our&rdquo;, or &ldquo;us&rdquo;) is committed to protecting
               your privacy and ensuring the lawful processing of your personal information in
               accordance with the Protection of Personal Information Act 4 of 2013 (&ldquo;POPIA&rdquo;).
             </p>
@@ -31,10 +31,12 @@ export function POPIPage() {
 
           <Section title="2. Who We Are">
             <p>
-              King Cars (Pty) Ltd is a licensed used motor vehicle dealership operating branches
-              in the Western Cape and Eastern Cape provinces of South Africa. We are registered
-              as a Financial Services Provider (FSP Licence No. 10220) and act as a Responsible
-              Party in respect of the personal information we process.
+              King Cars is a partnership that operates a group of licensed used motor vehicle
+              dealerships (the &ldquo;King Cars Group&rdquo;), with branches across the Western Cape and
+              Eastern Cape provinces of South Africa. We are registered as a Financial Services
+              Provider (FSP Licence No. 10220). As a partnership conducting business in South
+              Africa, King Cars is a &ldquo;private body&rdquo; for the purposes of POPIA and acts as the
+              Responsible Party in respect of the personal information we process.
             </p>
             <div className="mt-4 bg-gray-50 rounded-xl p-4 text-sm space-y-1">
               <p><strong>Information Officer:</strong> Pierre Potgieter</p>

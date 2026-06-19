@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { MapPin, Phone, Mail, Clock, Send, CheckCircle } from 'lucide-react';
+import { trackEvent } from '@/lib/analytics';
 import { BRANCHES } from '@/data/branches';
 
 const WC_IDS = ['bellville', 'vredekloof', 'brackenfell'];
@@ -71,6 +72,7 @@ export function ContactPage() {
         body: JSON.stringify(form),
       });
       setStatus(res.ok ? 'sent' : 'error');
+      if (res.ok) trackEvent('contact_form_submitted');
     } catch {
       setStatus('error');
     }

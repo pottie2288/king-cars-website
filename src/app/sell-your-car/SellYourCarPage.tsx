@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Check, ChevronRight, Send, Shield, Clock, Banknote, UploadCloud, AlertCircle } from 'lucide-react';
+import { trackEvent } from '@/lib/analytics';
 import { BranchSection } from '@/components/BranchSection';
 
 
@@ -99,6 +100,7 @@ export function SellYourCarPage() {
       const res = await fetch('/api/sell-car', { method: 'POST', body });
       if (!res.ok) throw new Error(`Sell-car request failed: ${res.status}`);
       setIsSubmitted(true);
+      trackEvent('sell_car_submitted', { make: formData.make, model: formData.model });
     } catch {
       // Don't fake success — surface an honest error so the lead isn't lost silently.
       setError(true);

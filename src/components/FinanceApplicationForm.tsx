@@ -21,6 +21,7 @@ import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Checkbox } from './ui/checkbox';
 import { PERSONAL_BANKS } from '@/data/banks';
+import { trackEvent } from '@/lib/analytics';
 import {
     Select,
     SelectContent,
@@ -102,6 +103,7 @@ export function FinanceApplicationForm() {
             });
             if (!res.ok) throw new Error(`Finance application failed: ${res.status}`);
             setIsSubmitted(true);
+            trackEvent('finance_application_submitted', { bank: data.bankName });
         } catch {
             // Don't fake success — surface an honest error so the lead isn't lost silently.
             setSubmitError(true);

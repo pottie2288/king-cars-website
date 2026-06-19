@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { MessageSquareHeart, ThumbsUp, ThumbsDown, Upload, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { trackEvent } from '@/lib/analytics';
 import { AnimatedSection } from '@/components/AnimatedSection';
 
 export function ComplaintsPage() {
@@ -30,6 +31,7 @@ export function ComplaintsPage() {
       const res = await fetch('/api/complaints', { method: 'POST', body });
       if (!res.ok) throw new Error(`Complaints request failed: ${res.status}`);
       setSubmitted(true);
+      trackEvent('feedback_submitted', { reason });
     } catch {
       // Don't fake success — surface an honest error so the message isn't lost silently.
       setError(true);

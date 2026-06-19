@@ -24,6 +24,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { FinanceCalculator } from '@/components/FinanceCalculator';
 import { useInventory } from '@/hooks/useInventory';
 import { useFavourites } from '@/context/FavouritesContext';
+import { trackEvent } from '@/lib/analytics';
 import type { Car, VmgVehicle } from '@/types';
 import {
     Carousel,
@@ -380,12 +381,6 @@ function PriceActionsCard({
     const managers = car.location === 'Eastern Cape' ? EC_MANAGERS : WC_MANAGERS;
     const carUrl = `https://www.kingcars.co.za/showroom/${car.id}`;
     const waMessage = encodeURIComponent(`Hi, I'm interested in the ${car.year} ${car.make} ${car.model} (${car.variant}) priced at R ${car.price.toLocaleString('en-ZA')}. Please can you assist?\n\n${carUrl}`);
-
-    const trackEvent = (eventName: string, params: Record<string, string>) => {
-        if (typeof window !== 'undefined' && (window as unknown as Record<string, unknown>).gtag) {
-            (window as unknown as Record<string, (...args: unknown[]) => void>).gtag('event', eventName, params);
-        }
-    };
 
     const handleEnquirySubmit = async (e: React.FormEvent) => {
         e.preventDefault();

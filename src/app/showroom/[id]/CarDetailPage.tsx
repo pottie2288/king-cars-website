@@ -440,29 +440,29 @@ function PriceActionsCard({
             {/* Key Specs */}
             <div className="grid grid-cols-2 gap-4 mb-8">
                 <div className="p-3 bg-gray-50 rounded-xl">
-                    <div className="flex items-center gap-2 text-gray-400 text-xs uppercase tracking-wider mb-1">
-                        <Settings className="w-3 h-3" />
+                    <div className="flex items-center gap-1.5 text-gray-400 text-[10px] sm:text-[11px] uppercase tracking-wide mb-1">
+                        <Settings className="w-3 h-3 shrink-0" />
                         Transmission
                     </div>
                     <p className="font-semibold text-gray-900">{car.transmission}</p>
                 </div>
                 <div className="p-3 bg-gray-50 rounded-xl">
-                    <div className="flex items-center gap-2 text-gray-400 text-xs uppercase tracking-wider mb-1">
-                        <Fuel className="w-3 h-3" />
+                    <div className="flex items-center gap-1.5 text-gray-400 text-[10px] sm:text-[11px] uppercase tracking-wide mb-1">
+                        <Fuel className="w-3 h-3 shrink-0" />
                         Fuel Type
                     </div>
                     <p className="font-semibold text-gray-900">{car.fuelType}</p>
                 </div>
                 <div className="p-3 bg-gray-50 rounded-xl">
-                    <div className="flex items-center gap-2 text-gray-400 text-xs uppercase tracking-wider mb-1">
-                        <MapPin className="w-3 h-3" />
+                    <div className="flex items-center gap-1.5 text-gray-400 text-[10px] sm:text-[11px] uppercase tracking-wide mb-1">
+                        <MapPin className="w-3 h-3 shrink-0" />
                         Location
                     </div>
                     <p className="font-semibold text-gray-900">{car.location}</p>
                 </div>
                 <div className="p-3 bg-gray-50 rounded-xl">
-                    <div className="flex items-center gap-2 text-gray-400 text-xs uppercase tracking-wider mb-1">
-                        <Calendar className="w-3 h-3" />
+                    <div className="flex items-center gap-1.5 text-gray-400 text-[10px] sm:text-[11px] uppercase tracking-wide mb-1">
+                        <Calendar className="w-3 h-3 shrink-0" />
                         Year
                     </div>
                     <p className="font-semibold text-gray-900">{car.year}</p>

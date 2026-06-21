@@ -1,14 +1,15 @@
 'use client'
 
-import { useState, useEffect, useMemo } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { Search, MapPin, Grid, List as ListIcon, ChevronDown, Car as CarIcon, Shapes } from 'lucide-react';
 import { MAKE_LOGOS } from '@/lib/car-logos';
 import { Slider } from '@/components/ui/slider';
 import { CarCard } from '@/components/CarCard';
 import { useInventory } from '@/hooks/useInventory';
 import { useFavourites } from '@/context/FavouritesContext';
-import type { FilterState, VmgVehicle } from '@/types';
+import type { Car, FilterState, VmgVehicle } from '@/types';
+import { SHOWROOM_SCROLL_KEY, SHOWROOM_COUNT_KEY } from '@/lib/scroll-keys';
 
 const PAGE_SIZE = 12;
 const MAX_PRICE = 1_000_000;
@@ -56,6 +57,58 @@ export function ShowroomPage({ initialVehicles }: { initialVehicles?: VmgVehicle
   const [priceRange, setPriceRange] = useState<[number, number]>([0, MAX_PRICE]);
   const [yearRange, setYearRange] = useState<[number, number]>([MIN_YEAR, MAX_YEAR]);
   const searchParams = useSearchParams();
+  const router = useRouter();
+  // Restore scroll position + how many cars were loaded when the user returns
+  // from a car detail page, so they land back on the car they were viewing.
+  // Runs on mount (Next remounts the page), on history back/forward (Next reuses
+  // the cached instance — common with the OS/gesture back on iOS & Android), and
+  // on bfcache restore (pageshow). Gated purely on a saved snapshot existing, so
+  // it's a no-op on a normal fresh visit. Filters persist separately in
+  // sessionStorage and are re-applied by the effect below.
+  const restorePosition = useCallback(() => {
+    const savedScroll = sessionStorage.getItem(SHOWROOM_SCROLL_KEY);
+    if (!savedScroll) return; // no snapshot → fresh visit, leave scroll alone
+
+    const savedCount = sessionStorage.getItem(SHOWROOM_COUNT_KEY);
+    if (savedCount) setVisibleCount(parseInt(savedCount, 10));
+
+    const y = parseInt(savedScroll, 10);
+    let attempts = 0;
+    // `instant` overrides the global `scroll-behavior: smooth` so there's no
+    // visible animation (it just appears on the car, AutoTrader-style). Re-issue
+    // each frame until the page is tall enough to reach it (cards/filters settle
+    // async), then clear the snapshot. Capped so it can't loop forever.
+    const step = () => {
+      window.scrollTo({ top: y, behavior: 'instant' as ScrollBehavior });
+      attempts += 1;
+      if (Math.abs(window.scrollY - y) > 2 && attempts < 60) {
+        requestAnimationFrame(step);
+      } else {
+        sessionStorage.removeItem(SHOWROOM_SCROLL_KEY);
+        sessionStorage.removeItem(SHOWROOM_COUNT_KEY);
+      }
+    };
+    step();
+  }, []);
+
+  useEffect(() => {
+    restorePosition(); // remount / full reload
+    // Reused-instance history back (no remount) + mobile bfcache restore.
+    const onPop = () => requestAnimationFrame(restorePosition);
+    window.addEventListener('popstate', onPop);
+    window.addEventListener('pageshow', restorePosition);
+    return () => {
+      window.removeEventListener('popstate', onPop);
+      window.removeEventListener('pageshow', restorePosition);
+    };
+  }, [restorePosition]);
+
+  // Snapshot position before opening a car, then navigate.
+  const handleCarClick = (car: Car) => {
+    sessionStorage.setItem(SHOWROOM_SCROLL_KEY, String(window.scrollY));
+    sessionStorage.setItem(SHOWROOM_COUNT_KEY, String(visibleCount));
+    router.push(`/showroom/${car.id}`);
+  };
 
   const [filters, setFilters] = useState<FilterState>({
     searchQuery: '',
@@ -84,9 +137,30 @@ export function ShowroomPage({ initialVehicles }: { initialVehicles?: VmgVehicle
     const doors = searchParams.get('doors');
     const maxPrice = searchParams.get('maxPrice');
     const q = searchParams.get('q');
-
     const hasUrlFilters = make || model || location || category || doors || maxPrice || q;
 
+    const stored = sessionStorage.getItem('showroomFilters');
+    const storedUrl = sessionStorage.getItem('showroomFiltersUrl');
+    const currentUrl = window.location.search;
+
+    const applyStored = (raw: string) => {
+      const parsed: FilterState = JSON.parse(raw);
+      setFilters(parsed);
+      setPriceRange([parsed.minPrice ?? 0, parsed.maxPrice ?? MAX_PRICE]);
+      setYearRange([parsed.minYear ?? MIN_YEAR, parsed.maxYear ?? MAX_YEAR]);
+    };
+
+    // 1) Returning to the SAME showroom URL we left (e.g. via Back) → restore the
+    //    full saved set, including filters added via the UI that never went into
+    //    the URL. Without this, a UI-added make is lost when the body type (or any
+    //    other filter) was in the URL.
+    if (stored && storedUrl === currentUrl) {
+      applyStored(stored);
+      return;
+    }
+
+    // 2) A fresh filtered link (URL differs from what we saved) → use the URL,
+    //    then persist it so a later Back restores the complete set.
     if (hasUrlFilters) {
       const urlFilters: FilterState = {
         searchQuery: q || '',
@@ -104,15 +178,13 @@ export function ShowroomPage({ initialVehicles }: { initialVehicles?: VmgVehicle
       setFilters(urlFilters);
       setPriceRange([0, urlFilters.maxPrice ?? MAX_PRICE]);
       setYearRange([MIN_YEAR, MAX_YEAR]);
-    } else {
-      const stored = sessionStorage.getItem('showroomFilters');
-      if (stored) {
-        const parsed: FilterState = JSON.parse(stored);
-        setFilters(parsed);
-        setPriceRange([parsed.minPrice ?? 0, parsed.maxPrice ?? MAX_PRICE]);
-        setYearRange([parsed.minYear ?? MIN_YEAR, parsed.maxYear ?? MAX_YEAR]);
-      }
+      sessionStorage.setItem('showroomFilters', JSON.stringify(urlFilters));
+      sessionStorage.setItem('showroomFiltersUrl', currentUrl);
+      return;
     }
+
+    // 3) Plain /showroom with filters saved earlier this session → restore them.
+    if (stored) applyStored(stored);
   }, [searchParams]);
 
   // When inventory loads, promote the URL ?q= param into make/model filters
@@ -155,12 +227,20 @@ export function ShowroomPage({ initialVehicles }: { initialVehicles?: VmgVehicle
     }
   }, [makes, searchParams, getUniqueModels]);
 
+  // Persist the full current filter set plus the URL it belongs to, so returning
+  // to the same showroom URL (via Back) restores everything — including filters
+  // added in the UI that were never written to the URL.
+  const persistFilters = (next: FilterState) => {
+    sessionStorage.setItem('showroomFilters', JSON.stringify(next));
+    sessionStorage.setItem('showroomFiltersUrl', window.location.search);
+  };
+
   const handleFilterChange = (key: keyof FilterState, value: FilterState[keyof FilterState]) => {
     setFilters(prev => {
       const next = { ...prev, [key]: value };
       if (key === 'make') next.model = null;
       if (key === 'category') next.doors = null;
-      sessionStorage.setItem('showroomFilters', JSON.stringify(next));
+      persistFilters(next);
       return next;
     });
   };
@@ -184,6 +264,7 @@ export function ShowroomPage({ initialVehicles }: { initialVehicles?: VmgVehicle
     setPriceRange([0, MAX_PRICE]);
     setYearRange([MIN_YEAR, MAX_YEAR]);
     sessionStorage.removeItem('showroomFilters');
+    sessionStorage.removeItem('showroomFiltersUrl');
     setVisibleCount(PAGE_SIZE);
     setOpenFilter(null);
   };
@@ -197,7 +278,7 @@ export function ShowroomPage({ initialVehicles }: { initialVehicles?: VmgVehicle
         minPrice: min > 0 ? min : null,
         maxPrice: max < MAX_PRICE ? max : null,
       };
-      sessionStorage.setItem('showroomFilters', JSON.stringify(next));
+      persistFilters(next);
       return next;
     });
   };
@@ -211,7 +292,7 @@ export function ShowroomPage({ initialVehicles }: { initialVehicles?: VmgVehicle
         minYear: min > MIN_YEAR ? min : null,
         maxYear: max < MAX_YEAR ? max : null,
       };
-      sessionStorage.setItem('showroomFilters', JSON.stringify(next));
+      persistFilters(next);
       return next;
     });
   };
@@ -660,6 +741,7 @@ export function ShowroomPage({ initialVehicles }: { initialVehicles?: VmgVehicle
                         isFavourite={favourites.includes(car.id)}
                         onToggleFavourite={() => toggleFavourite(car.id)}
                         viewMode={viewMode}
+                        onClick={handleCarClick}
                       />
                     </div>
                   ))}

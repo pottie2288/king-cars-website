@@ -2,11 +2,18 @@
 
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import { SHOWROOM_SCROLL_KEY } from '@/lib/scroll-keys';
 
 export function ScrollToTop() {
   const pathname = usePathname();
 
   useEffect(() => {
+    // Stand down when returning to the showroom with a saved scroll position —
+    // ShowroomPage restores the user to the car they were viewing instead.
+    if (pathname === '/showroom' && sessionStorage.getItem(SHOWROOM_SCROLL_KEY)) {
+      return;
+    }
+
     // Immediate scroll attempts for all common scrolling elements
     window.scrollTo(0, 0);
     document.documentElement.scrollTo(0, 0);

@@ -399,6 +399,16 @@ export function ShowroomPage({ initialVehicles }: { initialVehicles?: VmgVehicle
   // ── complete filter panel (shared between mobile overlay + desktop sidebar) ──
   const filterPanel = (
     <div className="space-y-5">
+      {/* Clear filters — small text, top-right of the panel */}
+      <div className="flex justify-end -mb-2 -mt-1">
+        <button
+          onClick={clearFilters}
+          className="text-xs font-medium text-white/70 hover:text-white underline-offset-2 hover:underline transition-colors"
+        >
+          Clear filters
+        </button>
+      </div>
+
       {/* Search */}
       <div className="space-y-2">
         <label className="text-sm font-semibold text-white ml-1">Search</label>
@@ -618,13 +628,6 @@ export function ShowroomPage({ initialVehicles }: { initialVehicles?: VmgVehicle
           <span>{MAX_YEAR}</span>
         </div>
       </div>
-
-      <button
-        onClick={clearFilters}
-        className="w-full py-2.5 text-white font-medium text-sm hover:bg-white/10 rounded-xl transition-colors border border-dashed border-white/30"
-      >
-        Clear All Filters
-      </button>
     </div>
   );
 

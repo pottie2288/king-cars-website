@@ -74,7 +74,7 @@ function transformVehicle(v: VmgVehicle): Car {
   return {
     id: String(v.stock_id),
     stockCode: v.stock_code ?? '',
-    make: titleCase(v.make ?? ''),
+    make: titleCase(v.make ?? '').trim(),
     model: titleCase(v.series ?? ''),
     variant: v.variant ?? '',
     year: v.year,
@@ -175,7 +175,8 @@ export function useInventory(initialVehicles?: VmgVehicle[]) {
   }, [cars]);
 
   const getUniqueMakes = useCallback((): string[] => {
-    const makes = new Set(cars.map((car) => car.make));
+    const excluded = new Set(['Bush Lapa']);
+    const makes = new Set(cars.map((car) => car.make).filter((m) => !excluded.has(m)));
     return Array.from(makes).sort();
   }, [cars]);
 

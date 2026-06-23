@@ -11,7 +11,7 @@ import { useInventory } from '@/hooks/useInventory';
 import { AnimatedSection } from '@/components/AnimatedSection';
 import { BodyTypeFilter } from '@/components/BodyTypeFilter';
 import { BranchSection } from '@/components/BranchSection';
-import { TestimonialCarousel } from '@/components/ui/testimonial';
+import { GoogleReviewCarousel, type GoogleReview } from '@/components/ui/testimonial';
 import { Typewriter } from '@/components/ui/typewriter';
 import { useFavourites } from '@/context/FavouritesContext';
 import type { FilterState, Car } from '@/types';
@@ -36,31 +36,54 @@ export function HomePage() {
   };
 
 
-  const testimonials = [
+  const reviews: GoogleReview[] = [
     {
       id: 1,
-      name: 'Andre',
-      description: 'Andre gave me excellent service right from the start. I highly recommend him and King Cars.',
-    },
-    {
-      id: 2,
-      name: 'Tamaryne',
-      description: 'Excellent Service. Thank you King Cars Bellville for the excellent service received.',
+      name: 'Marius Crous',
+      timeAgo: '2 weeks ago',
+      text: 'Clinton Groenewald was my Sales Executive and I have received 5 star service from him. He has listened to my needs, took me through the entire buying experience, we went for a test drive and sorted out all the paper work. Van Zyl and all other I have dealt with all provided me with the KING CAR EXPERIENCE!! I am glad to be a member of the King Cars family!!!',
     },
     {
       id: 3,
-      name: 'Ollie',
-      description: "GREAT WORK & SERVICE. Just a word thanks to you and Nigel for the great work and service.",
+      name: 'Mr Moses',
+      timeAgo: '2 months ago',
+      text: 'I came to King Cars after canceling a very bad deal with a much bigger corporate dealer. I was assisted by Mr Elliot Mfakadolo who from the beginning was very chilled but professional, and then the F&I Adiela Manual made the rest of the process very easy. She listened to our concerns and made us a very good deal. So far I have had a very good experience with King Cars Bellville.',
     },
     {
       id: 4,
-      name: 'Teresa Booysen',
-      description: 'Customer service is nie meer soos dit vroeer jare was nie maar Justin het my gewys dat daar nog mense is.',
+      name: 'Emilio Castano',
+      timeAgo: '7 months ago',
+      text: 'I had the best experience at King Cars Bellville. Everyone was super helpful and made the buying process extremely easy and efficient. They helped me every step of the way. Would highly recommend going to them before purchasing a car. They got a new loyal customer.',
     },
     {
       id: 5,
-      name: 'Michael',
-      description: 'Thank you for keeping on trying. The effort you put into finding the right car was exceptional.',
+      name: 'Nashlean-lee Links',
+      timeAgo: '7 months ago',
+      text: 'Had the absolute best service and experience with this company. From the car salesman (William) to the finance lady (Adiela). All so helpful, patient and kind. Highly recommend!!',
+    },
+    {
+      id: 6,
+      name: 'Gwynneth Swart',
+      timeAgo: '8 months ago',
+      text: 'Choosing a car is such an important and personal experience. I have received the best service and after care service from Dawid Kotze. He has taken the experience to a 5 star level. I would definitely recommend buying your car through this company.',
+    },
+    {
+      id: 7,
+      name: 'Sia Dube',
+      timeAgo: '5 months ago',
+      text: 'Got swift professional assistance from Dawid, quick response and delivery! Even scored a free driving refresher lesson from Dawid! Thank you!',
+    },
+    {
+      id: 8,
+      name: 'Fatima Isaacs',
+      timeAgo: '8 months ago',
+      text: 'Service was great and staff is very helpful. Shout out to Izzy and his wonderful wife :)',
+    },
+    {
+      id: 9,
+      name: 'Lyle Claassen',
+      timeAgo: 'A year ago',
+      text: 'Well to start with the guy that helped me, Dawid was excellent from the start. He was helpful and patient until the deal was through, then also sorted out my vehicle\'s interior afterwards. Thank you for that.',
     },
   ];
 
@@ -234,33 +257,40 @@ export function HomePage() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="section-padding">
-          <AnimatedSection className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-king-cyan font-medium text-sm uppercase tracking-wider">
-              Testimonials
-            </span>
-            <h2 className="font-display font-bold text-3xl sm:text-4xl text-gray-900 mt-2 mb-4">
-              What Our Customers Say
+      <section className="py-20 relative">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: 'url(/testimonial.jpeg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundAttachment: 'fixed',
+            backgroundRepeat: 'no-repeat',
+          }}
+        />
+        <div className="absolute inset-0 bg-gray-900/80" />
+
+        <div className="relative z-10 section-padding">
+          <AnimatedSection className="text-center mb-14">
+            <p className="text-white/55 text-xs sm:text-sm tracking-widest uppercase mb-3">
+              What Our Happy Clients say about us
+            </p>
+            <h2 className="font-display font-bold text-3xl sm:text-5xl text-white uppercase tracking-wide">
+              Our Testimonials
             </h2>
           </AnimatedSection>
 
-          <div className="flex justify-center">
-            <TestimonialCarousel
-              testimonials={testimonials}
-              className="max-w-4xl"
-            />
-          </div>
+          <GoogleReviewCarousel reviews={reviews} className="max-w-5xl mx-auto" />
 
           <div className="mt-12 text-center">
             <a
               href="https://www.google.com/search?q=King+Cars+Bellville+reviews"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-white border border-gray-200 rounded-full text-gray-600 font-medium hover:bg-gray-50 transition-colors shadow-sm"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/20 rounded-full text-white font-medium transition-colors backdrop-blur-sm"
             >
               <img src="https://www.google.com/favicon.ico" alt="Google" className="w-4 h-4" />
-              See more Google Reviews
+              See all Google Reviews
             </a>
           </div>
         </div>

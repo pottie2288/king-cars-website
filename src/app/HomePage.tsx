@@ -259,14 +259,8 @@ export function HomePage() {
       {/* Testimonials Section */}
       <section className="py-20 relative">
         <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: 'url(/testimonial.jpeg)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundAttachment: 'fixed',
-            backgroundRepeat: 'no-repeat',
-          }}
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: 'url(/testimonial.jpeg)' }}
         />
         <div className="absolute inset-0 bg-gray-900/80" />
 

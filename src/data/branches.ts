@@ -40,8 +40,8 @@ export const BRANCHES: Branch[] = [
     name: 'Brackenfell',
     fullName: 'King Cars Brackenfell',
     address: 'Corner of Old Paarl and Ferndale St, Brackenfell, Cape Town',
-    phones: ['083 302 4500'],
-    email: 'andre@kingcars.co.za',
+    phones: ['083 480 2929'],
+    email: 'izzy@kingcars.co.za',
     mapUrl:
       'https://maps.google.com/maps?q=Corner%20of%20Old%20Paarl%20and%20Ferndale%20St%2C%20Brackenfell%2C%20Cape%20Town&t=&z=15&ie=UTF8&iwloc=&output=embed',
     hours: STANDARD_HOURS,

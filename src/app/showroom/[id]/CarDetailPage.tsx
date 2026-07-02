@@ -11,7 +11,7 @@ import {
 const WC_MANAGERS = [
     { name: 'Andre Sadie',   branch: 'Bellville',   role: 'Sales Manager', phone: '27835008181', photo: '/managers/Andre-Sadie.png' },
     { name: 'Louis Jacobs',  branch: 'Vredekloof',  role: 'Sales Manager', phone: '27722939376', photo: '/managers/Louis-Jacobs.png' },
-    { name: 'Andre Richard', branch: 'Brackenfell', role: 'Sales Manager', phone: '27833024500', photo: '/managers/Andre-Richard.png' },
+    { name: 'Iesmodien Manuel', branch: 'Brackenfell', role: 'Sales Manager', phone: '27834802929', photo: '/managers/Iesmodien-Manuel.png' },
 ];
 
 const EC_MANAGERS = [

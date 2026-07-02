@@ -36,14 +36,14 @@ export const BRANCHES: Branch[] = [
     hours: STANDARD_HOURS,
   },
   {
-    id: '17th',
-    name: '17th Ave',
-    fullName: 'King Cars On 17th',
-    address: '1 William Moffett Express Way, Walmer, Gqeberha',
-    phones: ['073 431 4230'],
-    email: 'simbo@kingcars.co.za',
+    id: 'brackenfell',
+    name: 'Brackenfell',
+    fullName: 'King Cars Brackenfell',
+    address: 'Corner of Old Paarl and Ferndale St, Brackenfell, Cape Town',
+    phones: ['083 302 4500'],
+    email: 'andre@kingcars.co.za',
     mapUrl:
-      'https://maps.google.com/maps?q=1%20William%20Moffett%20Express%20Way%2C%20Gqeberha&t=&z=15&ie=UTF8&iwloc=&output=embed',
+      'https://maps.google.com/maps?q=Corner%20of%20Old%20Paarl%20and%20Ferndale%20St%2C%20Brackenfell%2C%20Cape%20Town&t=&z=15&ie=UTF8&iwloc=&output=embed',
     hours: STANDARD_HOURS,
   },
   {
@@ -80,14 +80,14 @@ export const BRANCHES: Branch[] = [
     hours: STANDARD_HOURS,
   },
   {
-    id: 'brackenfell',
-    name: 'Brackenfell',
-    fullName: 'King Cars Brackenfell',
-    address: 'Corner of Old Paarl and Ferndale St, Brackenfell, Cape Town',
-    phones: ['083 302 4500'],
-    email: 'andre@kingcars.co.za',
+    id: '17th',
+    name: '17th Ave',
+    fullName: 'King Cars On 17th',
+    address: '1 William Moffett Express Way, Walmer, Gqeberha',
+    phones: ['073 431 4230'],
+    email: 'simbo@kingcars.co.za',
     mapUrl:
-      'https://maps.google.com/maps?q=Corner%20of%20Old%20Paarl%20and%20Ferndale%20St%2C%20Brackenfell%2C%20Cape%20Town&t=&z=15&ie=UTF8&iwloc=&output=embed',
+      'https://maps.google.com/maps?q=1%20William%20Moffett%20Express%20Way%2C%20Gqeberha&t=&z=15&ie=UTF8&iwloc=&output=embed',
     hours: STANDARD_HOURS,
   },
 ]

@@ -22,6 +22,7 @@ import { Input } from './ui/input';
 import { Checkbox } from './ui/checkbox';
 import { PERSONAL_BANKS } from '@/data/banks';
 import { trackEvent } from '@/lib/analytics';
+import { isValidSAPhone, isValidSAID } from '@/lib/validation';
 import {
     Select,
     SelectContent,
@@ -33,16 +34,16 @@ import {
 const formSchema = z.object({
     // Step 1: Personal
     fullName: z.string().min(3, 'Full name is required'),
-    idNumber: z.string().length(13, 'SA ID Number must be 13 digits'),
+    idNumber: z.string().refine(isValidSAID, 'Enter a valid 13-digit SA ID number'),
     email: z.string().email('Invalid email address'),
-    phone: z.string().min(10, 'Valid phone number is required'),
+    phone: z.string().refine(isValidSAPhone, 'Enter a valid SA phone number (e.g. 082 123 4567)'),
     maritalStatus: z.string().min(1, 'Please select marital status'),
 
     // Step 2: Employment
     employmentType: z.string().min(1, 'Please select employment type'),
     employerName: z.string().min(2, 'Employer name is required'),
     occupation: z.string().min(2, 'Occupation is required'),
-    workPhone: z.string().min(10, 'Work phone is required'),
+    workPhone: z.string().refine(isValidSAPhone, 'Enter a valid SA phone number (e.g. 021 123 4567)'),
     netIncome: z.string().min(1, 'Monthly net income is required'),
     totalExpenses: z.string().min(1, 'Monthly expenses are required'),
 

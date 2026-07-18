@@ -1,9 +1,20 @@
 import { NextResponse } from 'next/server';
 import { sendEmail } from '@/lib/brevo';
+import { validateSAPhone, validateEmail } from '@/lib/validation';
 
 export async function POST(request: Request) {
   try {
     const data = await request.json();
+
+    const phoneCheck = validateSAPhone(data.phone);
+    const workPhoneCheck = validateSAPhone(data.workPhone);
+    const emailCheck = validateEmail(data.email);
+    if (!phoneCheck.valid || !workPhoneCheck.valid || !emailCheck.valid) {
+      return NextResponse.json(
+        { success: false, error: phoneCheck.error ?? workPhoneCheck.error ?? emailCheck.error },
+        { status: 400 }
+      );
+    }
 
     await sendEmail({
       to: 'info@kingcars.co.za',

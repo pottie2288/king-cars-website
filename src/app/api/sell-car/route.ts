@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { sendEmail } from '@/lib/brevo';
+import { validateSAPhone, validateEmail } from '@/lib/validation';
 
 export async function POST(request: Request) {
   try {
@@ -13,6 +14,15 @@ export async function POST(request: Request) {
     const name      = data.get('name')      as string;
     const email     = data.get('email')     as string;
     const phone     = data.get('phone')     as string;
+
+    const phoneCheck = validateSAPhone(phone);
+    const emailCheck = validateEmail(email);
+    if (!phoneCheck.valid || !emailCheck.valid) {
+      return NextResponse.json(
+        { success: false, error: phoneCheck.error ?? emailCheck.error },
+        { status: 400 }
+      );
+    }
 
     const attachments: { filename: string; content: Buffer }[] = [];
     for (let i = 0; i < 5; i++) {

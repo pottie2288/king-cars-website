@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { MessageSquareHeart, ThumbsUp, ThumbsDown, Upload, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
+import { validateSAPhone, validateEmail } from '@/lib/validation';
 import { AnimatedSection } from '@/components/AnimatedSection';
 
 export function ComplaintsPage() {
@@ -19,8 +20,12 @@ export function ComplaintsPage() {
   const [attachment1, setAttachment1] = useState<File | null>(null);
   const [attachment2, setAttachment2] = useState<File | null>(null);
 
+  const phoneCheck = validateSAPhone(form.phone);
+  const emailCheck = validateEmail(form.email);
+
   const handleSubmit = async (e?: React.FormEvent) => {
     e?.preventDefault();
+    if (!phoneCheck.valid || !emailCheck.valid) return;
     setError(false);
     try {
       const body = new FormData();
@@ -183,8 +188,15 @@ export function ComplaintsPage() {
                     required
                     value={form.phone}
                     onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-king-blue/30 focus:border-king-blue text-gray-900 text-sm transition-all"
+                    className={`w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-2 text-gray-900 text-sm transition-all ${
+                      form.phone && !phoneCheck.valid
+                        ? 'border-red-400 focus:ring-red-200 focus:border-red-500'
+                        : 'border-gray-200 focus:ring-king-blue/30 focus:border-king-blue'
+                    }`}
                   />
+                  {form.phone && !phoneCheck.valid && (
+                    <p className="text-red-500 text-xs mt-1">{phoneCheck.error}</p>
+                  )}
                 </div>
 
                 {/* Email */}
@@ -198,8 +210,15 @@ export function ComplaintsPage() {
                     required
                     value={form.email}
                     onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-king-blue/30 focus:border-king-blue text-gray-900 text-sm transition-all"
+                    className={`w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-2 text-gray-900 text-sm transition-all ${
+                      form.email && !emailCheck.valid
+                        ? 'border-red-400 focus:ring-red-200 focus:border-red-500'
+                        : 'border-gray-200 focus:ring-king-blue/30 focus:border-king-blue'
+                    }`}
                   />
+                  {form.email && !emailCheck.valid && (
+                    <p className="text-red-500 text-xs mt-1">{emailCheck.error}</p>
+                  )}
                 </div>
 
                 {/* Description */}
@@ -247,7 +266,8 @@ export function ComplaintsPage() {
                 {/* Submit */}
                 <button
                   type="submit"
-                  className={`w-full flex items-center justify-center gap-2 py-4 rounded-2xl font-bold text-white text-sm transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5 ${
+                  disabled={!phoneCheck.valid || !emailCheck.valid}
+                  className={`w-full flex items-center justify-center gap-2 py-4 rounded-2xl font-bold text-white text-sm transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-lg ${
                     reason === 'Complaint'
                       ? 'bg-red-500 hover:bg-red-600'
                       : 'bg-king-blue hover:bg-king-blue/90'

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { MapPin, Phone, Mail, Clock, Send, CheckCircle } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
+import { validateSAPhone, validateEmail } from '@/lib/validation';
 import { BRANCHES } from '@/data/branches';
 
 const WC_IDS = ['bellville', 'vredekloof', 'brackenfell'];
@@ -62,8 +63,12 @@ export function ContactPage() {
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' });
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
 
+  const phoneCheck = validateSAPhone(form.phone);
+  const emailCheck = validateEmail(form.email);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!phoneCheck.valid || !emailCheck.valid) return;
     setStatus('sending');
     try {
       const res = await fetch('/api/contact', {
@@ -133,10 +138,13 @@ export function ContactPage() {
                       required
                       type="tel"
                       placeholder="e.g. 082 000 0000"
-                      className={inputCls}
+                      className={`${inputCls} ${form.phone && !phoneCheck.valid ? 'border-red-400 focus:border-red-500 focus:ring-red-200' : ''}`}
                       value={form.phone}
                       onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
                     />
+                    {form.phone && !phoneCheck.valid && (
+                      <p className="text-red-500 text-xs mt-1">{phoneCheck.error}</p>
+                    )}
                   </div>
                 </div>
 
@@ -146,10 +154,13 @@ export function ContactPage() {
                     required
                     type="email"
                     placeholder="e.g. john@example.com"
-                    className={inputCls}
+                    className={`${inputCls} ${form.email && !emailCheck.valid ? 'border-red-400 focus:border-red-500 focus:ring-red-200' : ''}`}
                     value={form.email}
                     onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
                   />
+                  {form.email && !emailCheck.valid && (
+                    <p className="text-red-500 text-xs mt-1">{emailCheck.error}</p>
+                  )}
                 </div>
 
                 <div>
@@ -170,7 +181,7 @@ export function ContactPage() {
 
                 <button
                   type="submit"
-                  disabled={status === 'sending'}
+                  disabled={status === 'sending' || !phoneCheck.valid || !emailCheck.valid}
                   className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-king-blue text-white font-semibold rounded-xl hover:bg-primary-light transition-colors disabled:opacity-60"
                 >
                   <Send className="w-4 h-4" />

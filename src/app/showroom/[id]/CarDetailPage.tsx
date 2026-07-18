@@ -25,6 +25,7 @@ import { FinanceCalculator } from '@/components/FinanceCalculator';
 import { useInventory } from '@/hooks/useInventory';
 import { useFavourites } from '@/context/FavouritesContext';
 import { trackEvent } from '@/lib/analytics';
+import { validateSAPhone, validateEmail } from '@/lib/validation';
 import type { Car, VmgVehicle } from '@/types';
 import {
     Carousel,
@@ -378,12 +379,16 @@ function PriceActionsCard({
     const [enquiryState, setEnquiryState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
     const [showWaModal, setShowWaModal] = useState(false);
 
+    const phoneCheck = validateSAPhone(enquiry.phone);
+    const emailCheck = validateEmail(enquiry.email);
+
     const managers = car.location === 'Eastern Cape' ? EC_MANAGERS : WC_MANAGERS;
     const carUrl = `https://www.kingcars.co.za/showroom/${car.id}`;
     const waMessage = encodeURIComponent(`Hi, I'm interested in the ${car.year} ${car.make} ${car.model} (${car.variant}) priced at R ${car.price.toLocaleString('en-ZA')}. Please can you assist?\n\n${carUrl}`);
 
     const handleEnquirySubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (!phoneCheck.valid || !emailCheck.valid) return;
         setEnquiryState('submitting');
         try {
             const res = await fetch('/api/enquiry', {
@@ -592,22 +597,40 @@ function PriceActionsCard({
                                 onChange={e => setEnquiry(prev => ({ ...prev, name: e.target.value }))}
                                 className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-king-blue focus:ring-1 focus:ring-king-blue outline-none"
                             />
-                            <input
-                                type="email"
-                                placeholder="Email Address"
-                                required
-                                value={enquiry.email}
-                                onChange={e => setEnquiry(prev => ({ ...prev, email: e.target.value }))}
-                                className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-king-blue focus:ring-1 focus:ring-king-blue outline-none"
-                            />
-                            <input
-                                type="tel"
-                                placeholder="Phone Number"
-                                required
-                                value={enquiry.phone}
-                                onChange={e => setEnquiry(prev => ({ ...prev, phone: e.target.value }))}
-                                className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-king-blue focus:ring-1 focus:ring-king-blue outline-none"
-                            />
+                            <div>
+                                <input
+                                    type="email"
+                                    placeholder="Email Address"
+                                    required
+                                    value={enquiry.email}
+                                    onChange={e => setEnquiry(prev => ({ ...prev, email: e.target.value }))}
+                                    className={`w-full px-4 py-3 rounded-lg bg-gray-50 border outline-none ${
+                                        enquiry.email && !emailCheck.valid
+                                            ? 'border-red-400 focus:border-red-500 focus:ring-1 focus:ring-red-300'
+                                            : 'border-gray-200 focus:border-king-blue focus:ring-1 focus:ring-king-blue'
+                                    }`}
+                                />
+                                {enquiry.email && !emailCheck.valid && (
+                                    <p className="text-red-500 text-xs mt-1">{emailCheck.error}</p>
+                                )}
+                            </div>
+                            <div>
+                                <input
+                                    type="tel"
+                                    placeholder="Phone Number"
+                                    required
+                                    value={enquiry.phone}
+                                    onChange={e => setEnquiry(prev => ({ ...prev, phone: e.target.value }))}
+                                    className={`w-full px-4 py-3 rounded-lg bg-gray-50 border outline-none ${
+                                        enquiry.phone && !phoneCheck.valid
+                                            ? 'border-red-400 focus:border-red-500 focus:ring-1 focus:ring-red-300'
+                                            : 'border-gray-200 focus:border-king-blue focus:ring-1 focus:ring-king-blue'
+                                    }`}
+                                />
+                                {enquiry.phone && !phoneCheck.valid && (
+                                    <p className="text-red-500 text-xs mt-1">{phoneCheck.error}</p>
+                                )}
+                            </div>
                             <textarea
                                 placeholder="Message"
                                 rows={3}
@@ -617,7 +640,7 @@ function PriceActionsCard({
                             />
                             <button
                                 type="submit"
-                                disabled={enquiryState === 'submitting'}
+                                disabled={enquiryState === 'submitting' || !phoneCheck.valid || !emailCheck.valid}
                                 className="w-full py-3 rounded-lg border border-gray-300 text-gray-800 font-semibold hover:bg-gray-50 transition-colors disabled:opacity-50"
                             >
                                 {enquiryState === 'submitting' ? 'Sending...' : 'Send Message'}

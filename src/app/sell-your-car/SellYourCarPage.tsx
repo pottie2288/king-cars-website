@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Check, ChevronRight, Send, Shield, Clock, Banknote, UploadCloud, AlertCircle } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
+import { validateSAPhone, validateEmail } from '@/lib/validation';
 import { BranchSection } from '@/components/BranchSection';
 
 
@@ -55,12 +56,15 @@ export function SellYourCarPage() {
 
 
 
+  const phoneCheck = validateSAPhone(formData.phone);
+  const emailCheck = validateEmail(formData.email);
+
   const canProceedToNext = () => {
     if (currentStep === 1) {
       return formData.year && formData.make && formData.model && formData.mileage;
     }
     if (currentStep === 2) {
-      return formData.name && formData.email && formData.phone;
+      return formData.name && emailCheck.valid && phoneCheck.valid;
     }
     return true;
   };
@@ -333,8 +337,15 @@ export function SellYourCarPage() {
                             placeholder="john@example.com"
                             value={formData.email}
                             onChange={(e) => updateFormData('email', e.target.value)}
-                            className="w-full h-12 px-4 rounded-xl border-2 border-gray-200 focus:border-king-blue focus:ring-0 font-medium transition-colors bg-gray-50"
+                            className={`w-full h-12 px-4 rounded-xl border-2 focus:ring-0 font-medium transition-colors bg-gray-50 ${
+                              formData.email && !emailCheck.valid
+                                ? 'border-red-400 focus:border-red-500'
+                                : 'border-gray-200 focus:border-king-blue'
+                            }`}
                           />
+                          {formData.email && !emailCheck.valid && (
+                            <p className="text-red-500 text-sm mt-1.5">{emailCheck.error}</p>
+                          )}
                         </div>
 
                         <div className="md:col-span-2">
@@ -344,14 +355,21 @@ export function SellYourCarPage() {
                             placeholder="+27 82 123 4567"
                             value={formData.phone}
                             onChange={(e) => updateFormData('phone', e.target.value)}
-                            className="w-full h-12 px-4 rounded-xl border-2 border-gray-200 focus:border-king-blue focus:ring-0 font-medium transition-colors bg-gray-50"
+                            className={`w-full h-12 px-4 rounded-xl border-2 focus:ring-0 font-medium transition-colors bg-gray-50 ${
+                              formData.phone && !phoneCheck.valid
+                                ? 'border-red-400 focus:border-red-500'
+                                : 'border-gray-200 focus:border-king-blue'
+                            }`}
                           />
+                          {formData.phone && !phoneCheck.valid && (
+                            <p className="text-red-500 text-sm mt-1.5">{phoneCheck.error}</p>
+                          )}
                         </div>
                       </div>
 
                       <button
                         onClick={handleSubmit}
-                        disabled={isSubmitting || !formData.name || !formData.email || !formData.phone}
+                        disabled={isSubmitting || !formData.name || !emailCheck.valid || !phoneCheck.valid}
                         className="w-full btn-primary h-14 text-lg shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
                       >
                         {isSubmitting ? (

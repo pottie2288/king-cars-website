@@ -1,9 +1,19 @@
 import { NextResponse } from 'next/server';
 import { sendEmail } from '@/lib/brevo';
+import { validateSAPhone, validateEmail } from '@/lib/validation';
 
 export async function POST(request: Request) {
   try {
     const data = await request.json();
+
+    const phoneCheck = validateSAPhone(data.phone);
+    const emailCheck = validateEmail(data.email);
+    if (!phoneCheck.valid || !emailCheck.valid) {
+      return NextResponse.json(
+        { success: false, error: phoneCheck.error ?? emailCheck.error },
+        { status: 400 }
+      );
+    }
 
     const to = data.location === 'Eastern Cape'
       ? 'divan@kingcars.co.za'

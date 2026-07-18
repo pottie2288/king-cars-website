@@ -27,7 +27,7 @@ export async function generateMetadata(
 
     if (!v) {
         return {
-            title: 'Vehicle Not Found — King Cars',
+            title: 'Vehicle Not Found',
             description: 'This vehicle could not be found. Browse our full inventory at King Cars.',
         };
     }
@@ -40,7 +40,7 @@ export async function generateMetadata(
     }).format(v.selling_price);
 
     const mileage = new Intl.NumberFormat('en-ZA').format(v.mileage);
-    const title = `${v.year} ${v.make} ${v.series} — ${price} | King Cars`;
+    const title = `${v.year} ${v.make} ${v.series} — ${price}`;
     const description = `${v.year} ${v.make} ${v.series} for sale at King Cars ${v.province}. ${price}. ${mileage} km. Finance available. View photos and enquire online.`;
     const canonicalUrl = `${BASE_URL}/showroom/${v.stock_id}`;
 

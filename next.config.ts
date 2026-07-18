@@ -27,7 +27,17 @@ const nextConfig: NextConfig = {
       { source: '/our-vision-and-mission{/}?', destination: '/about', permanent: true },
       { source: '/social-media{/}?', destination: '/', permanent: true },
       { source: '/private{/}?', destination: '/showroom', permanent: true },
-      // Old VMG per-branch showroom pages (e.g. /showroom-bellville, /showroom-newton)
+      // Old VMG per-branch showroom pages — route to the correct province filter
+      // rather than dumping everyone on the unfiltered showroom. There's no
+      // branch-level filter today (the VMG feed's branch field is messy/inconsistent —
+      // see SEO_FIX_PLAN.md), so province is the most precise filter available.
+      { source: '/showroom-bellville', destination: '/showroom?location=Western%20Cape', permanent: true },
+      { source: '/showroom-brackenfell', destination: '/showroom?location=Western%20Cape', permanent: true },
+      { source: '/showroom-vredekloof', destination: '/showroom?location=Western%20Cape', permanent: true },
+      { source: '/showroom-newton', destination: '/showroom?location=Eastern%20Cape', permanent: true },
+      { source: '/showroom-sydenham', destination: '/showroom?location=Eastern%20Cape', permanent: true },
+      { source: '/showroom-walmer', destination: '/showroom?location=Eastern%20Cape', permanent: true },
+      // Fallback for any other old branch slug not explicitly mapped above
       { source: '/showroom-:branch', destination: '/showroom', permanent: true },
       // Old VMG per-branch team pages (e.g. /team-capetown, /team-sydenham, /team-newton)
       { source: '/team-:branch', destination: '/about', permanent: true },

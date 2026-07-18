@@ -54,7 +54,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "AutoDealer",
               "name": "King Cars",
-              "description": "Quality pre-owned car dealership in Cape Town and Port Elizabeth. 28+ brands with 2-year unlimited km warranty.",
+              "description": "Quality pre-owned car dealership with 6 branches across the Western Cape and Eastern Cape. 28+ brands with 2-year unlimited km warranty.",
               "url": "https://www.kingcars.co.za",
               "logo": "https://www.kingcars.co.za/king-cars-logo.png",
               "telephone": "+27835008181",
@@ -69,50 +69,146 @@ export default function RootLayout({
                 { "@type": "City", "name": "Gqeberha" },
                 { "@type": "City", "name": "Port Elizabeth" }
               ],
-              "address": [
+              "department": [
                 {
-                  "@type": "PostalAddress",
-                  "streetAddress": "25 Strand Rd",
-                  "addressLocality": "Bellville",
-                  "addressRegion": "Western Cape",
-                  "postalCode": "7530",
-                  "addressCountry": "ZA"
+                  "@type": "AutoDealer",
+                  "name": "King Cars Bellville",
+                  "url": "https://www.kingcars.co.za/contact",
+                  "telephone": "+27835008181",
+                  "email": "andresadie@kingcars.co.za",
+                  "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "25 Strand Rd",
+                    "addressLocality": "Bellville",
+                    "addressRegion": "Western Cape",
+                    "postalCode": "7530",
+                    "addressCountry": "ZA"
+                  },
+                  "geo": {
+                    "@type": "GeoCoordinates",
+                    "latitude": -33.9029090,
+                    "longitude": 18.6438121
+                  },
+                  "openingHoursSpecification": [
+                    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "08:00", "closes": "17:30" },
+                    { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "09:00", "closes": "13:00" }
+                  ]
                 },
                 {
-                  "@type": "PostalAddress",
-                  "streetAddress": "2 Hillcrest Rd",
-                  "addressLocality": "Vredekloof",
-                  "addressRegion": "Western Cape",
-                  "postalCode": "7560",
-                  "addressCountry": "ZA"
+                  "@type": "AutoDealer",
+                  "name": "King Cars Vredekloof",
+                  "url": "https://www.kingcars.co.za/contact",
+                  "telephone": "+27722939376",
+                  "email": "louis@kingcars.co.za",
+                  "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "2 Hillcrest Rd",
+                    "addressLocality": "Vredekloof",
+                    "addressRegion": "Western Cape",
+                    "postalCode": "7560",
+                    "addressCountry": "ZA"
+                  },
+                  "geo": {
+                    "@type": "GeoCoordinates",
+                    "latitude": -33.8619014,
+                    "longitude": 18.6834027
+                  },
+                  "openingHoursSpecification": [
+                    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "08:00", "closes": "17:30" },
+                    { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "09:00", "closes": "13:00" }
+                  ]
                 },
                 {
-                  "@type": "PostalAddress",
-                  "streetAddress": "Corner of Old Paarl and Ferndale St",
-                  "addressLocality": "Brackenfell",
-                  "addressRegion": "Western Cape",
-                  "addressCountry": "ZA"
+                  "@type": "AutoDealer",
+                  "name": "King Cars Brackenfell",
+                  "url": "https://www.kingcars.co.za/contact",
+                  "telephone": "+27834802929",
+                  "email": "izzy@kingcars.co.za",
+                  "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "Corner of Old Paarl and Ferndale St",
+                    "addressLocality": "Brackenfell",
+                    "addressRegion": "Western Cape",
+                    "addressCountry": "ZA"
+                  },
+                  "geo": {
+                    "@type": "GeoCoordinates",
+                    "latitude": -33.8711139,
+                    "longitude": 18.7001289
+                  },
+                  "openingHoursSpecification": [
+                    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "08:00", "closes": "17:30" },
+                    { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "09:00", "closes": "13:00" }
+                  ]
                 },
                 {
-                  "@type": "PostalAddress",
-                  "streetAddress": "1 William Moffett Express Way",
-                  "addressLocality": "Walmer, Gqeberha",
-                  "addressRegion": "Eastern Cape",
-                  "addressCountry": "ZA"
+                  "@type": "AutoDealer",
+                  "name": "King Cars On 17th",
+                  "url": "https://www.kingcars.co.za/contact",
+                  "telephone": "+27734314230",
+                  "email": "simbo@kingcars.co.za",
+                  "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "1 William Moffett Express Way",
+                    "addressLocality": "Walmer, Gqeberha",
+                    "addressRegion": "Eastern Cape",
+                    "addressCountry": "ZA"
+                  },
+                  "geo": {
+                    "@type": "GeoCoordinates",
+                    "latitude": -33.9783333,
+                    "longitude": 25.5874001
+                  },
+                  "openingHoursSpecification": [
+                    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "08:00", "closes": "17:30" },
+                    { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "09:00", "closes": "13:00" }
+                  ]
                 },
                 {
-                  "@type": "PostalAddress",
-                  "streetAddress": "19-21 Uitenhage Road",
-                  "addressLocality": "Sydenham, Gqeberha",
-                  "addressRegion": "Eastern Cape",
-                  "addressCountry": "ZA"
+                  "@type": "AutoDealer",
+                  "name": "King Cars Sydenham",
+                  "url": "https://www.kingcars.co.za/contact",
+                  "telephone": "+27833149334",
+                  "email": "divan@kingcars.co.za",
+                  "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "19-21 Uitenhage Road",
+                    "addressLocality": "Sydenham, Gqeberha",
+                    "addressRegion": "Eastern Cape",
+                    "addressCountry": "ZA"
+                  },
+                  "geo": {
+                    "@type": "GeoCoordinates",
+                    "latitude": -33.9313763,
+                    "longitude": 25.5990354
+                  },
+                  "openingHoursSpecification": [
+                    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "08:00", "closes": "17:30" },
+                    { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "09:00", "closes": "13:00" }
+                  ]
                 },
                 {
-                  "@type": "PostalAddress",
-                  "streetAddress": "343 Cape Rd",
-                  "addressLocality": "Newton Park, Gqeberha",
-                  "addressRegion": "Eastern Cape",
-                  "addressCountry": "ZA"
+                  "@type": "AutoDealer",
+                  "name": "King Cars Newton Park",
+                  "url": "https://www.kingcars.co.za/contact",
+                  "telephone": "+27680374018",
+                  "email": "shane@kingcars.co.za",
+                  "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "343 Cape Rd",
+                    "addressLocality": "Newton Park, Gqeberha",
+                    "addressRegion": "Eastern Cape",
+                    "addressCountry": "ZA"
+                  },
+                  "geo": {
+                    "@type": "GeoCoordinates",
+                    "latitude": -33.9487518,
+                    "longitude": 25.5650611
+                  },
+                  "openingHoursSpecification": [
+                    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "08:00", "closes": "17:30" },
+                    { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "09:00", "closes": "13:00" }
+                  ]
                 }
               ]
             })

@@ -64,7 +64,7 @@ export function SellYourCarPage() {
       return formData.year && formData.make && formData.model && formData.mileage;
     }
     if (currentStep === 2) {
-      return formData.name && emailCheck.valid && phoneCheck.valid;
+      return formData.name && emailCheck.valid && phoneCheck.valid && formData.location;
     }
     return true;
   };
@@ -365,11 +365,24 @@ export function SellYourCarPage() {
                             <p className="text-red-500 text-sm mt-1.5">{phoneCheck.error}</p>
                           )}
                         </div>
+
+                        <div className="md:col-span-2">
+                          <label className="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">Which Region Are You In?</label>
+                          <select
+                            value={formData.location}
+                            onChange={(e) => updateFormData('location', e.target.value)}
+                            className="w-full h-12 px-4 rounded-xl border-2 border-gray-200 focus:border-king-blue focus:ring-0 font-medium transition-colors bg-gray-50"
+                          >
+                            <option value="">Select Region</option>
+                            <option value="Western Cape">Western Cape</option>
+                            <option value="Eastern Cape">Eastern Cape</option>
+                          </select>
+                        </div>
                       </div>
 
                       <button
                         onClick={handleSubmit}
-                        disabled={isSubmitting || !formData.name || !emailCheck.valid || !phoneCheck.valid}
+                        disabled={isSubmitting || !formData.name || !emailCheck.valid || !phoneCheck.valid || !formData.location}
                         className="w-full btn-primary h-14 text-lg shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
                       >
                         {isSubmitting ? (

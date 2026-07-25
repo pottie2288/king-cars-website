@@ -38,6 +38,7 @@ const formSchema = z.object({
     email: z.string().email('Invalid email address'),
     phone: z.string().refine(isValidSAPhone, 'Enter a valid SA phone number (e.g. 082 123 4567)'),
     maritalStatus: z.string().min(1, 'Please select marital status'),
+    province: z.string().min(1, 'Please select your region'),
 
     // Step 2: Employment
     employmentType: z.string().min(1, 'Please select employment type'),
@@ -82,7 +83,7 @@ export function FinanceApplicationForm() {
 
     const nextStep = async () => {
         let fieldsToValidate: (keyof FormData)[] = [];
-        if (step === 1) fieldsToValidate = ['fullName', 'idNumber', 'email', 'phone', 'maritalStatus'];
+        if (step === 1) fieldsToValidate = ['fullName', 'idNumber', 'email', 'phone', 'maritalStatus', 'province'];
         if (step === 2) fieldsToValidate = ['employmentType', 'employerName', 'occupation', 'workPhone', 'netIncome', 'totalExpenses'];
         if (step === 3) fieldsToValidate = ['physicalAddress', 'bankName'];
 
@@ -244,6 +245,19 @@ export function FinanceApplicationForm() {
                                     </SelectContent>
                                 </Select>
                                 {errors.maritalStatus && <p className="text-red-500 text-xs mt-1">{errors.maritalStatus.message}</p>}
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium text-gray-700">Which Region Are You In?</label>
+                                <Select onValueChange={(val) => setValue('province', val)}>
+                                    <SelectTrigger className="py-6 rounded-xl">
+                                        <SelectValue placeholder="Select Region" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="Western Cape">Western Cape</SelectItem>
+                                        <SelectItem value="Eastern Cape">Eastern Cape</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                                {errors.province && <p className="text-red-500 text-xs mt-1">{errors.province.message}</p>}
                             </div>
                         </div>
                     </div>

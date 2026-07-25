@@ -15,13 +15,15 @@ export async function POST(request: Request) {
       );
     }
 
-    const to = data.location === 'Eastern Cape'
-      ? 'divan@kingcars.co.za'
-      : 'andresadie@kingcars.co.za';
+    const isEasternCape = data.location === 'Eastern Cape';
+    const to = isEasternCape ? 'divan@kingcars.co.za' : 'izzy@kingcars.co.za';
+    const cc = isEasternCape
+      ? 'pottie2288@gmail.com'
+      : ['vanzyl@kingcars.co.za', 'pottie2288@gmail.com'];
 
     await sendEmail({
       to,
-      cc: 'pottie2288@gmail.com',
+      cc,
       subject: `Car Enquiry — ${data.car}`,
       html: `
         <h2 style="color:#1a3a5c;">New Car Enquiry</h2>

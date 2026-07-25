@@ -17,8 +17,8 @@ export async function POST(request: Request) {
     }
 
     await sendEmail({
-      to: 'info@kingcars.co.za',
-      cc: 'pottie2288@gmail.com',
+      to: 'izzy@kingcars.co.za',
+      cc: ['vanzyl@kingcars.co.za', 'pottie2288@gmail.com'],
       subject: `Finance Application — ${data.fullName}`,
       html: `
         <h2 style="color:#1a3a5c;">New Finance Application</h2>

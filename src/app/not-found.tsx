@@ -1,9 +1,15 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
+import { markPageNotFound } from '@/lib/analytics'
 
 export default function NotFound() {
   const router = useRouter()
+
+  // Deliberately during render, not in an effect — the tag snippets in
+  // app/layout.tsx read this flag when they are injected, which happens after
+  // render but before effects. Stops unknown URLs creating analytics sessions.
+  markPageNotFound()
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">

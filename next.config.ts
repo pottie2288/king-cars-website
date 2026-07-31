@@ -41,6 +41,13 @@ const nextConfig: NextConfig = {
       { source: '/showroom-:branch', destination: '/showroom', permanent: true },
       // Old VMG per-branch team pages (e.g. /team-capetown, /team-sydenham, /team-newton)
       { source: '/team-:branch', destination: '/about', permanent: true },
+      // Note: bare /team, /our-team, /staff, /people and /get-in-touch are
+      // deliberately NOT redirected. They never existed here — they appear in no
+      // sitemap entry and no internal link, and the traffic is bot noise
+      // (0.00s engagement, 1 pageview, 100% desktop, from 10 Jul 2026). A 301
+      // would forward that noise onto /about and /contact and pollute two real
+      // pages, so they 404 instead. Analytics is suppressed on 404 — see
+      // markPageNotFound() in src/lib/analytics.ts.
       // Old testimonials page
       { source: '/testimonials{/}?', destination: '/about', permanent: true },
       // Old news section (indexed on old site — send to home)

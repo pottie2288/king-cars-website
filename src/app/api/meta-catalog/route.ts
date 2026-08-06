@@ -129,6 +129,28 @@ function branchLabel(vehicle: VmgVehicle): string {
   return vehicle.province?.trim() || "King Cars";
 }
 
+const BRANCH_REGION: Readonly<Record<string, string>> = {
+  Bellville: "Western Cape",
+  Brackenfell: "Western Cape",
+  Vredekloof: "Western Cape",
+  Gqeberha: "Eastern Cape",
+};
+
+/**
+ * Region for the regional product sets, derived from the branch the car
+ * physically sits at rather than from VMG's `province`.
+ *
+ * The two disagree on a handful of records: three company-133 vehicles are filed
+ * as province "Eastern Cape" with suburb "PORT ELIZABETH" while `location` reads
+ * "PRIVATE SELECT - BELLVILLE". Trusting `province` put Bellville cars into the
+ * Gqeberha ad set, which would send a Gqeberha buyer 1,000 km to the wrong
+ * showroom. `location` is the operational field staff actually maintain, so it
+ * wins; `province` is the fallback for locations we cannot map to a branch.
+ */
+function regionLabel(vehicle: VmgVehicle, branch: string): string {
+  return BRANCH_REGION[branch] ?? vehicle.province?.trim() ?? "";
+}
+
 /** Coarse bands, so a product set can say "under R250k" without a price rule. */
 function priceBand(price: number): string {
   if (price < 150_000) return "Under R150k";
@@ -216,7 +238,7 @@ function toFeedRow(vehicle: VmgVehicle): string | null {
     images.slice(1, 11).join(","),
     vehicle.make,
     vehicle.body_type ?? "",
-    vehicle.province ?? "",
+    regionLabel(vehicle, branch),
     branch,
     priceBand(vehicle.selling_price),
     FUEL_LABELS[vehicle.fuel_type] ?? "",

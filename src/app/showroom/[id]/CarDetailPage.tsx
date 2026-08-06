@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
     ArrowLeft, MapPin, Calendar, Fuel, Settings,
     Share2, Heart, Mail, CheckCircle, X, AlertCircle,
@@ -24,7 +24,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { FinanceCalculator } from '@/components/FinanceCalculator';
 import { useInventory } from '@/hooks/useInventory';
 import { useFavourites } from '@/context/FavouritesContext';
-import { trackEvent } from '@/lib/analytics';
+import { trackEvent, trackCarView } from '@/lib/analytics';
 import { validateSAPhone, validateEmail } from '@/lib/validation';
 import type { Car, VmgVehicle } from '@/types';
 import {
@@ -49,6 +49,16 @@ export function CarDetailPage({ initialVehicle }: { initialVehicle?: VmgVehicle 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [id]);
+
+    // Meta ViewContent — the signal Meta campaigns optimise for. useInventory
+    // refetches, so `car` gets a new object identity for the same vehicle;
+    // guard on the id so a refresh does not double-count the view.
+    const viewTrackedFor = useRef<string | null>(null);
+    useEffect(() => {
+        if (!car || viewTrackedFor.current === car.id) return;
+        viewTrackedFor.current = car.id;
+        trackCarView(car);
+    }, [car]);
 
     useEffect(() => {
         if (!api) return;

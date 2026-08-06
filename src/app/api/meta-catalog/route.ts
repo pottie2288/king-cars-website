@@ -50,6 +50,45 @@ const TRANSMISSION_LABELS: Readonly<Record<string, string>> = {
   M: "Manual",
 };
 
+/**
+ * Makes and model codes that must not be title-cased. Anything containing a
+ * digit is left uppercase too (NP200, CX-5, GD-6, T6, 4X4) — VMG stores every
+ * title in caps, and "Np200" or "Cx-5" reads as a typo in an ad.
+ */
+const ALL_CAPS_TOKENS: ReadonlySet<string> = new Set([
+  // Marques
+  "BMW", "GWM", "MG", "VW", "BYD", "JAC", "DS", "UD",
+  // Model codes — Mercedes and VW trim designations present in stock
+  "GLA", "GLB", "GLC", "GLE", "GLS", "CLA", "CLS", "SLK", "SLC", "AMG",
+  "GTI", "TDI", "TSI",
+  // Roman numerals in model names (CLIO IV, JETTA VI)
+  "II", "III", "IV", "VI", "VII",
+]);
+
+function titleCaseToken(token: string): string {
+  // VMG stores titles in caps, so any lowercase letter is deliberate styling
+  // (Hyundai's "i20", "i10") — trust the source rather than re-casing it.
+  if (/[a-z]/.test(token)) return token;
+  const upper = token.toUpperCase();
+  if (ALL_CAPS_TOKENS.has(upper)) return upper;
+  if (/\d/.test(token)) return upper;
+  // Split on hyphens so T-CROSS becomes T-Cross, not T-cross.
+  return token
+    .split("-")
+    .map(part => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
+    .join("-");
+}
+
+function titleCase(text: string): string {
+  return text.trim().split(/\s+/).filter(Boolean).map(titleCaseToken).join(" ");
+}
+
+/** "229627" -> "229,627". Explicit rather than toLocaleString so the output
+ *  never depends on the server's ICU locale data. */
+function withThousands(value: number): string {
+  return Math.round(value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 const FEED_COLUMNS = [
   "id",
   "title",
@@ -109,16 +148,30 @@ function galleryUrls(vehicle: VmgVehicle): string[] {
 }
 
 /**
- * VMG leaves `description` empty on roughly half the stock, so it is always
- * generated rather than passed through — Meta rejects rows without one, and a
- * consistent spec line reads better in an ad than an inconsistent dealer note.
+ * Card description, matching the spec line used by the hand-built bakkie
+ * carousel that outperformed everything else in the account:
+ *
+ *   229,627 km · Full service history · Automatic · Diesel · 130 kW of power · R 560,000
+ *
+ * VMG leaves `description` empty on roughly half the stock and Meta rejects
+ * rows without one, so this is always generated rather than passed through.
+ * Every part is conditional — the reference ad omitted whichever fields were
+ * missing rather than printing blanks.
+ *
+ * "No Service History" is omitted rather than printed: it is a negative selling
+ * point, the reference ad left it out, and the full detail is on the listing
+ * page one tap away.
  */
-function buildDescription(vehicle: VmgVehicle, branch: string): string {
+function buildDescription(vehicle: VmgVehicle): string {
   const parts: string[] = [];
 
-  if (vehicle.variant?.trim()) parts.push(vehicle.variant.trim());
   if (typeof vehicle.mileage === "number" && vehicle.mileage > 0) {
-    parts.push(`${vehicle.mileage.toLocaleString("en-ZA")} km`);
+    parts.push(`${withThousands(vehicle.mileage)} km`);
+  }
+
+  const service = vehicle.service_history?.trim();
+  if (service && !/^no service history$/i.test(service)) {
+    parts.push(service.charAt(0).toUpperCase() + service.slice(1).toLowerCase());
   }
 
   const transmission = TRANSMISSION_LABELS[vehicle.transmission];
@@ -127,17 +180,13 @@ function buildDescription(vehicle: VmgVehicle, branch: string): string {
   const fuel = FUEL_LABELS[vehicle.fuel_type];
   if (fuel) parts.push(fuel);
 
-  // VMG stores condition inconsistently cased ("Excellent" vs "EXCELLENT");
-  // normalise so ad copy never reads as shouting.
-  const condition = vehicle.condition?.trim();
-  if (condition) {
-    const normalised =
-      condition.charAt(0).toUpperCase() + condition.slice(1).toLowerCase();
-    parts.push(`${normalised} condition`);
+  if (typeof vehicle.kilowatts === "number" && vehicle.kilowatts > 0) {
+    parts.push(`${vehicle.kilowatts} kW of power`);
   }
 
-  const spec = parts.join(" · ");
-  return `${spec}. Available at King Cars ${branch}. Finance available, trade-ins welcome.`;
+  parts.push(`R ${withThousands(vehicle.selling_price)}`);
+
+  return parts.join(" · ");
 }
 
 function toFeedRow(vehicle: VmgVehicle): string | null {
@@ -148,15 +197,17 @@ function toFeedRow(vehicle: VmgVehicle): string | null {
   if (!vehicle.stock_id || !(vehicle.selling_price > 0)) return null;
 
   const branch = branchLabel(vehicle);
-  const title = [vehicle.year, vehicle.make, vehicle.series]
-    .filter(Boolean)
-    .join(" ")
-    .slice(0, 200);
+  // VMG stores make/series in caps ("2018 VOLKSWAGEN POLO CLASSIC"), which both
+  // shouts and eats the carousel headline's ~25 visible characters. Title-cased
+  // and kept to year + make + series, matching the reference bakkie carousel.
+  const title = `${vehicle.year} ${titleCase(
+    [vehicle.make, vehicle.series].filter(Boolean).join(" ")
+  )}`.slice(0, 200);
 
   const cells = [
     vehicle.stock_id,
     title,
-    buildDescription(vehicle, branch),
+    buildDescription(vehicle),
     "in stock",
     vehicle.used === false ? "new" : "used",
     `${vehicle.selling_price.toFixed(2)} ZAR`,

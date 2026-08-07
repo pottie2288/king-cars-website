@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react';
-import { Check, ChevronRight, Send, Shield, Clock, Banknote, UploadCloud, AlertCircle } from 'lucide-react';
+import { Check, ChevronRight, Send, Shield, Clock, Banknote, UploadCloud, AlertCircle, Heart } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
 import { validateSAPhone, validateEmail } from '@/lib/validation';
 import { BranchSection } from '@/components/BranchSection';
@@ -116,8 +116,8 @@ export function SellYourCarPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Hero Section with Valuation Card */}
-      <div className="relative bg-gradient-to-b from-king-blue to-blue-900 pt-36 pb-32 lg:pt-48 lg:pb-48">
+      {/* Hero Section with Valuation Card — Women's Month pink (revert to "from-king-blue to-blue-900" + remove badge after August) */}
+      <div className="relative bg-gradient-to-b from-pink-400 to-pink-700 pt-36 pb-32 lg:pt-48 lg:pb-48">
         {/* Background Pattern/Image Overlay */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute inset-0 bg-[url('/sell-car-hero.jpg')] bg-cover bg-center opacity-20 mix-blend-overlay"></div>
@@ -126,10 +126,14 @@ export function SellYourCarPage() {
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
+            <span className="inline-flex items-center gap-1.5 bg-pink-600 text-white text-xs sm:text-sm font-semibold px-3.5 py-1.5 rounded-full shadow-sm mb-6">
+              <Heart className="w-3.5 h-3.5 fill-white" />
+              Happy Women&apos;s Month from King Cars
+            </span>
             <h1 className="font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-white mb-6 drop-shadow-lg">
               Sell Your Car the King Cars Way
             </h1>
-            <p className="text-xl text-blue-100 max-w-2xl mx-auto">
+            <p className="text-xl text-pink-50 max-w-2xl mx-auto">
               Get an instant, obligation-free valuation for your vehicle.
               Simple, transparent, and fast.
             </p>

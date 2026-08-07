@@ -1,6 +1,6 @@
 'use client'
 
-import { MapPin, Mail, Clock, Facebook, Instagram } from 'lucide-react';
+import { MapPin, Mail, Clock, Facebook, Instagram, Heart } from 'lucide-react';
 import Link from 'next/link';
 
 export function Footer() {
@@ -10,6 +10,12 @@ export function Footer() {
 
   return (
     <footer className="bg-king-dark text-white">
+      {/* Women's Month ribbon — remove this entire div after August */}
+      <div className="bg-pink-500 text-white text-center py-2 px-4 text-sm font-medium flex items-center justify-center gap-1.5">
+        <Heart className="w-3.5 h-3.5 fill-white shrink-0" />
+        Happy Women&apos;s Month from all of us at King Cars
+      </div>
+
       {/* Main Footer */}
       <div className="section-padding py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">

@@ -14,8 +14,9 @@ export function BodyTypeFilter() {
         router.push(`/showroom?${params.toString()}`);
     };
 
+    // Women's Month pink (revert to "bg-king-blue" after August)
     return (
-        <section className="pt-8 pb-20 bg-king-blue">
+        <section className="pt-8 pb-20 bg-pink-400">
             <div className="section-padding max-w-7xl mx-auto">
                 <AnimatedSection className="text-center mb-8">
                     <h2 className="font-display font-bold text-3xl sm:text-4xl text-white mb-4">

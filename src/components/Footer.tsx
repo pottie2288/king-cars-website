@@ -100,7 +100,7 @@ export function Footer() {
                     </li>
                     <li className="flex justify-between md:justify-start gap-4">
                       <span className="text-gray-300 w-24">Brackenfell:</span>
-                      <a href="tel:0833024500" className="hover:text-king-cyan transition-colors">083 302 4500</a>
+                      <a href="tel:0834802929" className="hover:text-king-cyan transition-colors">083 480 2929</a>
                     </li>
                   </ul>
                 </div>

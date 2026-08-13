@@ -305,14 +305,17 @@ button,
   user-select: none;
 }
 
-/* Smooth image loading */
+/* Smooth image loading.
+   NOTE: there used to be an `img[loading] { opacity: 0 }` rule here. That is an
+   attribute-*presence* selector, so it matched every image carrying a `loading`
+   attribute — including `loading="lazy"` — and because `loading` is a static
+   HTML attribute that is never removed, those images stayed at opacity 0
+   forever. Any image that opted into lazy loading became permanently invisible.
+   Fading in on load is per-image state, not something a static selector can
+   express, so it lives in the VehicleImage component instead. */
 img {
   opacity: 1;
   transition: opacity 0.3s ease;
-}
-
-img[loading] {
-  opacity: 0;
 }
 
 /* Card hover lift effect */

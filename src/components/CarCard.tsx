@@ -3,6 +3,7 @@
 import { MapPin, Fuel, Settings, Gauge, Heart } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import type { Car } from '@/types';
+import { VehicleImage } from '@/components/VehicleImage';
 
 interface CarCardProps {
   car: Car;
@@ -48,7 +49,7 @@ export function CarCard({ car, onClick, isFavourite = false, onToggleFavourite, 
       <div className={`relative bg-gray-100 overflow-hidden shrink-0 ${
         viewMode === 'list' ? 'w-full lg:w-[320px] aspect-[4/3] lg:aspect-auto lg:h-full' : 'w-full aspect-[4/3]'
       }`}>
-        <img
+        <VehicleImage
           src={car.image}
           alt={`${car.make} ${car.model}`}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"

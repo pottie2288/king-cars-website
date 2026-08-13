@@ -22,10 +22,11 @@ const EC_MANAGERS = [
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { FinanceCalculator } from '@/components/FinanceCalculator';
+import { VehicleImage } from '@/components/VehicleImage';
 import { useInventory } from '@/hooks/useInventory';
 import { useFavourites } from '@/context/FavouritesContext';
 import { trackEvent, trackCarView } from '@/lib/analytics';
-import { validateSAPhone, validateEmail } from '@/lib/validation';
+import { validateSAPhone, validateEmail, validateText, FIELD_LIMITS } from '@/lib/validation';
 import type { Car, VmgVehicle } from '@/types';
 import {
     Carousel,
@@ -153,9 +154,10 @@ export function CarDetailPage({ initialVehicle }: { initialVehicle?: VmgVehicle 
                                     {images.map((img, idx) => (
                                         <CarouselItem key={idx} className="pl-0">
                                             <div className="aspect-[16/10] bg-gray-100 rounded-2xl overflow-hidden shadow-lg">
-                                                <img
+                                                <VehicleImage
                                                     src={img}
                                                     alt={`${car.make} ${car.model} - View ${idx + 1}`}
+                                                    loading={idx === 0 ? 'eager' : 'lazy'}
                                                     className="w-full h-full object-cover"
                                                 />
                                             </div>
@@ -193,7 +195,7 @@ export function CarDetailPage({ initialVehicle }: { initialVehicle?: VmgVehicle 
                                     className={`aspect-[4/3] rounded-xl overflow-hidden border-2 transition-all ${current === idx + 1 ? 'border-king-blue shadow-md' : 'border-transparent opacity-70 hover:opacity-100'
                                         }`}
                                 >
-                                    <img src={img} alt="Thumbnail" className="w-full h-full object-cover" />
+                                    <VehicleImage src={img} alt={`${car.make} ${car.model} thumbnail`} className="w-full h-full object-cover" />
                                 </button>
                             ))}
                         </div>
@@ -387,10 +389,13 @@ function PriceActionsCard({
 }: PriceActionsCardProps) {
     const [enquiry, setEnquiry] = useState({ name: '', email: '', phone: '', message: `I'm interested in the ${car.year} ${car.make} ${car.model}. Please contact me.` });
     const [enquiryState, setEnquiryState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+    const [enquiryError, setEnquiryError] = useState<string | null>(null);
     const [showWaModal, setShowWaModal] = useState(false);
 
     const phoneCheck = validateSAPhone(enquiry.phone);
     const emailCheck = validateEmail(enquiry.email);
+    const nameCheck = validateText(enquiry.name, 'Your name', FIELD_LIMITS.name);
+    const enquiryValid = nameCheck.valid && phoneCheck.valid && emailCheck.valid;
 
     const managers = car.location === 'Eastern Cape' ? EC_MANAGERS : WC_MANAGERS;
     const carUrl = `https://www.kingcars.co.za/showroom/${car.id}`;
@@ -398,20 +403,26 @@ function PriceActionsCard({
 
     const handleEnquirySubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!phoneCheck.valid || !emailCheck.valid) return;
+        if (!enquiryValid) return;
         setEnquiryState('submitting');
+        setEnquiryError(null);
         try {
             const res = await fetch('/api/enquiry', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ ...enquiry, car: `${car.year} ${car.make} ${car.model}`, price: car.price, stockCode: car.stockCode, location: car.location }),
             });
-            if (!res.ok) throw new Error(`Enquiry failed: ${res.status}`);
+            if (!res.ok) {
+                // Surface the server's reason so the buyer can fix it and retry.
+                const payload = await res.json().catch(() => null);
+                throw new Error(payload?.error ?? `Enquiry failed: ${res.status}`);
+            }
             setEnquiryState('success');
             trackEvent('enquiry_sent', { car: `${car.year} ${car.make} ${car.model}`, car_id: car.id });
-        } catch {
+        } catch (err) {
             // Don't fake success — surface an honest error with a WhatsApp fallback
             // so a failed email still becomes a recoverable lead.
+            setEnquiryError(err instanceof Error ? err.message : null);
             setEnquiryState('error');
             trackEvent('enquiry_failed', { car: `${car.year} ${car.make} ${car.model}`, car_id: car.id });
         }
@@ -576,8 +587,8 @@ function PriceActionsCard({
                                 <div>
                                     <p className="font-semibold text-gray-900 text-sm">Couldn&apos;t send your message</p>
                                     <p className="text-sm text-gray-600 mt-0.5">
-                                        Something went wrong on our side. Message the branch directly on
-                                        WhatsApp — it&apos;s instant — or try again.
+                                        {enquiryError ?? 'Something went wrong on our side.'} Message the branch
+                                        directly on WhatsApp — it&apos;s instant — or try again.
                                     </p>
                                 </div>
                             </div>
@@ -603,15 +614,24 @@ function PriceActionsCard({
                                 type="text"
                                 placeholder="Your Name"
                                 required
+                                maxLength={FIELD_LIMITS.name}
                                 value={enquiry.name}
                                 onChange={e => setEnquiry(prev => ({ ...prev, name: e.target.value }))}
-                                className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-king-blue focus:ring-1 focus:ring-king-blue outline-none"
+                                className={`w-full px-4 py-3 rounded-lg bg-gray-50 border outline-none ${
+                                    enquiry.name && !nameCheck.valid
+                                        ? 'border-red-400 focus:border-red-500 focus:ring-1 focus:ring-red-300'
+                                        : 'border-gray-200 focus:border-king-blue focus:ring-1 focus:ring-king-blue'
+                                }`}
                             />
+                            {enquiry.name && !nameCheck.valid && (
+                                <p className="text-red-500 text-xs mt-1">{nameCheck.error}</p>
+                            )}
                             <div>
                                 <input
                                     type="email"
                                     placeholder="Email Address"
                                     required
+                                    maxLength={254}
                                     value={enquiry.email}
                                     onChange={e => setEnquiry(prev => ({ ...prev, email: e.target.value }))}
                                     className={`w-full px-4 py-3 rounded-lg bg-gray-50 border outline-none ${
@@ -629,6 +649,7 @@ function PriceActionsCard({
                                     type="tel"
                                     placeholder="Phone Number"
                                     required
+                                    maxLength={20}
                                     value={enquiry.phone}
                                     onChange={e => setEnquiry(prev => ({ ...prev, phone: e.target.value }))}
                                     className={`w-full px-4 py-3 rounded-lg bg-gray-50 border outline-none ${
@@ -644,13 +665,14 @@ function PriceActionsCard({
                             <textarea
                                 placeholder="Message"
                                 rows={3}
+                                maxLength={FIELD_LIMITS.message}
                                 value={enquiry.message}
                                 onChange={e => setEnquiry(prev => ({ ...prev, message: e.target.value }))}
                                 className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-king-blue focus:ring-1 focus:ring-king-blue outline-none resize-none"
                             />
                             <button
                                 type="submit"
-                                disabled={enquiryState === 'submitting' || !phoneCheck.valid || !emailCheck.valid}
+                                disabled={enquiryState === 'submitting' || !enquiryValid}
                                 className="w-full py-3 rounded-lg border border-gray-300 text-gray-800 font-semibold hover:bg-gray-50 transition-colors disabled:opacity-50"
                             >
                                 {enquiryState === 'submitting' ? 'Sending...' : 'Send Message'}

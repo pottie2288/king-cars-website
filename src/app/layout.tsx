@@ -45,8 +45,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" type="image/png" href="/king-cars-logo.png" />
-        <link rel="apple-touch-icon" href="/king-cars-logo.png" />
+        {/* Icons come from src/app/{favicon.ico,icon.png,apple-icon.png}, which
+            Next.js discovers and links automatically. The old manual tags
+            pointed at the full 800x228 wordmark, which browsers squashed into
+            the square tab slot. */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <script

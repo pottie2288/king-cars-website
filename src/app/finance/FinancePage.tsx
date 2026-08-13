@@ -186,8 +186,9 @@ export function FinancePage() {
       </div>
 
 
-      {/* FAQ Section */}
-      <div className="section-padding">
+      {/* FAQ Section — py-20 matches the section above it. Without vertical
+          padding the last question sat flush against the footer ribbon. */}
+      <div className="section-padding py-20">
         <div className="max-w-3xl mx-auto">
           <AnimatedSection className="text-center mb-12">
             <span className="text-king-cyan font-medium text-sm uppercase tracking-wider">

@@ -87,18 +87,23 @@ function branchSchema(branch: Branch) {
  * Google numbers are still being filled in, so this is always backed by real
  * data rather than an estimate.
  */
-function groupRating() {
+export function groupRatingSummary(): { value: number; count: number } {
   const rated = BRANCHES.filter(b => b.rating)
   if (rated.length === 0) {
-    return ratingSchema(REVIEW_RATING, GOOGLE_REVIEWS.length)
+    return { value: REVIEW_RATING, count: GOOGLE_REVIEWS.length }
   }
 
-  const totalReviews = rated.reduce((sum, b) => sum + b.rating!.count, 0)
+  const count = rated.reduce((sum, b) => sum + b.rating!.count, 0)
   const weightedSum = rated.reduce(
     (sum, b) => sum + b.rating!.value * b.rating!.count,
     0
   )
-  return ratingSchema(weightedSum / totalReviews, totalReviews)
+  return { value: Number((weightedSum / count).toFixed(1)), count }
+}
+
+function groupRating() {
+  const { value, count } = groupRatingSummary()
+  return ratingSchema(value, count)
 }
 
 /**

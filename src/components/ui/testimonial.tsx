@@ -4,13 +4,9 @@ import * as React from "react"
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 import { cn } from "@/lib/utils"
 
-export interface GoogleReview {
-  id: number | string
-  name: string
-  avatar?: string
-  timeAgo: string
-  text: string
-}
+import type { GoogleReview } from '@/data/reviews'
+
+export type { GoogleReview }
 
 function getInitials(name: string): string {
   return name

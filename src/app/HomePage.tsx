@@ -11,7 +11,8 @@ import { useInventory } from '@/hooks/useInventory';
 import { AnimatedSection } from '@/components/AnimatedSection';
 import { BodyTypeFilter } from '@/components/BodyTypeFilter';
 import { BranchSection } from '@/components/BranchSection';
-import { GoogleReviewCarousel, type GoogleReview } from '@/components/ui/testimonial';
+import { GoogleReviewCarousel } from '@/components/ui/testimonial';
+import { GOOGLE_REVIEWS } from '@/data/reviews';
 import { Typewriter } from '@/components/ui/typewriter';
 import { useFavourites } from '@/context/FavouritesContext';
 import type { FilterState, Car } from '@/types';
@@ -36,56 +37,6 @@ export function HomePage() {
   };
 
 
-  const reviews: GoogleReview[] = [
-    {
-      id: 1,
-      name: 'Marius Crous',
-      timeAgo: '2 weeks ago',
-      text: 'Clinton Groenewald was my Sales Executive and I have received 5 star service from him. He has listened to my needs, took me through the entire buying experience, we went for a test drive and sorted out all the paper work. Van Zyl and all other I have dealt with all provided me with the KING CAR EXPERIENCE!! I am glad to be a member of the King Cars family!!!',
-    },
-    {
-      id: 3,
-      name: 'Mr Moses',
-      timeAgo: '2 months ago',
-      text: 'I came to King Cars after canceling a very bad deal with a much bigger corporate dealer. I was assisted by Mr Elliot Mfakadolo who from the beginning was very chilled but professional, and then the F&I Adiela Manual made the rest of the process very easy. She listened to our concerns and made us a very good deal. So far I have had a very good experience with King Cars Bellville.',
-    },
-    {
-      id: 4,
-      name: 'Emilio Castano',
-      timeAgo: '7 months ago',
-      text: 'I had the best experience at King Cars Bellville. Everyone was super helpful and made the buying process extremely easy and efficient. They helped me every step of the way. Would highly recommend going to them before purchasing a car. They got a new loyal customer.',
-    },
-    {
-      id: 5,
-      name: 'Nashlean-lee Links',
-      timeAgo: '7 months ago',
-      text: 'Had the absolute best service and experience with this company. From the car salesman (William) to the finance lady (Adiela). All so helpful, patient and kind. Highly recommend!!',
-    },
-    {
-      id: 6,
-      name: 'Gwynneth Swart',
-      timeAgo: '8 months ago',
-      text: 'Choosing a car is such an important and personal experience. I have received the best service and after care service from Dawid Kotze. He has taken the experience to a 5 star level. I would definitely recommend buying your car through this company.',
-    },
-    {
-      id: 7,
-      name: 'Sia Dube',
-      timeAgo: '5 months ago',
-      text: 'Got swift professional assistance from Dawid, quick response and delivery! Even scored a free driving refresher lesson from Dawid! Thank you!',
-    },
-    {
-      id: 8,
-      name: 'Fatima Isaacs',
-      timeAgo: '8 months ago',
-      text: 'Service was great and staff is very helpful. Shout out to Izzy and his wonderful wife :)',
-    },
-    {
-      id: 9,
-      name: 'Lyle Claassen',
-      timeAgo: 'A year ago',
-      text: 'Well to start with the guy that helped me, Dawid was excellent from the start. He was helpful and patient until the deal was through, then also sorted out my vehicle\'s interior afterwards. Thank you for that.',
-    },
-  ];
 
 
   return (
@@ -278,7 +229,7 @@ export function HomePage() {
             </h2>
           </AnimatedSection>
 
-          <GoogleReviewCarousel reviews={reviews} className="max-w-5xl mx-auto" />
+          <GoogleReviewCarousel reviews={GOOGLE_REVIEWS} className="max-w-5xl mx-auto" />
 
           <div className="mt-12 text-center">
             <a

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { MapPin, Phone, Mail, Clock, Send, CheckCircle } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
-import { validateSAPhone, validateEmail } from '@/lib/validation';
+import { validateSAPhone, validateEmail, validateText, FIELD_LIMITS } from '@/lib/validation';
 import { BRANCHES } from '@/data/branches';
 
 const WC_IDS = ['bellville', 'vredekloof', 'brackenfell'];
@@ -62,22 +62,36 @@ export function ContactPage() {
 
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' });
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const phoneCheck = validateSAPhone(form.phone);
   const emailCheck = validateEmail(form.email);
+  const nameCheck = validateText(form.name, 'Full name', FIELD_LIMITS.name);
+  const messageCheck = validateText(form.message, 'Message', FIELD_LIMITS.message, { minLength: 5 });
+
+  const formValid = nameCheck.valid && emailCheck.valid && phoneCheck.valid && messageCheck.valid;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!phoneCheck.valid || !emailCheck.valid) return;
+    if (!formValid) return;
     setStatus('sending');
+    setErrorMessage(null);
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       });
-      setStatus(res.ok ? 'sent' : 'error');
-      if (res.ok) trackEvent('contact_form_submitted');
+      if (res.ok) {
+        setStatus('sent');
+        trackEvent('contact_form_submitted');
+        return;
+      }
+      // Show why it was rejected — validation or rate limit — rather than a
+      // generic failure the visitor can't act on.
+      const payload = await res.json().catch(() => null);
+      setErrorMessage(payload?.error ?? null);
+      setStatus('error');
     } catch {
       setStatus('error');
     }
@@ -127,10 +141,14 @@ export function ContactPage() {
                       required
                       type="text"
                       placeholder="e.g. John Smith"
-                      className={inputCls}
+                      maxLength={FIELD_LIMITS.name}
+                      className={`${inputCls} ${form.name && !nameCheck.valid ? 'border-red-400 focus:border-red-500 focus:ring-red-200' : ''}`}
                       value={form.name}
                       onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
                     />
+                    {form.name && !nameCheck.valid && (
+                      <p className="text-red-500 text-xs mt-1">{nameCheck.error}</p>
+                    )}
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">Phone Number *</label>
@@ -138,6 +156,7 @@ export function ContactPage() {
                       required
                       type="tel"
                       placeholder="e.g. 082 000 0000"
+                      maxLength={20}
                       className={`${inputCls} ${form.phone && !phoneCheck.valid ? 'border-red-400 focus:border-red-500 focus:ring-red-200' : ''}`}
                       value={form.phone}
                       onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
@@ -153,7 +172,8 @@ export function ContactPage() {
                   <input
                     required
                     type="email"
-                    placeholder="e.g. john@example.com"
+                    placeholder="e.g. john@gmail.com"
+                    maxLength={254}
                     className={`${inputCls} ${form.email && !emailCheck.valid ? 'border-red-400 focus:border-red-500 focus:ring-red-200' : ''}`}
                     value={form.email}
                     onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
@@ -169,19 +189,25 @@ export function ContactPage() {
                     required
                     rows={5}
                     placeholder="Tell us what you're looking for or what you need help with..."
+                    maxLength={FIELD_LIMITS.message}
                     className={`${inputCls} resize-none`}
                     value={form.message}
                     onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
                   />
+                  <p className="text-xs text-gray-400 mt-1 text-right">
+                    {form.message.length} / {FIELD_LIMITS.message}
+                  </p>
                 </div>
 
                 {status === 'error' && (
-                  <p className="text-red-500 text-sm">Something went wrong. Please try again or call us directly.</p>
+                  <p className="text-red-500 text-sm">
+                    {errorMessage ?? 'Something went wrong. Please try again or call us directly.'}
+                  </p>
                 )}
 
                 <button
                   type="submit"
-                  disabled={status === 'sending' || !phoneCheck.valid || !emailCheck.valid}
+                  disabled={status === 'sending' || !formValid}
                   className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-king-blue text-white font-semibold rounded-xl hover:bg-primary-light transition-colors disabled:opacity-60"
                 >
                   <Send className="w-4 h-4" />

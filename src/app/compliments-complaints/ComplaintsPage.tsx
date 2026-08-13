@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { MessageSquareHeart, ThumbsUp, ThumbsDown, Upload, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
-import { validateSAPhone, validateEmail } from '@/lib/validation';
+import { validateSAPhone, validateEmail, validateText, FIELD_LIMITS } from '@/lib/validation';
 import { AnimatedSection } from '@/components/AnimatedSection';
 
 export function ComplaintsPage() {
@@ -19,14 +19,51 @@ export function ComplaintsPage() {
   });
   const [attachment1, setAttachment1] = useState<File | null>(null);
   const [attachment2, setAttachment2] = useState<File | null>(null);
+  const [attachmentError, setAttachmentError] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const phoneCheck = validateSAPhone(form.phone);
   const emailCheck = validateEmail(form.email);
+  const firstNameCheck = validateText(form.firstName, 'First name', FIELD_LIMITS.firstName);
+  const lastNameCheck = validateText(form.lastName, 'Last name', FIELD_LIMITS.lastName);
+  const descriptionCheck = validateText(form.description, 'Description', FIELD_LIMITS.description, { minLength: 10 });
+
+  const formValid =
+    firstNameCheck.valid &&
+    lastNameCheck.valid &&
+    phoneCheck.valid &&
+    emailCheck.valid &&
+    descriptionCheck.valid;
+
+  /** Mirror the server's file rules in the browser so problems surface immediately. */
+  const handleAttachment = (file: File | null, setter: (f: File | null) => void) => {
+    setAttachmentError(null);
+
+    if (!file) {
+      setter(null);
+      return;
+    }
+
+    const allowed = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif', 'application/pdf'];
+    if (!allowed.includes(file.type)) {
+      setAttachmentError(`"${file.name}" isn’t a supported file type. Please attach a JPG, PNG, WEBP or PDF.`);
+      setter(null);
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      setAttachmentError(`"${file.name}" is larger than 5MB. Please attach a smaller file.`);
+      setter(null);
+      return;
+    }
+
+    setter(file);
+  };
 
   const handleSubmit = async (e?: React.FormEvent) => {
     e?.preventDefault();
-    if (!phoneCheck.valid || !emailCheck.valid) return;
+    if (!formValid) return;
     setError(false);
+    setErrorMessage(null);
     try {
       const body = new FormData();
       (Object.entries(form) as [string, string][]).forEach(([k, v]) => body.append(k, v));
@@ -34,12 +71,17 @@ export function ComplaintsPage() {
       if (attachment1) body.append('attachment1', attachment1, attachment1.name);
       if (attachment2) body.append('attachment2', attachment2, attachment2.name);
       const res = await fetch('/api/complaints', { method: 'POST', body });
-      if (!res.ok) throw new Error(`Complaints request failed: ${res.status}`);
+      if (!res.ok) {
+        // Show the server's actual reason so the sender can correct it.
+        const payload = await res.json().catch(() => null);
+        throw new Error(payload?.error ?? `Complaints request failed: ${res.status}`);
+      }
       setSubmitted(true);
       trackEvent('feedback_submitted', { reason });
-    } catch {
+    } catch (err) {
       // Don't fake success — surface an honest error so the message isn't lost silently.
       setError(true);
+      setErrorMessage(err instanceof Error ? err.message : null);
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -54,8 +96,8 @@ export function ComplaintsPage() {
             </div>
             <h2 className="font-display font-bold text-2xl text-gray-900 mb-3">Something went wrong</h2>
             <p className="text-gray-500 mb-8">
-              We couldn&apos;t submit your message just now. Your details are still here — please try
-              again. If it keeps happening, call us on{' '}
+              {errorMessage ?? 'We couldn’t submit your message just now.'} Your details are still here —
+              please try again. If it keeps happening, call us on{' '}
               <a href="tel:0835008181" className="text-king-blue font-semibold">083 500 8181</a>.
             </p>
             <button onClick={() => handleSubmit()} className="btn-primary">
@@ -159,6 +201,7 @@ export function ComplaintsPage() {
                         type="text"
                         placeholder="First"
                         required
+                        maxLength={FIELD_LIMITS.firstName}
                         value={form.firstName}
                         onChange={e => setForm(f => ({ ...f, firstName: e.target.value }))}
                         className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-king-blue/30 focus:border-king-blue text-gray-900 text-sm transition-all"
@@ -169,6 +212,7 @@ export function ComplaintsPage() {
                         type="text"
                         placeholder="Last"
                         required
+                        maxLength={FIELD_LIMITS.lastName}
                         value={form.lastName}
                         onChange={e => setForm(f => ({ ...f, lastName: e.target.value }))}
                         className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-king-blue/30 focus:border-king-blue text-gray-900 text-sm transition-all"
@@ -186,6 +230,7 @@ export function ComplaintsPage() {
                     type="tel"
                     placeholder="e.g. 082 123 4567"
                     required
+                    maxLength={20}
                     value={form.phone}
                     onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
                     className={`w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-2 text-gray-900 text-sm transition-all ${
@@ -206,8 +251,9 @@ export function ComplaintsPage() {
                   </label>
                   <input
                     type="email"
-                    placeholder="you@example.com"
+                    placeholder="you@gmail.com"
                     required
+                    maxLength={254}
                     value={form.email}
                     onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
                     className={`w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-2 text-gray-900 text-sm transition-all ${
@@ -232,10 +278,23 @@ export function ComplaintsPage() {
                     placeholder={reason === 'Compliment'
                       ? 'Tell us what made your experience great...'
                       : 'Tell us what went wrong and how we can improve...'}
+                    maxLength={FIELD_LIMITS.description}
                     value={form.description}
                     onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-king-blue/30 focus:border-king-blue text-gray-900 text-sm transition-all resize-none"
+                    className={`w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-2 text-gray-900 text-sm transition-all resize-none ${
+                      form.description && !descriptionCheck.valid
+                        ? 'border-red-400 focus:ring-red-200 focus:border-red-500'
+                        : 'border-gray-200 focus:ring-king-blue/30 focus:border-king-blue'
+                    }`}
                   />
+                  <div className="flex items-start justify-between gap-3 mt-1">
+                    <p className="text-red-500 text-xs">
+                      {form.description && !descriptionCheck.valid ? descriptionCheck.error : ''}
+                    </p>
+                    <p className="text-xs text-gray-400 whitespace-nowrap">
+                      {form.description.length} / {FIELD_LIMITS.description}
+                    </p>
+                  </div>
                 </div>
 
                 {/* Attachments */}
@@ -253,20 +312,27 @@ export function ComplaintsPage() {
                         </span>
                         <input
                           type="file"
-                          accept="image/*,.pdf"
+                          accept="image/jpeg,image/png,image/webp,image/heic,image/heif,application/pdf"
                           className="hidden"
-                          onChange={e => setter(e.target.files?.[0] ?? null)}
+                          onChange={e => handleAttachment(e.target.files?.[0] ?? null, setter)}
                         />
                       </label>
-                      <p className="text-xs text-gray-400 mt-1">Max. file size: 10 MB</p>
+                      <p className="text-xs text-gray-400 mt-1">JPG, PNG, WEBP or PDF — max 5 MB</p>
                     </div>
                   ))}
                 </div>
 
+                {attachmentError && (
+                  <p className="flex items-start gap-1.5 text-red-500 text-xs">
+                    <AlertCircle className="w-3.5 h-3.5 mt-0.5 flex-shrink-0" />
+                    {attachmentError}
+                  </p>
+                )}
+
                 {/* Submit */}
                 <button
                   type="submit"
-                  disabled={!phoneCheck.valid || !emailCheck.valid}
+                  disabled={!formValid}
                   className={`w-full flex items-center justify-center gap-2 py-4 rounded-2xl font-bold text-white text-sm transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-lg ${
                     reason === 'Complaint'
                       ? 'bg-red-500 hover:bg-red-600'

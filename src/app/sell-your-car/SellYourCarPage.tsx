@@ -3,7 +3,14 @@
 import { useState } from 'react';
 import { Check, ChevronRight, Send, Shield, Clock, Banknote, UploadCloud, AlertCircle, Heart } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
-import { validateSAPhone, validateEmail } from '@/lib/validation';
+import {
+  validateSAPhone,
+  validateEmail,
+  validateText,
+  validateNumber,
+  FIELD_LIMITS,
+  NUMERIC_LIMITS,
+} from '@/lib/validation';
 import { BranchSection } from '@/components/BranchSection';
 
 
@@ -31,12 +38,21 @@ const years = Array.from({ length: 25 }, (_, i) => (2024 - i).toString());
 
 
 
+/** Fields the user can touch, used to decide when to reveal an error. */
+type TouchedFields = Partial<Record<keyof FormData, boolean>>;
+
 export function SellYourCarPage() {
   const [currentStep, setCurrentStep] = useState<Step>(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [photos, setPhotos] = useState<File[]>([]);
+  const [photoError, setPhotoError] = useState<string | null>(null);
+  const [touched, setTouched] = useState<TouchedFields>({});
+  // Set when the user presses a blocked button, so every outstanding problem
+  // is revealed at once rather than staying silent behind a disabled control.
+  const [showAllErrors, setShowAllErrors] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     year: '',
     make: '',
@@ -52,28 +68,67 @@ export function SellYourCarPage() {
 
   const updateFormData = (field: keyof FormData, value: string) => {
     setFormData((prev: FormData) => ({ ...prev, [field]: value }));
+    setTouched(prev => ({ ...prev, [field]: true }));
   };
 
-
-
+  // Every field is checked on every render so the button state and the inline
+  // messages can never disagree about why a step is blocked.
+  const yearCheck = formData.year
+    ? { valid: true as const, error: undefined }
+    : { valid: false as const, error: 'Please select the year' };
+  const makeCheck = formData.make
+    ? { valid: true as const, error: undefined }
+    : { valid: false as const, error: 'Please select the make' };
+  const modelCheck = validateText(formData.model, 'Model', FIELD_LIMITS.model);
+  const mileageCheck = validateNumber(formData.mileage, 'Mileage', NUMERIC_LIMITS.mileage);
+  const nameCheck = validateText(formData.name, 'Full name', FIELD_LIMITS.name);
   const phoneCheck = validateSAPhone(formData.phone);
   const emailCheck = validateEmail(formData.email);
+  const locationCheck = formData.location
+    ? { valid: true as const, error: undefined }
+    : { valid: false as const, error: 'Please select your region' };
 
-  const canProceedToNext = () => {
-    if (currentStep === 1) {
-      return formData.year && formData.make && formData.model && formData.mileage;
-    }
-    if (currentStep === 2) {
-      return formData.name && emailCheck.valid && phoneCheck.valid && formData.location;
-    }
-    return true;
-  };
+  const stepOneChecks = [yearCheck, makeCheck, modelCheck, mileageCheck];
+  const stepTwoChecks = [nameCheck, emailCheck, phoneCheck, locationCheck];
+
+  const stepOneValid = stepOneChecks.every(c => c.valid);
+  const stepTwoValid = stepTwoChecks.every(c => c.valid);
+
+  /** Show a field's error once the user has touched it, or after a blocked submit. */
+  const shouldShow = (field: keyof FormData) => showAllErrors || touched[field];
+
+  /** First outstanding problem on the current step, for the summary banner. */
+  const blockingError = (currentStep === 1 ? stepOneChecks : stepTwoChecks)
+    .find(c => !c.valid)?.error;
 
   const handleNext = () => {
-    if (currentStep < 2 && canProceedToNext()) {
-      setCurrentStep(2);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (!stepOneValid) {
+      // Tell them what's wrong instead of leaving a dead button.
+      setShowAllErrors(true);
+      return;
     }
+    setShowAllErrors(false);
+    setCurrentStep(2);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handlePhotoChange = (fileList: FileList | null) => {
+    const selected = Array.from(fileList ?? []);
+    setPhotoError(null);
+
+    if (selected.length > 5) {
+      setPhotoError('You can upload a maximum of 5 photos — only the first 5 were kept.');
+    }
+
+    const capped = selected.slice(0, 5);
+    const withinSize = capped.filter(f => f.size <= 2 * 1024 * 1024);
+
+    if (withinSize.length < capped.length) {
+      const rejected = capped.length - withinSize.length;
+      setPhotoError(`${rejected} photo${rejected > 1 ? 's were' : ' was'} larger than 2MB and could not be added.`);
+    }
+
+    setPhotos(withinSize);
   };
 
   const benefits = [
@@ -95,19 +150,33 @@ export function SellYourCarPage() {
   ];
 
   const handleSubmit = async () => {
+    if (!stepOneValid || !stepTwoValid) {
+      setShowAllErrors(true);
+      return;
+    }
+
     setIsSubmitting(true);
     setError(false);
+    setErrorMessage(null);
     try {
       const body = new FormData();
       (Object.entries(formData) as [string, string][]).forEach(([k, v]) => body.append(k, v));
       photos.forEach((photo, i) => body.append(`photo_${i}`, photo, photo.name));
       const res = await fetch('/api/sell-car', { method: 'POST', body });
-      if (!res.ok) throw new Error(`Sell-car request failed: ${res.status}`);
+
+      if (!res.ok) {
+        // The server rejects for a specific reason — show that reason rather
+        // than a generic failure the user can't act on.
+        const payload = await res.json().catch(() => null);
+        throw new Error(payload?.error ?? `Sell-car request failed: ${res.status}`);
+      }
+
       setIsSubmitted(true);
       trackEvent('sell_car_submitted', { make: formData.make, model: formData.model });
-    } catch {
+    } catch (err) {
       // Don't fake success — surface an honest error so the lead isn't lost silently.
       setError(true);
+      setErrorMessage(err instanceof Error ? err.message : null);
     } finally {
       setIsSubmitting(false);
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -169,8 +238,8 @@ export function SellYourCarPage() {
                   Something went wrong
                 </h2>
                 <p className="text-gray-600 mb-8 max-w-md mx-auto">
-                  We couldn&apos;t submit your valuation request just now. Your details are still
-                  here — please try again. If it keeps happening, call us on{' '}
+                  {errorMessage ?? 'We couldn’t submit your valuation request just now.'} Your details are
+                  still here — please try again. If it keeps happening, call us on{' '}
                   <a href="tel:0835008181" className="text-king-blue font-semibold">083 500 8181</a>.
                 </p>
                 <button
@@ -211,6 +280,9 @@ export function SellYourCarPage() {
                             <option value="">Select Year</option>
                             {years.map(year => <option key={year} value={year}>{year}</option>)}
                           </select>
+                          {shouldShow('year') && !yearCheck.valid && (
+                            <p className="text-red-500 text-sm mt-1.5">{yearCheck.error}</p>
+                          )}
                         </div>
 
                         {/* Make */}
@@ -224,6 +296,9 @@ export function SellYourCarPage() {
                             <option value="">Select Make</option>
                             {carMakes.map(make => <option key={make} value={make}>{make}</option>)}
                           </select>
+                          {shouldShow('make') && !makeCheck.valid && (
+                            <p className="text-red-500 text-sm mt-1.5">{makeCheck.error}</p>
+                          )}
                         </div>
 
                         {/* Model */}
@@ -232,10 +307,19 @@ export function SellYourCarPage() {
                           <input
                             type="text"
                             placeholder="e.g. Ranger 2.0 Bi-Turbo"
+                            maxLength={FIELD_LIMITS.model}
                             value={formData.model}
                             onChange={(e) => updateFormData('model', e.target.value)}
-                            className="w-full h-12 px-4 rounded-xl border-2 border-gray-200 focus:border-king-blue focus:ring-0 font-medium transition-colors bg-gray-50"
+                            onBlur={() => setTouched(prev => ({ ...prev, model: true }))}
+                            className={`w-full h-12 px-4 rounded-xl border-2 focus:ring-0 font-medium transition-colors bg-gray-50 ${
+                              shouldShow('model') && !modelCheck.valid
+                                ? 'border-red-400 focus:border-red-500'
+                                : 'border-gray-200 focus:border-king-blue'
+                            }`}
                           />
+                          {shouldShow('model') && !modelCheck.valid && (
+                            <p className="text-red-500 text-sm mt-1.5">{modelCheck.error}</p>
+                          )}
                         </div>
 
                         {/* Mileage */}
@@ -244,13 +328,30 @@ export function SellYourCarPage() {
                           <div className="relative">
                             <input
                               type="number"
+                              inputMode="numeric"
                               placeholder="e.g. 45000"
+                              min={NUMERIC_LIMITS.mileage.min}
+                              max={NUMERIC_LIMITS.mileage.max}
+                              step={1}
                               value={formData.mileage}
                               onChange={(e) => updateFormData('mileage', e.target.value)}
-                              className="w-full h-12 px-4 rounded-xl border-2 border-gray-200 focus:border-king-blue focus:ring-0 font-medium transition-colors bg-gray-50"
+                              onBlur={() => setTouched(prev => ({ ...prev, mileage: true }))}
+                              // Block the characters that make a number input accept
+                              // "-3838888888888888888221" and exponent notation.
+                              onKeyDown={(e) => {
+                                if (['-', '+', 'e', 'E'].includes(e.key)) e.preventDefault();
+                              }}
+                              className={`w-full h-12 px-4 rounded-xl border-2 focus:ring-0 font-medium transition-colors bg-gray-50 ${
+                                shouldShow('mileage') && !mileageCheck.valid
+                                  ? 'border-red-400 focus:border-red-500'
+                                  : 'border-gray-200 focus:border-king-blue'
+                              }`}
                             />
                             <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 font-medium">km</span>
                           </div>
+                          {shouldShow('mileage') && !mileageCheck.valid && (
+                            <p className="text-red-500 text-sm mt-1.5">{mileageCheck.error}</p>
+                          )}
                         </div>
 
                         {/* File Upload Box */}
@@ -268,15 +369,15 @@ export function SellYourCarPage() {
                             <p className="text-gray-400 text-xs mt-1">Maximum file size: 2MB per photo</p>
                             <input
                               type="file"
-                              accept="image/*"
+                              accept="image/jpeg,image/png,image/webp,image/heic,image/heif"
                               multiple
                               className="hidden"
-                              onChange={(e) => {
-                                const files = Array.from(e.target.files ?? []).slice(0, 5);
-                                setPhotos(files.filter(f => f.size <= 2 * 1024 * 1024));
-                              }}
+                              onChange={(e) => handlePhotoChange(e.target.files)}
                             />
                           </label>
+                          {photoError && (
+                            <p className="text-red-500 text-sm mt-2">{photoError}</p>
+                          )}
                         </div>
 
                         {/* Privacy Policy text */}
@@ -297,10 +398,26 @@ export function SellYourCarPage() {
                         </div>
                       </div>
 
+                      {/* The button stays enabled so pressing it explains what's
+                          missing — a dead button tells the user nothing. */}
+                      {/* role="alert" so screen readers announce the reason the
+                          moment it appears. The button is deliberately NOT
+                          aria-disabled: pressing it is how the reason gets
+                          revealed, so it must stay operable for everyone. */}
+                      {showAllErrors && blockingError && (
+                        <div
+                          role="alert"
+                          className="mb-4 flex items-start gap-2 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700"
+                        >
+                          <AlertCircle className="mt-0.5 h-4 w-4 flex-shrink-0" />
+                          <span>Please fix the highlighted fields above before continuing.</span>
+                        </div>
+                      )}
                       <button
                         onClick={handleNext}
-                        disabled={!canProceedToNext()}
-                        className="btn-primary bg-king-dark hover:bg-black text-white px-8 h-12 rounded mt-4"
+                        className={`btn-primary bg-king-dark hover:bg-black text-white px-8 h-12 rounded mt-4 ${
+                          !stepOneValid ? 'opacity-60' : ''
+                        }`}
                       >
                         Submit
                       </button>
@@ -328,10 +445,19 @@ export function SellYourCarPage() {
                           <input
                             type="text"
                             placeholder="John Doe"
+                            maxLength={FIELD_LIMITS.name}
                             value={formData.name}
                             onChange={(e) => updateFormData('name', e.target.value)}
-                            className="w-full h-12 px-4 rounded-xl border-2 border-gray-200 focus:border-king-blue focus:ring-0 font-medium transition-colors bg-gray-50"
+                            onBlur={() => setTouched(prev => ({ ...prev, name: true }))}
+                            className={`w-full h-12 px-4 rounded-xl border-2 focus:ring-0 font-medium transition-colors bg-gray-50 ${
+                              shouldShow('name') && !nameCheck.valid
+                                ? 'border-red-400 focus:border-red-500'
+                                : 'border-gray-200 focus:border-king-blue'
+                            }`}
                           />
+                          {shouldShow('name') && !nameCheck.valid && (
+                            <p className="text-red-500 text-sm mt-1.5">{nameCheck.error}</p>
+                          )}
                         </div>
 
                         <div>
@@ -381,13 +507,30 @@ export function SellYourCarPage() {
                             <option value="Western Cape">Western Cape</option>
                             <option value="Eastern Cape">Eastern Cape</option>
                           </select>
+                          {shouldShow('location') && !locationCheck.valid && (
+                            <p className="text-red-500 text-sm mt-1.5">{locationCheck.error}</p>
+                          )}
                         </div>
                       </div>
 
+                      {showAllErrors && blockingError && (
+                        <div
+                          role="alert"
+                          className="mb-4 flex items-start gap-2 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700"
+                        >
+                          <AlertCircle className="mt-0.5 h-4 w-4 flex-shrink-0" />
+                          <span>{blockingError}</span>
+                        </div>
+                      )}
+
+                      {/* Only genuinely disabled while the request is in flight —
+                          otherwise it must stay pressable so it can explain itself. */}
                       <button
                         onClick={handleSubmit}
-                        disabled={isSubmitting || !formData.name || !emailCheck.valid || !phoneCheck.valid || !formData.location}
-                        className="w-full btn-primary h-14 text-lg shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                        disabled={isSubmitting}
+                        className={`w-full btn-primary h-14 text-lg shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all disabled:opacity-50 flex items-center justify-center gap-2 ${
+                          !stepTwoValid ? 'opacity-60' : ''
+                        }`}
                       >
                         {isSubmitting ? (
                           <>

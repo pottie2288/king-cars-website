@@ -12,6 +12,14 @@ interface SendEmailOptions {
 }
 
 export async function sendEmail({ to, cc, subject, html, attachments }: SendEmailOptions) {
+  // Fail loudly and early: a missing key would otherwise surface as an opaque
+  // 401 from Brevo, which reads like a transient outage rather than a
+  // misconfigured deployment.
+  const apiKey = process.env.BREVO_API_KEY;
+  if (!apiKey) {
+    throw new Error('BREVO_API_KEY is not configured — cannot send lead email');
+  }
+
   const toArr = Array.isArray(to) ? to : [to];
   const ccArr = cc ? (Array.isArray(cc) ? cc : [cc]) : undefined;
 
@@ -35,7 +43,7 @@ export async function sendEmail({ to, cc, subject, html, attachments }: SendEmai
     method: 'POST',
     headers: {
       accept: 'application/json',
-      'api-key': process.env.BREVO_API_KEY!,
+      'api-key': apiKey,
       'content-type': 'application/json',
     },
     body: JSON.stringify(body),

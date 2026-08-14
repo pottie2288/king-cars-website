@@ -291,7 +291,7 @@ export function AboutPage() {
             </h2>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <AnimatedSection>
               <div className="bg-gray-50 rounded-3xl p-10 border border-gray-100 flex flex-col items-center justify-center text-center">
                 <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-6">Member of</p>
@@ -302,6 +302,23 @@ export function AboutPage() {
                 />
                 <p className="text-gray-600 text-sm leading-relaxed max-w-xs">
                   An exclusive network of South Africa's most trusted independent dealerships, united by a shared commitment to integrity and service excellence.
+                </p>
+              </div>
+
+              {/* Second credential card, mirroring the Bluechip one above. This
+                  is the most externally-verifiable credential on the page — a
+                  major bank's own award — so it earns a card rather than a
+                  line of text alongside FSP/IDA. */}
+              <div className="bg-gray-50 rounded-3xl p-10 border border-gray-100 flex flex-col items-center justify-center text-center mt-8">
+                <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-6">Awarded by</p>
+                <img
+                  src="/absa-golden-partner.png"
+                  alt="ABSA Golden Partner Winner 2011 to 2025"
+                  className="w-[230px] h-auto object-contain mb-6"
+                />
+                <p className="text-gray-600 text-sm leading-relaxed max-w-xs">
+                  ABSA has named King Cars a Golden Partner every year since 2011 — fourteen
+                  consecutive years recognising the standard of our vehicle finance.
                 </p>
               </div>
             </AnimatedSection>

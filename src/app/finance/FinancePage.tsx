@@ -144,6 +144,25 @@ export function FinancePage() {
                       />
                     ))}
                   </div>
+
+                  {/* The ABSA endorsement belongs directly under the bank logos:
+                      it turns "we work with these banks" into "and one of them
+                      has named us their top partner 14 years running" — read at
+                      the moment the customer is deciding whether to apply. */}
+                  <div className="mt-7 pt-6 border-t border-gray-100 text-center">
+                    <p className="text-[11px] font-semibold uppercase tracking-widest text-gray-400 mb-3">
+                      Recognised by
+                    </p>
+                    <img
+                      src="/absa-golden-partner.png"
+                      alt="ABSA Golden Partner Winner 2011 to 2025"
+                      className="w-[190px] h-auto object-contain mx-auto"
+                    />
+                    <p className="text-xs text-gray-500 leading-relaxed mt-3">
+                      Named an ABSA Golden Partner every year since 2011 — 14 consecutive
+                      years of vehicle finance excellence.
+                    </p>
+                  </div>
                 </div>
               </AnimatedSection>
 

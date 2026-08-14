@@ -245,6 +245,36 @@ export function HomePage() {
         </div>
       </section>
 
+      {/* Recognition strip — deliberately placed straight after the testimonials
+          so all third-party proof sits together: customers vouch above, and the
+          institutions vouch here. Sized by width, not height: the badges carry
+          fine print that turns to mush below ~180px wide. */}
+      <section className="py-14 bg-white border-t border-gray-100">
+        <div className="section-padding">
+          <AnimatedSection className="max-w-4xl mx-auto text-center">
+            <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-8">
+              Recognised by
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-x-14 gap-y-8">
+              <img
+                src="/bluechip-dealer-logo.png"
+                alt="Bluechip Dealer"
+                className="h-12 sm:h-14 w-auto object-contain"
+              />
+              <img
+                src="/absa-golden-partner.png"
+                alt="ABSA Golden Partner Winner 2011 to 2025"
+                className="w-[200px] sm:w-[240px] h-auto object-contain"
+              />
+            </div>
+            <p className="text-sm text-gray-500 mt-8 max-w-lg mx-auto leading-relaxed">
+              An ABSA Golden Partner every year since 2011 — fourteen consecutive years
+              recognised for our vehicle finance.
+            </p>
+          </AnimatedSection>
+        </div>
+      </section>
+
       {/* Locations Section */}
       <section className="py-24 bg-white overflow-hidden">
         <div className="section-padding">

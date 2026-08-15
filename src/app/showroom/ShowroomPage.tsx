@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { Search, MapPin, Grid, List as ListIcon, ChevronDown, Car as CarIcon, Shapes, Heart } from 'lucide-react';
+import { Search, MapPin, Grid, List as ListIcon, ChevronDown, Car as CarIcon, Shapes } from 'lucide-react';
 import { MAKE_LOGOS } from '@/lib/car-logos';
 import { Slider } from '@/components/ui/slider';
 import { CarCard } from '@/components/CarCard';
@@ -633,15 +633,11 @@ export function ShowroomPage({ initialVehicles }: { initialVehicles?: VmgVehicle
 
   return (
     <div className="min-h-screen bg-gray-50 pt-20">
-      {/* Header — Women's Month pink (revert to "bg-king-blue" + remove badge after August) */}
-      <div className="bg-pink-400 text-white py-12">
+      {/* Header */}
+      <div className="bg-king-blue text-white py-12">
         <div className="section-padding">
-          <span className="inline-flex items-center gap-1.5 bg-pink-600 text-white text-xs sm:text-sm font-semibold px-3.5 py-1.5 rounded-full shadow-sm mb-4">
-            <Heart className="w-3.5 h-3.5 fill-white" />
-            Happy Women&apos;s Month from King Cars
-          </span>
           <h1 className="font-display font-bold text-4xl mb-4">Our Showroom</h1>
-          <p className="text-pink-50 max-w-2xl">
+          <p className="text-blue-100 max-w-2xl">
             Browse our extensive collection of premium quality used vehicles.
             Each car is thoroughly inspected and comes with our quality guarantee.
           </p>

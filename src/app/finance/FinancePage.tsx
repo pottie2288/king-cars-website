@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react';
-import { Clock, ChevronDown, Phone, Wallet, TrendingDown, ArrowRight, Building2, Heart } from 'lucide-react';
+import { Clock, ChevronDown, Phone, Wallet, TrendingDown, ArrowRight, Building2 } from 'lucide-react';
 import { AnimatedSection } from '@/components/AnimatedSection';
 import { FinanceApplicationForm } from '@/components/FinanceApplicationForm';
 import { BANKS } from '@/data/banks';
@@ -93,18 +93,14 @@ export function FinancePage() {
         </div>
       </div>
 
-      {/* Call to Action Section — Women's Month pink (revert to "bg-king-blue" + remove badge after August) */}
-      <div className="section-padding py-24 bg-pink-500 relative overflow-hidden">
+      {/* Call to Action Section */}
+      <div className="section-padding py-24 bg-king-blue relative overflow-hidden">
         {/* Decorative background elements */}
         <div className="absolute top-0 right-0 w-1/3 h-full bg-king-cyan/10 skew-x-12 translate-x-1/4" />
         <div className="absolute bottom-0 left-0 w-1/4 h-1/2 bg-white/5 -skew-x-12 -translate-x-1/4" />
 
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <AnimatedSection>
-            <span className="inline-flex items-center gap-1.5 bg-pink-700 text-white text-xs sm:text-sm font-semibold px-3.5 py-1.5 rounded-full shadow-sm mb-6">
-              <Heart className="w-3.5 h-3.5 fill-white" />
-              Happy Women&apos;s Month from King Cars
-            </span>
             <h2 className="font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-white mb-10 leading-tight">
               Put us to the test
               <span className="block text-king-cyan">apply online</span>

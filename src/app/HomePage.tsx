@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react';
-import { ArrowRight, Car as CarIcon, Coins, HandCoins, Heart } from 'lucide-react';
+import { ArrowRight, Car as CarIcon, Coins, HandCoins } from 'lucide-react';
 import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button';
 import { CssCarAnimation } from '@/components/ui/css-car-animation';
 import { useRouter } from 'next/navigation';
@@ -41,10 +41,10 @@ export function HomePage() {
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section - Women's Month Pink Gradient (revert to "from-white to-king-blue" after August) */}
+      {/* Hero Section - Blue Gradient Background */}
       <section className="relative flex flex-col justify-center">
         {/* Background Image */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white to-pink-400">
+        <div className="absolute inset-0 bg-gradient-to-b from-white to-king-blue">
         </div>
 
         {/* Content */}
@@ -52,7 +52,7 @@ export function HomePage() {
           <div className="max-w-7xl mx-auto text-center">
 
             {/* Pill Label */}
-            <AnimatedSection className="mb-8 flex flex-wrap items-center justify-center gap-3">
+            <AnimatedSection className="mb-8 flex justify-center">
               <span className="inline-flex items-center justify-center py-1.5 sm:py-2">
                 <img
                   src="/bluechip-dealer-logo.png"
@@ -60,13 +60,9 @@ export function HomePage() {
                   className="h-10 sm:h-12 w-auto object-contain block"
                 />
               </span>
-              <span className="inline-flex items-center gap-1.5 bg-pink-500 text-white text-xs sm:text-sm font-semibold px-3.5 py-1.5 rounded-full shadow-sm">
-                <Heart className="w-3.5 h-3.5 fill-white" />
-                Happy Women&apos;s Month from King Cars
-              </span>
             </AnimatedSection>
             <h1 className="font-display font-bold text-5xl sm:text-7xl lg:text-8xl text-gray-900 mb-16 leading-tight animate-fade-in animate-delay-100">
-              Find Your <span className="text-white">Perfect</span> Car
+              Find Your <span className="text-king-blue">Perfect</span> Car
             </h1>
 
             {/* Search Bar */}

@@ -313,12 +313,12 @@ export function AboutPage() {
                 <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-6">Awarded by</p>
                 <img
                   src="/absa-golden-partner.png"
-                  alt="ABSA Golden Partner Winner 2011 to 2025"
+                  alt="ABSA Golden Partner Winner 2025"
                   className="w-[230px] h-auto object-contain mb-6"
                 />
                 <p className="text-gray-600 text-sm leading-relaxed max-w-xs">
-                  ABSA has named King Cars a Golden Partner every year since 2011 — fourteen
-                  consecutive years recognising the standard of our vehicle finance.
+                  ABSA named King Cars a Golden Partner in 2025, recognising the standard
+                  of the vehicle finance we arrange for our customers.
                 </p>
               </div>
             </AnimatedSection>

@@ -259,13 +259,13 @@ export function HomePage() {
               />
               <img
                 src="/absa-golden-partner.png"
-                alt="ABSA Golden Partner Winner 2011 to 2025"
+                alt="ABSA Golden Partner Winner 2025"
                 className="w-[200px] sm:w-[240px] h-auto object-contain"
               />
             </div>
             <p className="text-sm text-gray-500 mt-8 max-w-lg mx-auto leading-relaxed">
-              An ABSA Golden Partner every year since 2011 — fourteen consecutive years
-              recognised for our vehicle finance.
+              Named an ABSA Golden Partner in 2025, recognising the standard of our
+              vehicle finance.
             </p>
           </AnimatedSection>
         </div>
